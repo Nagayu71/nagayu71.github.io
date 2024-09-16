@@ -1,0 +1,154 @@
+/* CSS styles */
+
+/* 共通の色定義 */
+:root {
+    --color-border: #ddd;
+    --color-shadow-light: rgba(0, 0, 0, 0.1);
+    --color-shadow-dark: rgba(0, 0, 0, 0.2);
+    --color-minty: #78C2AD;
+    --color-blue: blue;
+    --color-red: #E95420;
+    --color-white: white;
+    --color-link: #2780e3;
+}
+
+/* フォント定義 */
+:root {
+    --font-sans: "BIZ UDPGothic", sans-serif;
+    --font-gill-sans: "Gill Sans", sans-serif;
+}
+
+/* 見出しとナビゲーション */
+h1, h2, h3, h4, h5, h6, .navbar-title, .menu-text {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* スライドデッキ */
+.slide-deck {
+    width: 100%;    /* 画面の幅全体に合わせる */
+    height: 475px;
+    border: 3px solid var(--color-minty); /* 枠線を非表示にする */
+}
+
+/* 記事カードとツイート */
+.article-card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.article-card, .twitter-tweet {
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    overflow: hidden;
+    width: 90%;
+    box-shadow: 0 2px 4px var(--color-shadow-light);
+    margin: 20px;
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow 0.3s ease-in-out;
+    align-items: center;
+}
+
+.article-card:hover, .twitter-tweet:hover {
+    box-shadow: 0 4px 8px var(--color-shadow-dark);
+}
+
+.article-image {
+    width: 100%;
+    height: auto;
+}
+
+.article-content {
+    padding: 15px;
+}
+
+.article-title {
+    font-size: 1.2em;
+    margin: 0 0 10px;
+}
+
+.article-description {
+    font-size: 0.9em;
+    color: #555;
+}
+
+.cvdate {
+    float: right;
+}
+
+.small-letter {
+    font-size: 11pt;
+}
+
+.blue-letter {
+    color: var(--color-link);
+}
+
+.artificial-align {
+    text-align: right;
+    font-family: var(--font-gill-sans) !important;
+}
+
+.artificial-align p {
+    margin: 0;
+}
+
+/* フッター */
+.nav-footer, .nav-footer a {
+    color: var(--color-white) !important; /* フッターのテキスト部分に適用 */
+}
+
+.nav-footer-left {
+    white-space: nowrap;
+}
+
+/* 色指定 */
+.color-minty {
+    color: var(--color-minty); /* font awesome のアイコンの色設定 */
+}
+
+.color-blue {
+    color: var(--color-blue);
+}
+
+.color-red, .color-unite {
+    color: var(--color-red);
+}
+
+/* サイズ調整 */
+.footnote-size {
+    font-size: 90% !important;
+}
+
+.script-size {
+    font-size: 80% !important;
+}
+
+.small-size {
+    font-size: 70% !important;
+}
+
+.callout-body-container {
+    max-width: 100%; /* これがないと callout section で overflow する． */
+}
+
+/* MathJax 設定 */
+.MathJax {
+    min-width: 0 !important;
+    max-width: 100%;
+}
+
+.MathJax.CtxtMenu_Attached_0 {
+    overflow-x: auto;
+    overflow-y: hidden; /* 縦方向のスクロールバーを非表示にし、不要な縦スクロールを防ぐ。 */
+    -webkit-overflow-scrolling: touch; /* これは主にiOSデバイス向けの設定。スクロール時のスムーズな慣性スクロールを有効にし、モバイルでのユーザー体験を向上させる。 */
+}
+
+.math.display {
+    overflow-x: auto;
+    overflow-y: hidden; /* 縦方向のスクロールバーを非表示にし、不要な縦スクロールを防ぐ。 */
+    max-width: 100%;
+}
