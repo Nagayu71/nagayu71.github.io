@@ -1,5 +1,26 @@
 [
   {
+    "objectID": "terms.html",
+    "href": "terms.html",
+    "title": "Terms",
+    "section": "",
+    "text": "当サイトのコンテンツは、断りがある場合を除き CC-BY-NC 4.0 で提供されています。"
+  },
+  {
+    "objectID": "terms.html#著作権",
+    "href": "terms.html#著作権",
+    "title": "Terms",
+    "section": "",
+    "text": "当サイトのコンテンツは、断りがある場合を除き CC-BY-NC 4.0 で提供されています。"
+  },
+  {
+    "objectID": "terms.html#リンク",
+    "href": "terms.html#リンク",
+    "title": "Terms",
+    "section": "リンク",
+    "text": "リンク\n当サイトにリンクを行う場合の許可や連絡は不要です。\n\n\n\n\n\n\n\n当サイトのリンクやバナーから移動したサイトで提供される情報やサービス等について一切の責任を負いません。\n当サイトのコンテンツや情報については、可能なかぎり正確な情報を提供するように努めておりますが、正確性や安全性を保証するものではありません。"
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Yuki Iwanaga | 岩永悠希",
@@ -42,36 +63,8 @@
     "text": "Experience\n\n Teaching Assistant\nKobe University, Japan\n\n\n Data Analyst\nmerchu inc. Long-term internship"
   },
   {
-    "objectID": "test.html",
-    "href": "test.html",
-    "title": "Finley Malloc",
-    "section": "",
-    "text": "Finley Malloc is the Chief Data Scientist at Wengo Analytics. When not innovating on data platforms, Finley enjoys spending time unicycling and playing with her pet iguana."
-  },
-  {
-    "objectID": "test.html#education",
-    "href": "test.html#education",
-    "title": "Finley Malloc",
-    "section": "1 Education",
-    "text": "1 Education\nUniversity of California, San Diego | San Diego, CA PhD in Mathematics | Sept 2011 - June 2015\nMacalester College | St. Paul MA B.A in Economics | Sept 2007 - June 2011"
-  },
-  {
-    "objectID": "test.html#experience",
-    "href": "test.html#experience",
-    "title": "Finley Malloc",
-    "section": "2 Experience",
-    "text": "2 Experience\nWengo Analytics | Head Data Scientist | April 2018 - present\nGeoScynce | Chief Analyst | Spet 2012 - April 2018"
-  },
-  {
     "objectID": "links.html",
     "href": "links.html",
-    "title": "関連リンク",
-    "section": "",
-    "text": "Zenn では主にネットワーク科学関係の記事を書いています．\nどちらかというと理論的な側面が強いです．\n\n\n\n\n\n\nQiita では実装面で困ったことの備忘録や，ちょっとしたまとめを記載しています．"
-  },
-  {
-    "objectID": "links.html#技術ブログ",
-    "href": "links.html#技術ブログ",
     "title": "関連リンク",
     "section": "",
     "text": "Zenn では主にネットワーク科学関係の記事を書いています．\nどちらかというと理論的な側面が強いです．\n\n\n\n\n\n\nQiita では実装面で困ったことの備忘録や，ちょっとしたまとめを記載しています．"
@@ -82,26 +75,5 @@
     "title": "関連リンク",
     "section": "",
     "text": "Zenn では主にネットワーク科学関係の記事を書いています．\nどちらかというと理論的な側面が強いです．\n\n\n\n\n\n\nQiita では実装面で困ったことの備忘録や，ちょっとしたまとめを記載しています．"
-  },
-  {
-    "objectID": "terms.html",
-    "href": "terms.html",
-    "title": "Terms",
-    "section": "",
-    "text": "当サイトのコンテンツは、断りがある場合を除き CC-BY-NC 4.0 で提供されています。"
-  },
-  {
-    "objectID": "terms.html#著作権",
-    "href": "terms.html#著作権",
-    "title": "Terms",
-    "section": "",
-    "text": "当サイトのコンテンツは、断りがある場合を除き CC-BY-NC 4.0 で提供されています。"
-  },
-  {
-    "objectID": "terms.html#リンク",
-    "href": "terms.html#リンク",
-    "title": "Terms",
-    "section": "リンク",
-    "text": "リンク\n当サイトにリンクを行う場合の許可や連絡は不要です。\n\n\n\n\n\n\n\n当サイトのリンクやバナーから移動したサイトで提供される情報やサービス等について一切の責任を負いません。\n当サイトのコンテンツや情報については、可能なかぎり正確な情報を提供するように努めておりますが、正確性や安全性を保証するものではありません。"
   }
 ]

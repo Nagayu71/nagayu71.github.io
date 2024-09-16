@@ -87,11 +87,11 @@ gtag('config', 'G-G4BZMT89L0', { 'anonymize_ip': true});
 <link rel="stylesheet" href="styles/styles.css">
 <meta property="og:title" content="関連リンク – Yuki Iwanaga">
 <meta property="og:description" content="他の媒体へのリンクなど">
-<meta property="og:image" content="assets/images/network_SBM.svg">
+<meta property="og:image" content="https://Nagayu71.github.io/nagayu71.github.io/assets/images/network_SBM.svg">
 <meta property="og:site_name" content="Yuki Iwanaga">
 <meta name="twitter:title" content="関連リンク – Yuki Iwanaga">
 <meta name="twitter:description" content="他の媒体へのリンクなど">
-<meta name="twitter:image" content="assets/images/network_SBM.svg">
+<meta name="twitter:image" content="https://Nagayu71.github.io/nagayu71.github.io/assets/images/network_SBM.svg">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
@@ -278,7 +278,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
+      var filterRegex = new RegExp("https:\/\/Nagayu71\.github\.io\/nagayu71\.github\.io\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
