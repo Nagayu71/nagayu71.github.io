@@ -1,0 +1,143 @@
+---
+title: "Yuki Iwanaga | 岩永悠希"
+description: "Master's Student in Economics"
+title-block-banner: true
+page-layout: full
+number-sections: false
+about:
+  template: marquee # これがないと links 以下が機能しない
+  links: 
+    - icon: envelope
+      text: "Contact"
+      href: mailto:yuki.iwanaga136@gmail.com
+---
+
+<!-- :::: {.columns}
+
+::: {.column width="40%"}
+![](assets/network_SBM.svg){width=350 fig-align="center"}
+:::
+
+::: {.column width="60%"}
+## Hello!
+
+I'm Yuki, a 2nd year master's Econ student supervised by [Teruyoshi Kobayashi](https://terukobayashi.wordpress.com/) at the [Kobe University](https://www.kobe-u.ac.jp/ja/) in Hyogo, Japan.
+
+:::
+
+:::: -->
+
+:::: {.columns}
+
+::: {.column width="60%"}
+## Hello!
+
+I'm a 2nd year master's Econ student supervised by [Teruyoshi Kobayashi](https://terukobayashi.wordpress.com/) at the [Kobe University](https://www.kobe-u.ac.jp/ja/) in Hyogo, Japan.
+
+<!-- #### Contact
+
+E-mail: yuki.iwanaga136[at]gmail.com -->
+
+
+:::
+
+::: {.column width="40%"}
+![](assets/images/network_SBM.svg){width=350 fig-align="center"}
+:::
+
+::::
+
+::: {layout="[50,50]"}
+
+::: {#first-column}
+## Interests
+
+- Collective Behavior
+- Network Science
+- Network Games
+  - Strategic network formation
+  - Econometric network formation models
+- Macroeconomics
+- Statistical Physics
+- Bayesian Modeling
+- History of Science
+
+![](assets/images/collective_behavior.png){width=450 fig-align="left"}
+
+:::
+
+::: {#second-column}
+## Research
+
+My research interests lie at the intersection of economics and network science. Although network science is a relatively new field that emerged in the years around the early 2000s, it has been applied across various domains with significant success. In economics, considering network structures has provided deeper insights in research areas such as input-output analysis, cascading failures in financial networks, and measuring peer effects.
+
+The focus of my research is to develop a statistical model that identifies the mechanisms behind the formation of observed economic and social networks. A key concept in economic model building is microfoundation, and I am currently working on a model based on network game theory.
+
+:::
+
+:::
+
+
+::: {layout="[50,50]" layout-valign="top"}
+
+::: {#first-column}
+## Education
+
+##### [{{< fa graduation-cap >}}]{.color-minty} M.A. in Economics, 2025 (expected)
+
+_Kobe University, Japan_
+
+##### [{{< fa graduation-cap >}}]{.color-minty} B.A. in Arts, 2023
+
+_Kobe University, Japan_
+
+:::
+
+::: {#second-column}
+## Experience
+
+##### [{{< fa person-chalkboard >}}]{.color-minty} Teaching Assistant
+
+_Kobe University, Japan_
+
+##### [{{< fa chart-simple >}}]{.color-minty} Data Analyst
+
+_merchu inc._<br>
+_[Long-term internship](https://merchu.notion.site/c70f2fe8b3534740a654fed5c19e73b0)_
+
+:::
+
+:::
+
+<!-- 以下の columns 環境だと若干右側のブロックが左寄りになる -->
+
+<!-- :::: {.columns layout-valign="top"}
+
+::: {.column width="50%"}
+## Education
+
+##### [{{< fa graduation-cap >}}]{.color-minty} M.A. in Economics, 2025 (expected)
+
+_Kobe University, Japan_
+
+##### [{{< fa graduation-cap >}}]{.color-minty} B.A. in Arts, 2023
+
+_Kobe University, Japan_
+
+:::
+
+::: {.column width="50%"}
+## Experience
+
+##### [{{< fa person-chalkboard >}}]{.color-minty} Teaching Assistant
+
+_Kobe University, Japan_
+
+##### [{{< fa chart-simple >}}]{.color-minty} Data Analyst
+
+_merchu inc._<br>
+_[Long-term internship](https://merchu.notion.site/c70f2fe8b3534740a654fed5c19e73b0)_
+
+:::
+
+:::: -->

@@ -1,0 +1,5 @@
+/.quarto/
+/_site/
+styles.scss
+styles_original.css
+.DS_Store

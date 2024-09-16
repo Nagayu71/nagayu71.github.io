@@ -1,0 +1,22 @@
+---
+title: "Terms"
+page-layout: full
+title-block-banner: true
+number-sections: false
+toc: false
+---
+
+## 著作権
+
+当サイトのコンテンツは、断りがある場合を除き [CC-BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/deed.ja) で提供されています。
+
+## リンク
+
+当サイトにリンクを行う場合の許可や連絡は不要です。
+
+<br>
+
+::: {.callout-important appearance="simple"}
+当サイトのリンクやバナーから移動したサイトで提供される情報やサービス等について一切の責任を負いません。\
+当サイトのコンテンツや情報については、可能なかぎり正確な情報を提供するように努めておりますが、正確性や安全性を保証するものではありません。
+:::
