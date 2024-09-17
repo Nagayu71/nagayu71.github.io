@@ -42,7 +42,7 @@ E-mail: yuki.iwanaga136[at]gmail.com -->
 :::
 
 ::: {.column width="40%"}
-![](assets/images/network_SBM.svg){width=350 fig-align="center"}
+[![](assets/images/network_SBM.svg){width=350 fig-align="center"}](https://graph-tool.skewed.de/)
 :::
 
 ::::
