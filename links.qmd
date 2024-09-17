@@ -9,9 +9,9 @@ toc: false
 
 ## Tech Blog
 
-:::: {.columns}
+::: {layout="[50,50]"}
 
-::: {.column width="50%"}
+::: {#first-column}
 
 [![](assets/images/zenn-logo.svg){width=150 fig-align="center"}](https://zenn.dev/nagayu71)
 
@@ -19,7 +19,7 @@ Zenn では主にネットワーク科学関係の記事を書いています．
 どちらかというと理論的な側面が強いです．
 
 :::
-::: {.column width="50%"}
+::: {#second-column}
 
 [![](assets/images/qiita-icon.png){width=150 fig-align="center"}](https://qiita.com/Nagayu71)
 
@@ -27,4 +27,4 @@ Qiita では実装面で困ったことの備忘録や，ちょっとしたま�
 
 :::
 
-::::
+:::

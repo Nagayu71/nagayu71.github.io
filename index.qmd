@@ -12,21 +12,7 @@ about:
       href: mailto:yuki.iwanaga136@gmail.com
 ---
 
-<!-- :::: {.columns}
-
-::: {.column width="40%"}
-![](assets/network_SBM.svg){width=350 fig-align="center"}
-:::
-
-::: {.column width="60%"}
-## Hello!
-
-I'm Yuki, a 2nd year master's Econ student supervised by [Teruyoshi Kobayashi](https://terukobayashi.wordpress.com/) at the [Kobe University](https://www.kobe-u.ac.jp/ja/) in Hyogo, Japan.
-
-:::
-
-:::: -->
-
+<!-- columns 環境は、どの媒体でも column を作ってしまうため、スマホでは非常に見にくい。媒体によって柔軟に要素を配置するには {layout="[]"} 環境を使う。
 :::: {.columns}
 
 ::: {.column width="60%"}
@@ -34,22 +20,29 @@ I'm Yuki, a 2nd year master's Econ student supervised by [Teruyoshi Kobayashi](h
 
 I'm a 2nd year master's Econ student supervised by [Teruyoshi Kobayashi](https://terukobayashi.wordpress.com/) at the [Kobe University](https://www.kobe-u.ac.jp/ja/) in Hyogo, Japan.
 
-<!-- #### Contact
-
-E-mail: yuki.iwanaga136[at]gmail.com -->
-
-<div style="margin-top: 36px;"></div>  <!-- Spotify Embed ブロックと上の文章の間を調整-->
-
-<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/6288O17c1Tf45kR6J2MBzX?utm_source=generator" width="87%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-
-
+<div style="margin-top: 36px;"></div>
 :::
 
 ::: {.column width="40%"}
 [![](assets/images/network_SBM.svg){width=350 fig-align="center"}](https://graph-tool.skewed.de/)
 :::
 
-::::
+:::: -->
+
+::: {layout="[55,-1,45]"}
+
+::: {#first-column}
+## Hello!
+
+I'm a 2nd year master's Econ student supervised by [Teruyoshi Kobayashi](https://terukobayashi.wordpress.com/) at the [Kobe University](https://www.kobe-u.ac.jp/ja/) in Hyogo, Japan.
+:::
+
+::: {#second-column}
+[![](assets/images/network_SBM.svg){width=350 fig-align="center"}](https://graph-tool.skewed.de/)
+:::
+
+:::
+
 
 ::: {layout="[50,50]"}
 

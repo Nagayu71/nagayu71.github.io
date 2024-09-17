@@ -87,11 +87,11 @@ gtag('config', 'G-G4BZMT89L0', { 'anonymize_ip': true});
 <link rel="stylesheet" href="styles/styles.css">
 <meta property="og:title" content="関連リンク – Yuki Iwanaga">
 <meta property="og:description" content="他の媒体へのリンクなど">
-<meta property="og:image" content="https://Nagayu71.github.io/nagayu71.github.io/assets/images/network_SBM.svg">
+<meta property="og:image" content="https://nagayu71.github.io/assets/images/network_SBM.svg">
 <meta property="og:site_name" content="Yuki Iwanaga">
 <meta name="twitter:title" content="関連リンク – Yuki Iwanaga">
 <meta name="twitter:description" content="他の媒体へのリンクなど">
-<meta name="twitter:image" content="https://Nagayu71.github.io/nagayu71.github.io/assets/images/network_SBM.svg">
+<meta name="twitter:image" content="https://nagayu71.github.io/assets/images/network_SBM.svg">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
@@ -163,8 +163,12 @@ gtag('config', 'G-G4BZMT89L0', { 'anonymize_ip': true});
 
 <section id="tech-blog" class="level2">
 <h2 class="anchored" data-anchor-id="tech-blog">Tech Blog</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout="[50,50]">
+<div class="quarto-layout-row">
+<div id="first-column" class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><a href="https://zenn.dev/nagayu71"><img src="assets/images/zenn-logo.svg" class="img-fluid quarto-figure quarto-figure-center figure-img" width="150"></a></p>
@@ -172,13 +176,15 @@ gtag('config', 'G-G4BZMT89L0', { 'anonymize_ip': true});
 </div>
 <p>Zenn では主にネットワーク科学関係の記事を書いています．<br>
 どちらかというと理論的な側面が強いです．</p>
-</div><div class="column" style="width:50%;">
+</div>
+<div id="second-column" class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><a href="https://qiita.com/Nagayu71"><img src="assets/images/qiita-icon.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="150"></a></p>
 </figure>
 </div>
 <p>Qiita では実装面で困ったことの備忘録や，ちょっとしたまとめを記載しています．</p>
+</div>
 </div>
 </div>
 
@@ -278,7 +284,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/Nagayu71\.github\.io\/nagayu71\.github\.io\/");
+      var filterRegex = new RegExp("https:\/\/nagayu71\.github\.io\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
