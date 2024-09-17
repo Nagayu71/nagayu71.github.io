@@ -35,3 +35,26 @@ Qiita では実装面で困ったことの備忘録や，ちょっとしたま�
 :::
 
 :::
+
+
+## Favorite
+
+::: {layout="[50,50]"}
+
+::: {#first-column}
+### Music
+
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/6288O17c1Tf45kR6J2MBzX?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+
+:::
+
+::: {#second-column}
+### YouTube
+
+- [予備校のノリで学ぶ「大学の数学・物理」](https://youtube.com/@yobinori?si=Yj-ozwJy3xaLv3c5)
+- [Animenz Piano Sheets](https://youtube.com/@animenzzz?si=4j8Z3EufJ9vlUdpu)
+- [Bappa Shota](https://youtube.com/@bappashota?si=UKR6GeX5riv2njUq)
+
+:::
+
+:::
