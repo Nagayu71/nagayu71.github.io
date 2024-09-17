@@ -38,6 +38,10 @@ I'm a 2nd year master's Econ student supervised by [Teruyoshi Kobayashi](https:/
 
 E-mail: yuki.iwanaga136[at]gmail.com -->
 
+<div style="margin-top: 36px;"></div>  <!-- Spotify Embed ブロックと上の文章の間を調整-->
+
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/6288O17c1Tf45kR6J2MBzX?utm_source=generator" width="87%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+
 
 :::
 
