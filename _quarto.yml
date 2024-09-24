@@ -8,8 +8,8 @@ project:
 website:
   title: "Yuki Iwanaga"
   google-analytics: "G-G4BZMT89L0"
-  image: "assets/images/network_SBM.svg"                       # Default site thumbnail image for twitter /open-graph
-  favicon: "assets/images/network_SBM.svg"                     # The favicon for your site provides an icon for browser tabs and other sites that link to yours.
+  image: "assets/images/favicon.png"                       # Default site thumbnail image for twitter /open-graph
+  favicon: "assets/images/favicon.png"                     # The favicon for your site provides an icon for browser tabs and other sites that link to yours.
   site-url: https://nagayu71.github.io/
   twitter-card: true
   open-graph: true
