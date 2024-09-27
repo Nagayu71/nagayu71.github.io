@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://nagayu71.github.io/terms.html</loc>
-    <lastmod>2024-09-16T01:00:12.358Z</lastmod>
+    <loc>https://nagayu71.github.io/posts/2024/MCMC/metropolis-hastings.html</loc>
+    <lastmod>2024-09-27T13:09:54.454Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nagayu71.github.io/links.html</loc>
+    <lastmod>2024-09-25T10:54:32.610Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nagayu71.github.io/blog.html</loc>
+    <lastmod>2024-09-27T11:54:36.363Z</lastmod>
   </url>
   <url>
     <loc>https://nagayu71.github.io/index.html</loc>
     <lastmod>2024-09-24T03:51:20.754Z</lastmod>
   </url>
   <url>
-    <loc>https://nagayu71.github.io/links.html</loc>
-    <lastmod>2024-09-25T10:54:32.610Z</lastmod>
+    <loc>https://nagayu71.github.io/terms.html</loc>
+    <lastmod>2024-09-16T01:00:12.358Z</lastmod>
   </url>
 </urlset>
