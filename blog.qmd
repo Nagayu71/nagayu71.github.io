@@ -1,0 +1,17 @@
+---
+title: "Recent Posts"
+description: "勉強の記録"
+listing:
+  contents: posts
+  sort: "date desc"
+  type: default
+  categories: numbered
+  sort-ui: false
+  filter-ui: false
+page-layout: full
+title-block-banner: true
+comments: false
+---
+<!-- 参考url: https://github.com/162348/162348.github.io/blob/main/blog.qmd -->
+
+<!-- [Notations](https://zenn.dev/nagayu71/articles/a2c5b290e8b11e#%E6%95%B0%E5%AD%A6%E8%A8%98%E6%B3%95) -->

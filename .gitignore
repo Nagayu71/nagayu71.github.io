@@ -3,3 +3,7 @@
 styles.scss
 styles_original.css
 .DS_Store
+
+# for python
+poetry.lock
+pyproject.toml

@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="岩永悠希">
+<meta name="dcterms.date" content="2024-09-27">
+
+<title>Metropolis-Hastings アルゴリズム – Yuki Iwanaga</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../assets/images/favicon.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "?",
+    "H"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-G4BZMT89L0"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-G4BZMT89L0', { 'anonymize_ip': true});
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kurenaido&amp;display=swap" rel="stylesheet">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic&amp;display=swap" rel="stylesheet">
+<style>
+.menu-text {
+  font-size: 120%;
+}
+</style>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles/styles.css">
+<meta property="og:title" content="Metropolis-Hastings アルゴリズム – Yuki Iwanaga">
+<meta property="og:description" content="MCMC (Markov Chain Monte Carlo) とは，任意の確率分布からのサンプリングを実現するモンテカルロ法である． 本稿では MCMC の一つである Metropolis-Hastings (MH) 法を Chib and Greenberg (1995) に沿って説明し，Python で実装することで MH 法への理解を深めたい．">
+<meta property="og:image" content="https://nagayu71.github.io/posts/2024/MCMC/images/MH.png">
+<meta property="og:site_name" content="Yuki Iwanaga">
+<meta property="og:image:height" content="576">
+<meta property="og:image:width" content="768">
+<meta name="twitter:title" content="Metropolis-Hastings アルゴリズム – Yuki Iwanaga">
+<meta name="twitter:description" content="MCMC (Markov Chain Monte Carlo) とは，任意の確率分布からのサンプリングを実現するモンテカルロ法である． 本稿では MCMC の一つである Metropolis-Hastings (MH) 法を Chib and Greenberg (1995) に沿って説明し，Python で実装することで MH 法への理解を深めたい．">
+<meta name="twitter:image" content="https://nagayu71.github.io/posts/2024/MCMC/images/MH.png">
+<meta name="twitter:image-height" content="576">
+<meta name="twitter:image-width" content="768">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Yuki Iwanaga</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../blog.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../links.html"> 
+<span class="menu-text">Links</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+    <a href="https://github.com/Nagayu71" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Metropolis-Hastings アルゴリズム</h1>
+            <p class="subtitle lead">Python による実装</p>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Bayesian</div>
+                <div class="quarto-category">MCMC</div>
+                <div class="quarto-category">Sampling</div>
+                <div class="quarto-category">Python</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>岩永悠希 </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">September 27, 2024</p>
+      </div>
+    </div>
+    
+      <div>
+      <div class="quarto-title-meta-heading">Modified</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date-modified">September 27, 2024</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  <div>
+    <div class="abstract">
+      <div class="block-title">概要</div>
+      <p>MCMC (Markov Chain Monte Carlo) とは，任意の確率分布からのサンプリングを実現するモンテカルロ法である． 本稿では MCMC の一つである Metropolis-Hastings (MH) 法を <span class="citation" data-cites="chib1995">Chib and Greenberg (<a href="#ref-chib1995" role="doc-biblioref">1995</a>)</span> に沿って説明し，Python で実装することで MH 法への理解を深めたい．</p>
+    </div>
+  </div>
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">目次</h2>
+   
+  <ul>
+  <li><a href="#モチベーション" id="toc-モチベーション" class="nav-link active" data-scroll-target="#モチベーション">モチベーション</a></li>
+  <li><a href="#metropolis-hastings-アルゴリズム" id="toc-metropolis-hastings-アルゴリズム" class="nav-link" data-scroll-target="#metropolis-hastings-アルゴリズム">Metropolis-Hastings アルゴリズム</a>
+  <ul class="collapse">
+  <li><a href="#提案分布の導入" id="toc-提案分布の導入" class="nav-link" data-scroll-target="#提案分布の導入">提案分布の導入</a></li>
+  <li><a href="#状態遷移の制限" id="toc-状態遷移の制限" class="nav-link" data-scroll-target="#状態遷移の制限">状態遷移の制限</a></li>
+  <li><a href="#遷移確率の定式化" id="toc-遷移確率の定式化" class="nav-link" data-scroll-target="#遷移確率の定式化">遷移確率の定式化</a></li>
+  <li><a href="#mh-アルゴリズム" id="toc-mh-アルゴリズム" class="nav-link" data-scroll-target="#mh-アルゴリズム">MH アルゴリズム</a></li>
+  </ul></li>
+  <li><a href="#python-による実装" id="toc-python-による実装" class="nav-link" data-scroll-target="#python-による実装">Python による実装</a>
+  <ul class="collapse">
+  <li><a href="#実装" id="toc-実装" class="nav-link" data-scroll-target="#実装">実装</a></li>
+  <li><a href="#サンプリング" id="toc-サンプリング" class="nav-link" data-scroll-target="#サンプリング">サンプリング</a></li>
+  <li><a href="#おまけr-のコード" id="toc-おまけr-のコード" class="nav-link" data-scroll-target="#おまけr-のコード">おまけ：R のコード</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="モチベーション" class="level2">
+<h2 class="anchored" data-anchor-id="モチベーション">モチベーション</h2>
+<p>MCMC とは，任意の確率分布 <span class="math inline">f(\cdot)</span> を定常分布にもつマルコフ連鎖を生成することで，所望の分布 <span class="math inline">f(\cdot)</span> に従う乱数を生成するモンテカルロ法である．</p>
+<p>ある確率分布に従う乱数が欲しい，あるいは確率分布を数値的に近似したいというシーンはしばしばある．</p>
+<p>例えば，ベイズ統計学ではデータ <span class="math inline">D</span> から得た情報によって，パラメータ <span class="math inline">\theta</span> に対する信念とも言える事前分布 <span class="math inline">p(\theta)</span> を事後分布 <span class="math inline">p(\theta|D)</span> に更新し，この事後分布を使って推定を行う．</p>
+<p><span class="math display">
+p(\theta|D) = \frac{p(D|\theta)p(\theta)}{p(D)}
+</span></p>
+<p>しかし，事後分布を解析的に導くことは，共役事前分布など特別な場合を除いて困難である．</p>
+<p>そこで，事後分布が定常分布となるような遷移確率（推移確率）を決めてパラメータについてのマルコフ連鎖 <span class="math inline">(\theta_t)_{t\geqslant 0}</span> を生成し，事後分布を数値的に近似することを考える．</p>
+<p>ここで生じる問題は，どのようにしてパラメータについての遷移確率を決めれば良いかである．</p>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>マルコフ連鎖については，Zenn に投稿している<a href="https://zenn.dev/nagayu71/books/markov_chains_note">マルコフ連鎖勉強ノート</a>を参照．</p>
+</div>
+</div>
+</div>
+</section>
+<section id="metropolis-hastings-アルゴリズム" class="level2">
+<h2 class="anchored" data-anchor-id="metropolis-hastings-アルゴリズム">Metropolis-Hastings アルゴリズム</h2>
+<p>Metropolis-Hastings (MH) 法は，目標分布 (target distribution) <span class="math inline">\pi(\cdot)</span> を定常分布にもつマルコフ連鎖を生成するアルゴリズムの一つである．</p>
+<p>前述のベイズ統計学の例で言うと，事後分布 <span class="math inline">p(\theta|D)</span> が目標分布 <span class="math inline">\pi(\theta)</span> ということになる． 本稿では引き続きこの例を使用し，パラメータ <span class="math inline">\theta \in \Theta \subset \R^d</span> の従う分布 <span class="math inline">\pi(\theta)</span> を目標分布だと考えて議論を進める．</p>
+<section id="提案分布の導入" class="level3">
+<h3 class="anchored" data-anchor-id="提案分布の導入">提案分布の導入</h3>
+<p>マルコフ連鎖は，状態空間 (state space) と状態間の遷移確率で規定される． 現時点でわかっていることは，パラメータ <span class="math inline">\theta</span> が状態空間 <span class="math inline">\Theta</span> の一つの状態を表すということだけで，どのような遷移確率で状態遷移するかは未知である．</p>
+<p>そこで，状態 <span class="math inline">\theta</span> の下での提案分布 <span class="math inline">q(\theta, \theta')</span> を適当に導入する． ただし，<span class="math inline">\int_\Theta q(\theta, \theta') d\theta' = 1</span>である． 提案分布はマルコフ連鎖 <span class="math inline">(\theta_t)</span> が状態 <span class="math inline">\theta</span> にあるとき，来期の状態 <span class="math inline">\theta'</span> が条件付き確率 <span class="math inline">q(\theta, \theta')</span> で決まることを意味する．</p>
+<p>もし提案分布 <span class="math inline">q(\theta, \theta')</span> が詳細釣り合い条件</p>
+<p><span id="eq-detailed-balance"><span class="math display">
+\pi(\theta)q(\theta, \theta') = \pi(\theta')q(\theta', \theta) \quad \forall \theta, \theta' \in \Theta
+\tag{1}</span></span></p>
+<p>を満たすなら，目標分布 <span class="math inline">\pi(\cdot)</span> を定常分布にもつマルコフ連鎖の遷移確率を得たことになるので，<span class="math inline">q(\theta, \theta')</span> を用いてサンプリングすれば良い． 実際，<a href="#eq-detailed-balance" class="quarto-xref">式&nbsp;1</a> の両辺を <span class="math inline">\theta'</span> について積分すれば，<span class="math inline">\pi(\cdot)</span> が定常分布であることがわかる：</p>
+<p><span class="math display">
+\pi(\theta) = \int_\Theta \pi(\theta')q(\theta', \theta) d\theta'.
+</span></p>
+<p>しかし，<span class="math inline">q(\theta, \theta')</span> は適当に設定した分布なので <a href="#eq-detailed-balance" class="quarto-xref">式&nbsp;1</a> は一般には成り立たない． ここで，一般性を失わずに</p>
+<p><span id="eq-inequality"><span class="math display">
+\pi(\theta)q(\theta, \theta') &gt; \pi(\theta')q(\theta', \theta)
+\tag{2}</span></span></p>
+<p>と仮定する． 目標分布 <span class="math inline">\pi(\theta)</span> を状態 <span class="math inline">\theta</span> にある人の割合と思えば，<a href="#eq-inequality" class="quarto-xref">式&nbsp;2</a> は状態 <span class="math inline">\theta</span> から <span class="math inline">\theta'</span> に移動する人の割合が，逆に <span class="math inline">\theta'</span> から <span class="math inline">\theta</span> に移動する人の割合よりも大きいということを表している．</p>
+</section>
+<section id="状態遷移の制限" class="level3">
+<h3 class="anchored" data-anchor-id="状態遷移の制限">状態遷移の制限</h3>
+<p>詳細釣り合い条件（<a href="#eq-detailed-balance" class="quarto-xref">式&nbsp;1</a>）は，両者の割合が同じであってほしいという要請なので，人の移動に交通規制をかけて状態間の移動人数が釣り合うようにしよう． 具体的には，状態 <span class="math inline">\theta</span> から <span class="math inline">\theta'</span> への移動を制限する確率 <span class="math inline">\alpha(\theta, \theta') &lt; 1</span> を導入し，<span class="math inline">\theta</span> から <span class="math inline">\theta'</span> へ移動する人の数を減らせば良い． この任意の2点間の移動を制限する確率 <span class="math inline">\alpha(\cdot, \cdot) \in [0,1]</span> をここでは交通規制率と呼ぶことにする<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>．</p>
+<div class="callout callout-style-simple callout-important">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>この時点で考えている問題が，どのような提案分布を設定すべきかという問題から交通規制率を求める問題に変化したことに注意．</p>
+</div>
+</div>
+</div>
+<p>交通規制率を導入すれば，状態 <span class="math inline">\theta</span> と <span class="math inline">\theta' \neq \theta</span> の間の移動は</p>
+<p><span id="eq-pmh"><span class="math display">
+\begin{cases}
+p_\text{MH}(\theta, \theta') \equiv q(\theta, \theta')\alpha(\theta, \theta') \\
+p_\text{MH}(\theta', \theta) = q(\theta', \theta)\alpha(\theta', \theta)
+\end{cases}
+\qquad (\theta \neq \theta')
+\tag{3}</span></span></p>
+<p>に従って行われることになる． <a href="#eq-inequality" class="quarto-xref">式&nbsp;2</a> は <span class="math inline">\theta'</span> から <span class="math inline">\theta</span> への移動数が不十分だと主張しているので，この方向の移動については規制をかけず <span class="math inline">\alpha(\theta', \theta) = 1</span> と設定する．</p>
+<p>以上のように <span class="math inline">\theta</span> から <span class="math inline">\theta'</span> への移動には規制をかけ，<span class="math inline">\theta'</span> から <span class="math inline">\theta</span> の移動を全て許可すれば，詳細釣り合い条件</p>
+<p><span id="eq-detailed-balance-pmh"><span class="math display">
+\pi(\theta)p_\text{MH}(\theta, \theta') = \pi(\theta')p_\text{MH}(\theta', \theta)
+\tag{4}</span></span></p>
+<p>が成り立つので，<a href="#eq-pmh" class="quarto-xref">式&nbsp;3</a> を使って書き下すと次式を得る：</p>
+<p><span class="math display">
+\begin{aligned}
+\pi(\theta)q(\theta, \theta')\alpha(\theta, \theta') &amp;= \pi(\theta')q(\theta', \theta)\alpha(\theta', \theta) \\
+&amp;= \pi(\theta')q(\theta', \theta).
+\end{aligned}
+</span></p>
+<p>これを <span class="math inline">\alpha(\theta, \theta')</span> について解けば，</p>
+<p><span class="math display">
+\alpha(\theta, \theta') =
+\frac{\pi(\theta')q(\theta', \theta)}{\pi(\theta)q(\theta, \theta')}
+</span></p>
+<p>と交通規制率を求めることができる． この <span class="math inline">\alpha(\theta, \theta')</span> は <a href="#eq-inequality" class="quarto-xref">式&nbsp;2</a> の大小関係の下で導出されたが，不等号が逆向きの場合も同様にして求めることができる．</p>
+<p>一度ここまでの議論をまとめよう．</p>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<ol type="1">
+<li>目標分布 <span class="math inline">\pi(\theta)</span> を定常分布にもつマルコフ連鎖 <span class="math inline">(\theta_t)</span> の遷移確率が未知なので，代わりに提案分布 <span class="math inline">q(\theta, \theta')</span> を導入した．</li>
+<li>提案分布が詳細釣り合い条件（<a href="#eq-detailed-balance" class="quarto-xref">式&nbsp;1</a>）を直接満たすとは限らないので，所与の提案分布に対して詳細釣り合い条件が成り立つように交通規制率を次式で定めた<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>．</li>
+</ol>
+<p><span id="eq-MH-ratio"><span class="math display">
+\alpha(\theta, \theta') =
+\min\left\{ 1, \frac{\pi(\theta')q(\theta', \theta)}{\pi(\theta)q(\theta, \theta')} \right\}
+\qquad (\theta \neq \theta')
+\tag{5}</span></span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="遷移確率の定式化" class="level3">
+<h3 class="anchored" data-anchor-id="遷移確率の定式化">遷移確率の定式化</h3>
+<p>これまでの議論では，状態遷移 <span class="math inline">\theta\to\theta'</span> について <span class="math inline">\theta' \neq \theta</span> であることを暗に仮定していた．MH 法の遷移確率を定式化するには，状態が <span class="math inline">\theta</span> にとどまるケース <span class="math inline">\theta\to\theta</span> も考える必要がある．</p>
+<p>状態が <span class="math inline">\theta</span> にとどまる確率は次式で与えられる．</p>
+<p><span id="eq-prob-stay"><span class="math display">
+\begin{aligned}
+r(\theta)
+&amp;= 1 - \int_\Theta p_\text{MH}(\theta, \theta') d\theta'\\
+&amp;= 1 - \int_\Theta q(\theta, \theta')\alpha(\theta, \theta') d\theta'
+\end{aligned}
+\tag{6}</span></span></p>
+<p><a href="#eq-prob-stay" class="quarto-xref">式&nbsp;6</a> を用いると MH 法の遷移確率 <span class="math inline">P_\text{MH}(\theta, \theta')</span> は，</p>
+<p><span id="eq-Pmh"><span class="math display">
+\begin{aligned}
+P_\text{MH}(\theta, \theta')
+&amp;= p_\text{MH}(\theta, \theta') + \delta(\theta' -\theta)r(\theta) \\
+&amp;= q(\theta, \theta')\alpha(\theta, \theta') + \delta(\theta' -\theta)r(\theta)
+\end{aligned}
+\tag{7}</span></span></p>
+<p>である． ただし，<span class="math inline">\delta(x)</span> はディラックのデルタ関数である<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>．</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+命題
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><a href="#eq-Pmh" class="quarto-xref">式&nbsp;7</a> で与えられるMH 法の遷移確率 <span class="math inline">P_\text{MH}(\theta, \theta')</span> の下で，目標分布 <span class="math inline">\pi(\cdot)</span> は定常分布である． すなわち，</p>
+<p><span class="math display">
+\int_\Theta \pi(\theta)P_\text{MH}(\theta, \theta') d\theta = \pi(\theta') \qquad \forall\theta,\theta'\in\Theta.
+</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+証明
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\theta,\theta'\in\Theta</span> を任意にとる． <a href="#eq-detailed-balance-pmh" class="quarto-xref">式&nbsp;4</a> を用いると次式が成り立つ．</p>
+<p><span class="math display">
+\begin{aligned}
+\int_\Theta \pi(\theta)P_\text{MH}(\theta, \theta') d\theta
+&amp;= \int_\Theta \pi(\theta)\left[ p_\text{MH}(\theta, \theta') + \delta(\theta' -\theta)r(\theta) \right] d\theta \\
+&amp;= \int_\Theta \textcolor{salmon}{\pi(\theta)p_\text{MH}(\theta, \theta')}d\theta + \int_\Theta \pi(\theta)\delta(\theta' -\theta)r(\theta)d\theta \\
+&amp;= \int_\Theta \textcolor{salmon}{\pi(\theta')p_\text{MH}(\theta', \theta)}d\theta + \pi(\theta')r(\theta') \\
+&amp;= \pi(\theta')\int_\Theta p_\text{MH}(\theta', \theta)d\theta + \pi(\theta')\left[1 - \int_\Theta p_\text{MH}(\theta', \theta) d\theta\right] \\
+&amp;= \pi(\theta').
+\end{aligned}
+</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="mh-アルゴリズム" class="level3">
+<h3 class="anchored" data-anchor-id="mh-アルゴリズム">MH アルゴリズム</h3>
+<p>MH 法をアルゴリズムとして書き下すと，次のようになる．</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Pseudocode for Metropolis Hastings method
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Input: The number of samples <span class="math inline">N</span> and starting point <span class="math inline">\theta_0</span>.</p>
+<ol type="1">
+<li><strong>for</strong> n = 1,…, N <strong>do</strong></li>
+<li> Propose <span class="math inline">\theta' \sim q(\theta_{n-1}, \theta')</span>.</li>
+<li> Compute the acceptance ratio given by</li>
+</ol>
+<p><span class="math display">
+\alpha(\theta_{n-1}, \theta') =
+\min\left\{ 1, \frac{\pi(\theta')q(\theta', \theta_{n-1})}{\pi(\theta_{n-1})q(\theta_{n-1}, \theta')} \right\}.
+</span></p>
+<ol start="4" type="1">
+<li> Draw <span class="math inline">u \sim \text{Uniform}[0, 1)</span>.</li>
+<li> If <span class="math inline">u &lt; \alpha(\theta_{n-1}, \theta')</span>, then set <span class="math inline">\theta_n = \theta'</span>.</li>
+<li> Otherwise reject the proposal <span class="math inline">\theta'</span> and set <span class="math inline">\theta_n = \theta_{n-1}</span>.</li>
+<li><strong>end for</strong></li>
+<li>Discard first burnin samples and return the remaining samples.</li>
+</ol>
+</div>
+</div>
+<p>特に，提案分布が <span class="math inline">q(\theta_{n-1}, \theta') = q(\theta', \theta_{n-1})</span> と対称的である場合は acceptance ratio が</p>
+<p><span class="math display">
+\alpha(\theta_{n-1}, \theta') =
+\min\left\{ 1, \frac{\pi(\theta')}{\pi(\theta_{n-1})} \right\}
+</span></p>
+<p>と簡単になり，解釈もしやすくなる．</p>
+<p>つまり，<span class="math inline">\theta_{n-1}\to\theta'</span> の状態遷移で目標分布 <span class="math inline">\pi(\cdot)</span> の山を登る方向の移動</p>
+<p><span class="math display">
+\pi(\theta_{n-1}) \leqslant \pi(\theta') \iff
+\frac{\pi(\theta')}{\pi(\theta_{n-1})} \geqslant 1
+</span></p>
+<p>は確率 <span class="math inline">1</span> で許可されるが，逆に山を降る方向の移動</p>
+<p><span class="math display">
+\pi(\theta_{n-1}) &gt; \pi(\theta') \iff
+\frac{\pi(\theta')}{\pi(\theta_{n-1})} &lt; 1
+</span></p>
+<p>については，確率 <span class="math inline">\alpha(\theta_{n-1}, \theta') = \pi(\theta') / \pi(\theta_{n-1})</span> で移動が許可される．</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/target-distribution.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<figcaption>Source: <span class="citation" data-cites="chib1995">Chib and Greenberg (<a href="#ref-chib1995" role="doc-biblioref">1995</a>)</span></figcaption>
+</figure>
+</div>
+<p><span class="citation" data-cites="chib1995">Chib and Greenberg (<a href="#ref-chib1995" role="doc-biblioref">1995</a>)</span> の図を借りると，<span class="math inline">\pi(\cdot)</span> という山で現在地 <span class="math inline">x</span> の標高よりも高い地点 <span class="math inline">y_1</span> に登る提案は 100% 受け入れられ，標高の低い地点 <span class="math inline">y_2</span> に移動する提案は <span class="math inline">\alpha(x, y_2)</span> で確率的に受け入れられるということだ．</p>
+</section>
+</section>
+<section id="python-による実装" class="level2">
+<h2 class="anchored" data-anchor-id="python-による実装">Python による実装</h2>
+<p>上記のMHアルゴリズムを <code>metropolis_hastings()</code> として実装する． 提案分布には平均 <span class="math inline">\theta_{t-1}</span>，標準偏差 <code>proposal_std</code> を持つ対称的な正規分布を使用する． したがって，acceptance ratio は目標分布の比に一致する．</p>
+<p>ここでは，標準正規分布を目標分布とし，確率密度</p>
+<p><span class="math display">
+f(x) = \frac{1}{\sqrt{2\pi}}\exp\left(-\frac{x^2}{2}\right)
+</span></p>
+<p>からMH法によってサンプリングを行う関数を実装する．</p>
+<section id="実装" class="level3">
+<h3 class="anchored" data-anchor-id="実装">実装</h3>
+<div id="007862f9" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> standard_normal(x):</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""目標分布 f(x) に比例する関数。ここでは標準正規分布を使用。"""</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.exp(<span class="op">-</span><span class="fl">0.5</span> <span class="op">*</span> x<span class="op">**</span><span class="dv">2</span>)  <span class="co"># 正規化定数は除く</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> metropolis_hastings(N, x_0, proposal_std):</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">    Metropolis-Hastings アルゴリズムによるサンプリング</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">    N:            サンプル数</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">    x_0:          初期値</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">    proposal_std: 提案分布の標準偏差</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    samples <span class="op">=</span>[]</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> x_0</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(N):</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        x_new <span class="op">=</span> np.random.normal(loc<span class="op">=</span>x, scale<span class="op">=</span>proposal_std)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        acceptance_ratio <span class="op">=</span> standard_normal(x_new) <span class="op">/</span> standard_normal(x)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> np.random.rand() <span class="op">&lt;</span> acceptance_ratio:</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>            x <span class="op">=</span> x_new</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>        samples.append(x)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> samples</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="サンプリング" class="level3">
+<h3 class="anchored" data-anchor-id="サンプリング">サンプリング</h3>
+<p><code>metropolis_hastings()</code> を使って標準正規分布から <code>N=10000</code> 個サンプリングを行い，そのトレースプロットを描いてみる． 初期値は <code>x_0=0</code> に設定する．</p>
+<div id="2c77a4bd" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># サンプリング</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>samples1 <span class="op">=</span> metropolis_hastings(N<span class="op">=</span><span class="dv">10000</span>, x_0<span class="op">=</span><span class="dv">0</span>, proposal_std<span class="op">=</span><span class="fl">1.0</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># トレースプロット</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>plt.plot(samples1, lw<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Trace Plot of Samples'</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Iteration'</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Sample Value'</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="metropolis-hastings_files/figure-html/cell-3-output-1.png" width="662" height="376" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>チェーンの最初の部分は初期値依存性があるので，サンプルの最初の 2000 個を burnin として捨て，残りの 8000 個のヒストグラムと目標分布を重ねて描いてみる．</p>
+<div id="43703cc0" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># サンプルと目標分布のプロット</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>plt.hist(samples1[<span class="dv">2000</span>:], bins<span class="op">=</span><span class="dv">50</span>, density<span class="op">=</span><span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.8</span>, color<span class="op">=</span><span class="st">'#78C2AD'</span>, label<span class="op">=</span><span class="st">'Sampled distribution'</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1000</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>plt.plot(x, <span class="dv">1</span><span class="op">/</span>np.sqrt(<span class="dv">2</span><span class="op">*</span>np.pi) <span class="op">*</span> np.exp(<span class="op">-</span>x<span class="op">**</span><span class="dv">2</span> <span class="op">/</span> <span class="dv">2</span>), <span class="st">'#FF7A72'</span>, lw<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">'Target distribution N(0,1)'</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Metropolis-Hastings Sampling'</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'x'</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Density'</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="metropolis-hastings_files/figure-html/cell-4-output-1.png" width="672" height="376" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>おおよそ目標分布（赤線）を数値的に近似できている様子が見て取れる． 次に，初期値を <code>x_0=3</code> に変え， <code>N=100000</code> 個サンプリングを行ってみる． サンプルサイズが増えるので，ヒストグラムはより赤線に近い形になるはずである．</p>
+<div id="4bbf0542" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 初期値とサンプルサイズを変えてみる</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>samples2 <span class="op">=</span> metropolis_hastings(N<span class="op">=</span><span class="dv">100000</span>, x_0<span class="op">=</span><span class="dv">3</span>, proposal_std<span class="op">=</span><span class="fl">1.0</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># トレースプロット</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">4</span>))</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>plt.plot(samples2, lw<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Trace Plot of Samples'</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Iteration'</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Sample Value'</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="metropolis-hastings_files/figure-html/cell-5-output-1.png" width="810" height="376" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="9a9e743b" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># サンプルと目標分布のプロット</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>plt.hist(samples2, bins<span class="op">=</span><span class="dv">50</span>, density<span class="op">=</span><span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.8</span>, color<span class="op">=</span><span class="st">'#78C2AD'</span>, label<span class="op">=</span><span class="st">'Sampled distribution'</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1000</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>plt.plot(x, <span class="dv">1</span><span class="op">/</span>np.sqrt(<span class="dv">2</span><span class="op">*</span>np.pi) <span class="op">*</span> np.exp(<span class="op">-</span>x<span class="op">**</span><span class="dv">2</span> <span class="op">/</span> <span class="dv">2</span>), <span class="st">'#FF7A72'</span>, lw<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">'Target distribution N(0,1)'</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Metropolis-Hastings Sampling'</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'x'</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Density'</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="metropolis-hastings_files/figure-html/cell-6-output-1.png" width="672" height="376" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="おまけr-のコード" class="level3">
+<h3 class="anchored" data-anchor-id="おまけr-のコード">おまけ：R のコード</h3>
+<p>上記の一連の流れを以下の R コードで行うこともできる．</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="in"># 目標分布（標準正規分布）</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="in">standard_norm &lt;- function(x) {</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="in">    return(exp(-0.5 * x^2))</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="in"># MH アルゴリズム</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="in">metropolis_hastings &lt;- function(x_0, N, proposal_std) {</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="in">    x &lt;- x_0</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="in">    samples &lt;- numeric(N)</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="in">    for (n in 1:N) {</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="in">        x_new &lt;- rnorm(1, mean = x, sd = proposal_std)</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="in">        acceptance_ratio &lt;- standard_norm(x_new) / standard_norm(x)</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="in">        if (runif(1) &lt; acceptance_ratio) {</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="in">            x &lt;- x_new</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="in">        }</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="in">        samples[n] &lt;- x</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="in">    }</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="in">    return(samples)</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="in"># MH法によるサンプリング</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="in">samples &lt;- metropolis_hastings(0, 10000, 1.0)</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="in"># トレースプロット</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="in">plot(samples, type="l", col="blue", </span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="in">    main="Trace Plot of MH Sampling", </span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="in">    xlab="Iteration", ylab="Sample Value")</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="in"># サンプルのヒストグラムとターゲット分布のプロット</span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="in">hist(samples, breaks = 50, probability = TRUE, col = "lightblue", </span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="in">     main = "Metropolis-Hastings Sampling", xlab = "x")</span></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a><span class="in"># 標準正規分布を重ねてプロット</span></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="in">curve(dnorm(x, mean = 0, sd = 1), col = "red", lwd = 2, add = TRUE)</span></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+
+
+</section>
+</section>
+
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-chib1995" class="csl-entry" role="listitem">
+Chib, Siddhartha, and Edward Greenberg. 1995. <span>“Understanding the Metropolis-Hastings Algorithm.”</span> <em>The American Statistician</em> 49 (4): 327–35. <a href="https://doi.org/10.1080/00031305.1995.10476177">https://doi.org/10.1080/00031305.1995.10476177</a>.
+</div>
+</div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>一般には採択比率 (acceptance ratio) や採択確率 (acceptance probability) などと呼ばれる．<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><a href="#eq-inequality" class="quarto-xref">式&nbsp;2</a> の不等号の向きがどちらの場合であっても対応できるように <span class="math inline">\min\{\}</span> を使用．<br>流出する人の数（分母）が流入する人の数（分子）よりも大きい場合のみ交通規制をかけるということ．<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p><span class="math inline">x=0</span> のとき <span class="math inline">1</span> をとり，それ以外の <span class="math inline">x</span> で <span class="math inline">0</span> をとる関数．<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/nagayu71\.github\.io\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Built with <a href="https://quarto.org/">Quarto</a></p>
+</div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="../../../terms.html">
+<p>© 2024, Yuki Iwanaga</p>
+</a>
+  </li>  
+</ul>
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/Nagayu71">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="mailto:yuki.iwanaga136@gmail.com">
+      <i class="bi bi-envelope" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

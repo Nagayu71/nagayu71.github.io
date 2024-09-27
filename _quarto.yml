@@ -20,8 +20,8 @@ website:
         href: index.qmd
       # - text: "Research"
       #   href: research.qmd
-      # - text: "Blog"
-      #   href: blog.qmd
+      - text: "Blog"
+        href: blog.qmd
       - text: "Links"
         # menu: 
         #   - text: "Zenn"
@@ -56,14 +56,23 @@ format:
       light: minty
       # dark: darkly
     css: styles/styles.css
-    highlight-style: ayu
+    code-block-bg: true
+    code-block-border-left: "#7CC4AC" # see https://quarto.org/docs/output-formats/html-code.html#appearance
+    highlight-style: ayu # see https://quarto.org/docs/output-formats/html-code.html#highlighting
     toc: true
     toc-title: "目次"
     abstract-title: "概要"
-    number-sections: true
+    number-sections: false
     # lang: ja
     link-external-newwindow: true
-    include-in-header: styles/font.html  # ウェブフォントの利用．どのデバイスでも同じフォントを使える．
+    include-in-header: 
+      - styles/font.html  # ウェブフォントの利用．どのデバイスでも同じフォントを使える．
+      - text: |
+          <style>
+          .menu-text {
+            font-size: 120%;
+          }
+          </style>
 
 crossref: 
   eq-prefix: 式
@@ -73,7 +82,7 @@ crossref:
   thm-title: 定理
   fig-prefix: 図
   fig-title: 図
-date-format: "M/DD/YYYY"
+# date-format: "M/DD/YYYY"
 
 execute: 
-  freeze: true
+  freeze: true # see https://quarto.org/docs/projects/code-execution.html#freeze

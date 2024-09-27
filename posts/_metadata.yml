@@ -1,0 +1,12 @@
+# options apply to all posts in this folder
+
+# freeze computational output
+freeze: true
+# enable banner style title blocks
+title-block-banner: true
+
+format: 
+  html: 
+    html-math-method: katex
+    code-fold: false
+    code-summary: "Show the code"
