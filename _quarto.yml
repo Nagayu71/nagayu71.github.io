@@ -69,7 +69,7 @@ format:
     link-external-newwindow: true
     include-in-header: 
       - styles/font.html  # ウェブフォントの利用．どのデバイスでも同じフォントを使える．
-      - text: |
+      - text: |           # ナビゲーションバーのフォントを大きめにする
           <style>
           .menu-text {
             font-size: 120%;

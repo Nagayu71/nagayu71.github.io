@@ -1,0 +1,37 @@
+::: {.hidden}
+
+::: {.content-visible when-format="html"}
+
+$$
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\G}{\mathcal{G}}
+\newcommand{\abs}[1]{\lvert#1\rvert}
+\newcommand{\Abs}[1]{\left|#1\right|}
+\newcommand{\norm}[1]{\|#1\|}
+\newcommand{\Norm}[1]{\left\|#1\right\|}
+\newcommand{\SquareBrac}[1]{\left[#1\right]}
+\newcommand{\Brace}[1]{\left\{#1\right\}}
+\newcommand{\Paren}[1]{\left(#1\right)}
+\newcommand{\brac}[1]{\langle#1\rangle}
+\newcommand{\Brac}[1]{\left\langle#1\right\rangle}
+\newcommand{\bra}[1]{\left\langle#1\right|}
+\newcommand{\ket}[1]{\left|#1\right\rangle}
+\newcommand{\ov}[1]{\overline{#1}}
+\newcommand{\un}[1]{\underline{#1}}
+\newcommand{\wt}[1]{\widetilde{#1}}
+\newcommand{\wh}[1]{\widehat{#1}}
+\newcommand{\pp}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\ppp}[3]{\frac{\partial #1}{\partial #2\partial #3}}
+\newcommand{\dd}[2]{\frac{d #1}{d #2}}
+\newcommand{\floor}[1]{\lfloor#1\rfloor}
+\newcommand{\Floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\ceil}[1]{\lceil#1\rceil}
+\newcommand{\Ceil}[1]{\left\lceil#1\rceil\right}
+\newcommand{\iso}{\overset{\sim}{\to}}
+$$
+
+:::
+
+:::

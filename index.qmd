@@ -10,13 +10,6 @@ about:
     - icon: envelope
       text: "Contact"
       href: mailto:yuki.iwanaga136@gmail.com
-include-in-header: # ナビゲーションバーのフォントを大きめにする
-    - text: |
-        <style>
-        .menu-text {
-          font-size: 120%;
-        }
-        </style>
 ---
 
 <!-- columns 環境は、どの媒体でも column を作ってしまうため、スマホでは非常に見にくい。媒体によって柔軟に要素を配置するには {layout="[]"} 環境を使う。

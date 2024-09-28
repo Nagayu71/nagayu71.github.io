@@ -5,13 +5,6 @@ title-block-banner: true
 page-layout: full
 number-sections: false
 toc: false
-include-in-header: # ナビゲーションバーのフォントを大きめにする
-    - text: |
-        <style>
-        .menu-text {
-          font-size: 120%;
-        }
-        </style>
 ---
 
 ## Tech Blog

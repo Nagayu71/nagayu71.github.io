@@ -15,6 +15,8 @@ abstract: |
 format: html
 ---
 
+{{< include ../../../assets/_preamble.qmd >}}
+
 ## モチベーション
 
 MCMC とは，任意の確率分布 $f(\cdot)$ を定常分布にもつマルコフ連鎖を生成することで，所望の分布 $f(\cdot)$ に従う乱数を生成するモンテカルロ法である．

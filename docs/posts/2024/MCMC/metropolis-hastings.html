@@ -305,6 +305,10 @@ window.Quarto = {
 
 
 
+<div class="hidden">
+<p>$$</p>
+<p>$$</p>
+</div>
 <section id="モチベーション" class="level2">
 <h2 class="anchored" data-anchor-id="モチベーション">モチベーション</h2>
 <p>MCMC とは，任意の確率分布 <span class="math inline">\(f(\cdot)\)</span> を定常分布にもつマルコフ連鎖を生成することで，所望の分布 <span class="math inline">\(f(\cdot)\)</span> に従う乱数を生成するモンテカルロ法である．</p>
@@ -330,7 +334,7 @@ p(\theta|D) = \frac{p(D|\theta)p(\theta)}{p(D)}
 <section id="metropolis-hastings-アルゴリズム" class="level2">
 <h2 class="anchored" data-anchor-id="metropolis-hastings-アルゴリズム">Metropolis-Hastings アルゴリズム</h2>
 <p>Metropolis-Hastings (MH) 法は，目標分布 (target distribution) <span class="math inline">\(\pi(\cdot)\)</span> を定常分布にもつマルコフ連鎖を生成するアルゴリズムの一つである．</p>
-<p>前述のベイズ統計学の例で言うと，事後分布 <span class="math inline">\(p(\theta|D)\)</span> が目標分布 <span class="math inline">\(\pi(\theta)\)</span> ということになる． 本稿では引き続きこの例を使用し，パラメータ <span class="math inline">\(\theta \in \Theta \subset \R^d\)</span> の従う分布 <span class="math inline">\(\pi(\theta)\)</span> を目標分布だと考えて議論を進める．</p>
+<p>前述のベイズ統計学の例で言うと，事後分布 <span class="math inline">\(p(\theta|D)\)</span> が目標分布 <span class="math inline">\(\pi(\theta)\)</span> ということになる． 本稿では引き続きこの例を使用し，パラメータ <span class="math inline">\(\theta \in \Theta \subset \mathbb{R}^d\)</span> の従う分布 <span class="math inline">\(\pi(\theta)\)</span> を目標分布だと考えて議論を進める．</p>
 <section id="提案分布の導入" class="level3">
 <h3 class="anchored" data-anchor-id="提案分布の導入">提案分布の導入</h3>
 <p>マルコフ連鎖は，状態空間 (state space) と状態間の遷移確率で規定される． 現時点でわかっていることは，パラメータ <span class="math inline">\(\theta\)</span> が状態空間 <span class="math inline">\(\Theta\)</span> の一つの状態を表すということだけで，どのような遷移確率で状態遷移するかは未知である．</p>
@@ -511,12 +515,12 @@ Pseudocode for Metropolis Hastings method
 <p>と簡単になり，解釈もしやすくなる．</p>
 <p>つまり，<span class="math inline">\(\theta_{n-1}\to\theta'\)</span> の状態遷移で目標分布 <span class="math inline">\(\pi(\cdot)\)</span> の山を登る方向の移動</p>
 <p><span class="math display">\[
-\pi(\theta_{n-1}) \leqslant \pi(\theta') \iff
+\pi(\theta_{n-1}) \leqslant \pi(\theta') \;\mathrm{iff}\;
 \frac{\pi(\theta')}{\pi(\theta_{n-1})} \geqslant 1
 \]</span></p>
 <p>は確率 <span class="math inline">\(1\)</span> で許可されるが，逆に山を降る方向の移動</p>
 <p><span class="math display">\[
-\pi(\theta_{n-1}) &gt; \pi(\theta') \iff
+\pi(\theta_{n-1}) &gt; \pi(\theta') \;\mathrm{iff}\;
 \frac{\pi(\theta')}{\pi(\theta_{n-1})} &lt; 1
 \]</span></p>
 <p>については，確率 <span class="math inline">\(\alpha(\theta_{n-1}, \theta') = \pi(\theta') / \pi(\theta_{n-1})\)</span> で移動が許可される．</p>
@@ -539,7 +543,7 @@ f(x) = \frac{1}{\sqrt{2\pi}}\exp\left(-\frac{x^2}{2}\right)
 <p>からMH法によってサンプリングを行う関数を実装する．</p>
 <section id="実装" class="level3">
 <h3 class="anchored" data-anchor-id="実装">実装</h3>
-<div id="007862f9" class="cell" data-execution_count="1">
+<div id="4cc34ce6" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -575,7 +579,7 @@ f(x) = \frac{1}{\sqrt{2\pi}}\exp\left(-\frac{x^2}{2}\right)
 <section id="サンプリング" class="level3">
 <h3 class="anchored" data-anchor-id="サンプリング">サンプリング</h3>
 <p><code>metropolis_hastings()</code> を使って標準正規分布から <code>N=10000</code> 個サンプリングを行い，そのトレースプロットを描いてみる． 初期値は <code>x_0=0</code> に設定する．</p>
-<div id="2c77a4bd" class="cell" data-execution_count="2">
+<div id="ffa9369f" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># サンプリング</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>samples1 <span class="op">=</span> metropolis_hastings(N<span class="op">=</span><span class="dv">10000</span>, x_0<span class="op">=</span><span class="dv">0</span>, proposal_std<span class="op">=</span><span class="fl">1.0</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -595,7 +599,7 @@ f(x) = \frac{1}{\sqrt{2\pi}}\exp\left(-\frac{x^2}{2}\right)
 </div>
 </div>
 <p>チェーンの最初の部分は初期値依存性があるので，サンプルの最初の 2000 個を burnin として捨て，残りの 8000 個のヒストグラムと目標分布を重ねて描いてみる．</p>
-<div id="43703cc0" class="cell" data-execution_count="3">
+<div id="931b8a6e" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># サンプルと目標分布のプロット</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>plt.hist(samples1[<span class="dv">2000</span>:], bins<span class="op">=</span><span class="dv">50</span>, density<span class="op">=</span><span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.8</span>, color<span class="op">=</span><span class="st">'#78C2AD'</span>, label<span class="op">=</span><span class="st">'Sampled distribution'</span>)</span>
@@ -609,13 +613,13 @@ f(x) = \frac{1}{\sqrt{2\pi}}\exp\left(-\frac{x^2}{2}\right)
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="metropolis-hastings_files/figure-html/cell-4-output-1.png" width="672" height="376" class="figure-img"></p>
+<p><img src="metropolis-hastings_files/figure-html/cell-4-output-1.png" width="663" height="376" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>おおよそ目標分布（赤線）を数値的に近似できている様子が見て取れる． 次に，初期値を <code>x_0=3</code> に変え， <code>N=100000</code> 個サンプリングを行ってみる． サンプルサイズが増えるので，ヒストグラムはより赤線に近い形になるはずである．</p>
-<div id="4bbf0542" class="cell" data-execution_count="4">
+<div id="ad5c8632" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 初期値とサンプルサイズを変えてみる</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>samples2 <span class="op">=</span> metropolis_hastings(N<span class="op">=</span><span class="dv">100000</span>, x_0<span class="op">=</span><span class="dv">3</span>, proposal_std<span class="op">=</span><span class="fl">1.0</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -634,7 +638,7 @@ f(x) = \frac{1}{\sqrt{2\pi}}\exp\left(-\frac{x^2}{2}\right)
 </div>
 </div>
 </div>
-<div id="9a9e743b" class="cell" data-execution_count="5">
+<div id="0d8a0d3a" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># サンプルと目標分布のプロット</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>plt.hist(samples2, bins<span class="op">=</span><span class="dv">50</span>, density<span class="op">=</span><span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.8</span>, color<span class="op">=</span><span class="st">'#78C2AD'</span>, label<span class="op">=</span><span class="st">'Sampled distribution'</span>)</span>
