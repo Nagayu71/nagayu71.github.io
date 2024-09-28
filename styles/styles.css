@@ -131,8 +131,9 @@ h1, h2, h3, h4, h5, h6, .navbar-title, .menu-text {
     font-size: 70% !important;
 }
 
+/* これ↓がないと callout section で overflow する． */
 .callout-body-container {
-    max-width: 100%; /* これがないと callout section で overflow する． */
+    max-width: 100%;
 }
 
 /* MathJax 設定 */

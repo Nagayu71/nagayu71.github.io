@@ -60,9 +60,11 @@ format:
     code-block-border-left: "#7CC4AC" # see https://quarto.org/docs/output-formats/html-code.html#appearance
     highlight-style: ayu # see https://quarto.org/docs/output-formats/html-code.html#highlighting
     toc: true
+    toc-expand: 2
     toc-title: "目次"
     abstract-title: "概要"
     number-sections: false
+    html-math-method: mathjax # katex だと長い数式の横スクロールができなくなる
     # lang: ja
     link-external-newwindow: true
     include-in-header: 

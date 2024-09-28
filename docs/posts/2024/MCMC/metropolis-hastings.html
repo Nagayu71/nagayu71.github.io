@@ -143,22 +143,8 @@ gtag('config', 'G-G4BZMT89L0', { 'anonymize_ip': true});
 }
 </style>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
-  <script>document.addEventListener("DOMContentLoaded", function () {
- var mathElements = document.getElementsByClassName("math");
- var macros = [];
- for (var i = 0; i < mathElements.length; i++) {
-  var texText = mathElements[i].firstChild;
-  if (mathElements[i].tagName == "SPAN") {
-   katex.render(texText.data, mathElements[i], {
-    displayMode: mathElements[i].classList.contains('display'),
-    throwOnError: false,
-    macros: macros,
-    fleqn: false
-   });
-}}});
-  </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -291,7 +277,7 @@ window.Quarto = {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="2">
     <h2 id="toc-title">目次</h2>
    
   <ul>
@@ -321,14 +307,14 @@ window.Quarto = {
 
 <section id="モチベーション" class="level2">
 <h2 class="anchored" data-anchor-id="モチベーション">モチベーション</h2>
-<p>MCMC とは，任意の確率分布 <span class="math inline">f(\cdot)</span> を定常分布にもつマルコフ連鎖を生成することで，所望の分布 <span class="math inline">f(\cdot)</span> に従う乱数を生成するモンテカルロ法である．</p>
+<p>MCMC とは，任意の確率分布 <span class="math inline">\(f(\cdot)\)</span> を定常分布にもつマルコフ連鎖を生成することで，所望の分布 <span class="math inline">\(f(\cdot)\)</span> に従う乱数を生成するモンテカルロ法である．</p>
 <p>ある確率分布に従う乱数が欲しい，あるいは確率分布を数値的に近似したいというシーンはしばしばある．</p>
-<p>例えば，ベイズ統計学ではデータ <span class="math inline">D</span> から得た情報によって，パラメータ <span class="math inline">\theta</span> に対する信念とも言える事前分布 <span class="math inline">p(\theta)</span> を事後分布 <span class="math inline">p(\theta|D)</span> に更新し，この事後分布を使って推定を行う．</p>
-<p><span class="math display">
+<p>例えば，ベイズ統計学ではデータ <span class="math inline">\(D\)</span> から得た情報によって，パラメータ <span class="math inline">\(\theta\)</span> に対する信念とも言える事前分布 <span class="math inline">\(p(\theta)\)</span> を事後分布 <span class="math inline">\(p(\theta|D)\)</span> に更新し，この事後分布を使って推定を行う．</p>
+<p><span class="math display">\[
 p(\theta|D) = \frac{p(D|\theta)p(\theta)}{p(D)}
-</span></p>
+\]</span></p>
 <p>しかし，事後分布を解析的に導くことは，共役事前分布など特別な場合を除いて困難である．</p>
-<p>そこで，事後分布が定常分布となるような遷移確率（推移確率）を決めてパラメータについてのマルコフ連鎖 <span class="math inline">(\theta_t)_{t\geqslant 0}</span> を生成し，事後分布を数値的に近似することを考える．</p>
+<p>そこで，事後分布が定常分布となるような遷移確率（推移確率）を決めてパラメータについてのマルコフ連鎖 <span class="math inline">\((\theta_t)_{t\geqslant 0}\)</span> を生成し，事後分布を数値的に近似することを考える．</p>
 <p>ここで生じる問題は，どのようにしてパラメータについての遷移確率を決めれば良いかである．</p>
 <div class="callout callout-style-simple callout-tip">
 <div class="callout-body d-flex">
@@ -343,29 +329,29 @@ p(\theta|D) = \frac{p(D|\theta)p(\theta)}{p(D)}
 </section>
 <section id="metropolis-hastings-アルゴリズム" class="level2">
 <h2 class="anchored" data-anchor-id="metropolis-hastings-アルゴリズム">Metropolis-Hastings アルゴリズム</h2>
-<p>Metropolis-Hastings (MH) 法は，目標分布 (target distribution) <span class="math inline">\pi(\cdot)</span> を定常分布にもつマルコフ連鎖を生成するアルゴリズムの一つである．</p>
-<p>前述のベイズ統計学の例で言うと，事後分布 <span class="math inline">p(\theta|D)</span> が目標分布 <span class="math inline">\pi(\theta)</span> ということになる． 本稿では引き続きこの例を使用し，パラメータ <span class="math inline">\theta \in \Theta \subset \R^d</span> の従う分布 <span class="math inline">\pi(\theta)</span> を目標分布だと考えて議論を進める．</p>
+<p>Metropolis-Hastings (MH) 法は，目標分布 (target distribution) <span class="math inline">\(\pi(\cdot)\)</span> を定常分布にもつマルコフ連鎖を生成するアルゴリズムの一つである．</p>
+<p>前述のベイズ統計学の例で言うと，事後分布 <span class="math inline">\(p(\theta|D)\)</span> が目標分布 <span class="math inline">\(\pi(\theta)\)</span> ということになる． 本稿では引き続きこの例を使用し，パラメータ <span class="math inline">\(\theta \in \Theta \subset \R^d\)</span> の従う分布 <span class="math inline">\(\pi(\theta)\)</span> を目標分布だと考えて議論を進める．</p>
 <section id="提案分布の導入" class="level3">
 <h3 class="anchored" data-anchor-id="提案分布の導入">提案分布の導入</h3>
-<p>マルコフ連鎖は，状態空間 (state space) と状態間の遷移確率で規定される． 現時点でわかっていることは，パラメータ <span class="math inline">\theta</span> が状態空間 <span class="math inline">\Theta</span> の一つの状態を表すということだけで，どのような遷移確率で状態遷移するかは未知である．</p>
-<p>そこで，状態 <span class="math inline">\theta</span> の下での提案分布 <span class="math inline">q(\theta, \theta')</span> を適当に導入する． ただし，<span class="math inline">\int_\Theta q(\theta, \theta') d\theta' = 1</span>である． 提案分布はマルコフ連鎖 <span class="math inline">(\theta_t)</span> が状態 <span class="math inline">\theta</span> にあるとき，来期の状態 <span class="math inline">\theta'</span> が条件付き確率 <span class="math inline">q(\theta, \theta')</span> で決まることを意味する．</p>
-<p>もし提案分布 <span class="math inline">q(\theta, \theta')</span> が詳細釣り合い条件</p>
-<p><span id="eq-detailed-balance"><span class="math display">
+<p>マルコフ連鎖は，状態空間 (state space) と状態間の遷移確率で規定される． 現時点でわかっていることは，パラメータ <span class="math inline">\(\theta\)</span> が状態空間 <span class="math inline">\(\Theta\)</span> の一つの状態を表すということだけで，どのような遷移確率で状態遷移するかは未知である．</p>
+<p>そこで，状態 <span class="math inline">\(\theta\)</span> の下での提案分布 <span class="math inline">\(q(\theta, \theta')\)</span> を適当に導入する． ただし，<span class="math inline">\(\int_\Theta q(\theta, \theta') d\theta' = 1\)</span>である． 提案分布はマルコフ連鎖 <span class="math inline">\((\theta_t)\)</span> が状態 <span class="math inline">\(\theta\)</span> にあるとき，来期の状態 <span class="math inline">\(\theta'\)</span> が条件付き確率 <span class="math inline">\(q(\theta, \theta')\)</span> で決まることを意味する．</p>
+<p>もし提案分布 <span class="math inline">\(q(\theta, \theta')\)</span> が詳細釣り合い条件</p>
+<p><span id="eq-detailed-balance"><span class="math display">\[
 \pi(\theta)q(\theta, \theta') = \pi(\theta')q(\theta', \theta) \quad \forall \theta, \theta' \in \Theta
-\tag{1}</span></span></p>
-<p>を満たすなら，目標分布 <span class="math inline">\pi(\cdot)</span> を定常分布にもつマルコフ連鎖の遷移確率を得たことになるので，<span class="math inline">q(\theta, \theta')</span> を用いてサンプリングすれば良い． 実際，<a href="#eq-detailed-balance" class="quarto-xref">式&nbsp;1</a> の両辺を <span class="math inline">\theta'</span> について積分すれば，<span class="math inline">\pi(\cdot)</span> が定常分布であることがわかる：</p>
-<p><span class="math display">
+\tag{1}\]</span></span></p>
+<p>を満たすなら，目標分布 <span class="math inline">\(\pi(\cdot)\)</span> を定常分布にもつマルコフ連鎖の遷移確率を得たことになるので，<span class="math inline">\(q(\theta, \theta')\)</span> を用いてサンプリングすれば良い． 実際，<a href="#eq-detailed-balance" class="quarto-xref">式&nbsp;1</a> の両辺を <span class="math inline">\(\theta'\)</span> について積分すれば，<span class="math inline">\(\pi(\cdot)\)</span> が定常分布であることがわかる：</p>
+<p><span class="math display">\[
 \pi(\theta) = \int_\Theta \pi(\theta')q(\theta', \theta) d\theta'.
-</span></p>
-<p>しかし，<span class="math inline">q(\theta, \theta')</span> は適当に設定した分布なので <a href="#eq-detailed-balance" class="quarto-xref">式&nbsp;1</a> は一般には成り立たない． ここで，一般性を失わずに</p>
-<p><span id="eq-inequality"><span class="math display">
+\]</span></p>
+<p>しかし，<span class="math inline">\(q(\theta, \theta')\)</span> は適当に設定した分布なので <a href="#eq-detailed-balance" class="quarto-xref">式&nbsp;1</a> は一般には成り立たない． ここで，一般性を失わずに</p>
+<p><span id="eq-inequality"><span class="math display">\[
 \pi(\theta)q(\theta, \theta') &gt; \pi(\theta')q(\theta', \theta)
-\tag{2}</span></span></p>
-<p>と仮定する． 目標分布 <span class="math inline">\pi(\theta)</span> を状態 <span class="math inline">\theta</span> にある人の割合と思えば，<a href="#eq-inequality" class="quarto-xref">式&nbsp;2</a> は状態 <span class="math inline">\theta</span> から <span class="math inline">\theta'</span> に移動する人の割合が，逆に <span class="math inline">\theta'</span> から <span class="math inline">\theta</span> に移動する人の割合よりも大きいということを表している．</p>
+\tag{2}\]</span></span></p>
+<p>と仮定する． 目標分布 <span class="math inline">\(\pi(\theta)\)</span> を状態 <span class="math inline">\(\theta\)</span> にある人の割合と思えば，<a href="#eq-inequality" class="quarto-xref">式&nbsp;2</a> は状態 <span class="math inline">\(\theta\)</span> から <span class="math inline">\(\theta'\)</span> に移動する人の割合が，逆に <span class="math inline">\(\theta'\)</span> から <span class="math inline">\(\theta\)</span> に移動する人の割合よりも大きいということを表している．</p>
 </section>
 <section id="状態遷移の制限" class="level3">
 <h3 class="anchored" data-anchor-id="状態遷移の制限">状態遷移の制限</h3>
-<p>詳細釣り合い条件（<a href="#eq-detailed-balance" class="quarto-xref">式&nbsp;1</a>）は，両者の割合が同じであってほしいという要請なので，人の移動に交通規制をかけて状態間の移動人数が釣り合うようにしよう． 具体的には，状態 <span class="math inline">\theta</span> から <span class="math inline">\theta'</span> への移動を制限する確率 <span class="math inline">\alpha(\theta, \theta') &lt; 1</span> を導入し，<span class="math inline">\theta</span> から <span class="math inline">\theta'</span> へ移動する人の数を減らせば良い． この任意の2点間の移動を制限する確率 <span class="math inline">\alpha(\cdot, \cdot) \in [0,1]</span> をここでは交通規制率と呼ぶことにする<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>．</p>
+<p>詳細釣り合い条件（<a href="#eq-detailed-balance" class="quarto-xref">式&nbsp;1</a>）は，両者の割合が同じであってほしいという要請なので，人の移動に交通規制をかけて状態間の移動人数が釣り合うようにしよう． 具体的には，状態 <span class="math inline">\(\theta\)</span> から <span class="math inline">\(\theta'\)</span> への移動を制限する確率 <span class="math inline">\(\alpha(\theta, \theta') &lt; 1\)</span> を導入し，<span class="math inline">\(\theta\)</span> から <span class="math inline">\(\theta'\)</span> へ移動する人の数を減らせば良い． この任意の2点間の移動を制限する確率 <span class="math inline">\(\alpha(\cdot, \cdot) \in [0,1]\)</span> をここでは交通規制率と呼ぶことにする<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>．</p>
 <div class="callout callout-style-simple callout-important">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -376,32 +362,32 @@ p(\theta|D) = \frac{p(D|\theta)p(\theta)}{p(D)}
 </div>
 </div>
 </div>
-<p>交通規制率を導入すれば，状態 <span class="math inline">\theta</span> と <span class="math inline">\theta' \neq \theta</span> の間の移動は</p>
-<p><span id="eq-pmh"><span class="math display">
+<p>交通規制率を導入すれば，状態 <span class="math inline">\(\theta\)</span> と <span class="math inline">\(\theta' \neq \theta\)</span> の間の移動は</p>
+<p><span id="eq-pmh"><span class="math display">\[
 \begin{cases}
 p_\text{MH}(\theta, \theta') \equiv q(\theta, \theta')\alpha(\theta, \theta') \\
 p_\text{MH}(\theta', \theta) = q(\theta', \theta)\alpha(\theta', \theta)
 \end{cases}
 \qquad (\theta \neq \theta')
-\tag{3}</span></span></p>
-<p>に従って行われることになる． <a href="#eq-inequality" class="quarto-xref">式&nbsp;2</a> は <span class="math inline">\theta'</span> から <span class="math inline">\theta</span> への移動数が不十分だと主張しているので，この方向の移動については規制をかけず <span class="math inline">\alpha(\theta', \theta) = 1</span> と設定する．</p>
-<p>以上のように <span class="math inline">\theta</span> から <span class="math inline">\theta'</span> への移動には規制をかけ，<span class="math inline">\theta'</span> から <span class="math inline">\theta</span> の移動を全て許可すれば，詳細釣り合い条件</p>
-<p><span id="eq-detailed-balance-pmh"><span class="math display">
+\tag{3}\]</span></span></p>
+<p>に従って行われることになる． <a href="#eq-inequality" class="quarto-xref">式&nbsp;2</a> は <span class="math inline">\(\theta'\)</span> から <span class="math inline">\(\theta\)</span> への移動数が不十分だと主張しているので，この方向の移動については規制をかけず <span class="math inline">\(\alpha(\theta', \theta) = 1\)</span> と設定する．</p>
+<p>以上のように <span class="math inline">\(\theta\)</span> から <span class="math inline">\(\theta'\)</span> への移動には規制をかけ，<span class="math inline">\(\theta'\)</span> から <span class="math inline">\(\theta\)</span> の移動を全て許可すれば，詳細釣り合い条件</p>
+<p><span id="eq-detailed-balance-pmh"><span class="math display">\[
 \pi(\theta)p_\text{MH}(\theta, \theta') = \pi(\theta')p_\text{MH}(\theta', \theta)
-\tag{4}</span></span></p>
+\tag{4}\]</span></span></p>
 <p>が成り立つので，<a href="#eq-pmh" class="quarto-xref">式&nbsp;3</a> を使って書き下すと次式を得る：</p>
-<p><span class="math display">
+<p><span class="math display">\[
 \begin{aligned}
 \pi(\theta)q(\theta, \theta')\alpha(\theta, \theta') &amp;= \pi(\theta')q(\theta', \theta)\alpha(\theta', \theta) \\
 &amp;= \pi(\theta')q(\theta', \theta).
 \end{aligned}
-</span></p>
-<p>これを <span class="math inline">\alpha(\theta, \theta')</span> について解けば，</p>
-<p><span class="math display">
+\]</span></p>
+<p>これを <span class="math inline">\(\alpha(\theta, \theta')\)</span> について解けば，</p>
+<p><span class="math display">\[
 \alpha(\theta, \theta') =
 \frac{\pi(\theta')q(\theta', \theta)}{\pi(\theta)q(\theta, \theta')}
-</span></p>
-<p>と交通規制率を求めることができる． この <span class="math inline">\alpha(\theta, \theta')</span> は <a href="#eq-inequality" class="quarto-xref">式&nbsp;2</a> の大小関係の下で導出されたが，不等号が逆向きの場合も同様にして求めることができる．</p>
+\]</span></p>
+<p>と交通規制率を求めることができる． この <span class="math inline">\(\alpha(\theta, \theta')\)</span> は <a href="#eq-inequality" class="quarto-xref">式&nbsp;2</a> の大小関係の下で導出されたが，不等号が逆向きの場合も同様にして求めることができる．</p>
 <p>一度ここまでの議論をまとめよう．</p>
 <div class="callout callout-style-simple callout-tip no-icon">
 <div class="callout-body d-flex">
@@ -410,38 +396,38 @@ p_\text{MH}(\theta', \theta) = q(\theta', \theta)\alpha(\theta', \theta)
 </div>
 <div class="callout-body-container">
 <ol type="1">
-<li>目標分布 <span class="math inline">\pi(\theta)</span> を定常分布にもつマルコフ連鎖 <span class="math inline">(\theta_t)</span> の遷移確率が未知なので，代わりに提案分布 <span class="math inline">q(\theta, \theta')</span> を導入した．</li>
+<li>目標分布 <span class="math inline">\(\pi(\theta)\)</span> を定常分布にもつマルコフ連鎖 <span class="math inline">\((\theta_t)\)</span> の遷移確率が未知なので，代わりに提案分布 <span class="math inline">\(q(\theta, \theta')\)</span> を導入した．</li>
 <li>提案分布が詳細釣り合い条件（<a href="#eq-detailed-balance" class="quarto-xref">式&nbsp;1</a>）を直接満たすとは限らないので，所与の提案分布に対して詳細釣り合い条件が成り立つように交通規制率を次式で定めた<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>．</li>
 </ol>
-<p><span id="eq-MH-ratio"><span class="math display">
+<p><span id="eq-MH-ratio"><span class="math display">\[
 \alpha(\theta, \theta') =
 \min\left\{ 1, \frac{\pi(\theta')q(\theta', \theta)}{\pi(\theta)q(\theta, \theta')} \right\}
 \qquad (\theta \neq \theta')
-\tag{5}</span></span></p>
+\tag{5}\]</span></span></p>
 </div>
 </div>
 </div>
 </section>
 <section id="遷移確率の定式化" class="level3">
 <h3 class="anchored" data-anchor-id="遷移確率の定式化">遷移確率の定式化</h3>
-<p>これまでの議論では，状態遷移 <span class="math inline">\theta\to\theta'</span> について <span class="math inline">\theta' \neq \theta</span> であることを暗に仮定していた．MH 法の遷移確率を定式化するには，状態が <span class="math inline">\theta</span> にとどまるケース <span class="math inline">\theta\to\theta</span> も考える必要がある．</p>
-<p>状態が <span class="math inline">\theta</span> にとどまる確率は次式で与えられる．</p>
-<p><span id="eq-prob-stay"><span class="math display">
+<p>これまでの議論では，状態遷移 <span class="math inline">\(\theta\to\theta'\)</span> について <span class="math inline">\(\theta' \neq \theta\)</span> であることを暗に仮定していた．MH 法の遷移確率を定式化するには，状態が <span class="math inline">\(\theta\)</span> にとどまるケース <span class="math inline">\(\theta\to\theta\)</span> も考える必要がある．</p>
+<p>状態が <span class="math inline">\(\theta\)</span> にとどまる確率は次式で与えられる．</p>
+<p><span id="eq-prob-stay"><span class="math display">\[
 \begin{aligned}
 r(\theta)
 &amp;= 1 - \int_\Theta p_\text{MH}(\theta, \theta') d\theta'\\
 &amp;= 1 - \int_\Theta q(\theta, \theta')\alpha(\theta, \theta') d\theta'
 \end{aligned}
-\tag{6}</span></span></p>
-<p><a href="#eq-prob-stay" class="quarto-xref">式&nbsp;6</a> を用いると MH 法の遷移確率 <span class="math inline">P_\text{MH}(\theta, \theta')</span> は，</p>
-<p><span id="eq-Pmh"><span class="math display">
+\tag{6}\]</span></span></p>
+<p><a href="#eq-prob-stay" class="quarto-xref">式&nbsp;6</a> を用いると MH 法の遷移確率 <span class="math inline">\(P_\text{MH}(\theta, \theta')\)</span> は，</p>
+<p><span id="eq-Pmh"><span class="math display">\[
 \begin{aligned}
 P_\text{MH}(\theta, \theta')
 &amp;= p_\text{MH}(\theta, \theta') + \delta(\theta' -\theta)r(\theta) \\
 &amp;= q(\theta, \theta')\alpha(\theta, \theta') + \delta(\theta' -\theta)r(\theta)
 \end{aligned}
-\tag{7}</span></span></p>
-<p>である． ただし，<span class="math inline">\delta(x)</span> はディラックのデルタ関数である<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>．</p>
+\tag{7}\]</span></span></p>
+<p>である． ただし，<span class="math inline">\(\delta(x)\)</span> はディラックのデルタ関数である<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>．</p>
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -452,10 +438,10 @@ P_\text{MH}(\theta, \theta')
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><a href="#eq-Pmh" class="quarto-xref">式&nbsp;7</a> で与えられるMH 法の遷移確率 <span class="math inline">P_\text{MH}(\theta, \theta')</span> の下で，目標分布 <span class="math inline">\pi(\cdot)</span> は定常分布である． すなわち，</p>
-<p><span class="math display">
+<p><a href="#eq-Pmh" class="quarto-xref">式&nbsp;7</a> で与えられるMH 法の遷移確率 <span class="math inline">\(P_\text{MH}(\theta, \theta')\)</span> の下で，目標分布 <span class="math inline">\(\pi(\cdot)\)</span> は定常分布である． すなわち，</p>
+<p><span class="math display">\[
 \int_\Theta \pi(\theta)P_\text{MH}(\theta, \theta') d\theta = \pi(\theta') \qquad \forall\theta,\theta'\in\Theta.
-</span></p>
+\]</span></p>
 </div>
 </div>
 <div class="callout callout-style-default callout-warning no-icon callout-titled">
@@ -470,8 +456,8 @@ P_\text{MH}(\theta, \theta')
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><span class="math inline">\theta,\theta'\in\Theta</span> を任意にとる． <a href="#eq-detailed-balance-pmh" class="quarto-xref">式&nbsp;4</a> を用いると次式が成り立つ．</p>
-<p><span class="math display">
+<p><span class="math inline">\(\theta,\theta'\in\Theta\)</span> を任意にとる． <a href="#eq-detailed-balance-pmh" class="quarto-xref">式&nbsp;4</a> を用いると次式が成り立つ．</p>
+<p><span class="math display">\[
 \begin{aligned}
 \int_\Theta \pi(\theta)P_\text{MH}(\theta, \theta') d\theta
 &amp;= \int_\Theta \pi(\theta)\left[ p_\text{MH}(\theta, \theta') + \delta(\theta' -\theta)r(\theta) \right] d\theta \\
@@ -480,7 +466,7 @@ P_\text{MH}(\theta, \theta')
 &amp;= \pi(\theta')\int_\Theta p_\text{MH}(\theta', \theta)d\theta + \pi(\theta')\left[1 - \int_\Theta p_\text{MH}(\theta', \theta) d\theta\right] \\
 &amp;= \pi(\theta').
 \end{aligned}
-</span></p>
+\]</span></p>
 </div>
 </div>
 </div>
@@ -498,58 +484,58 @@ Pseudocode for Metropolis Hastings method
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Input: The number of samples <span class="math inline">N</span> and starting point <span class="math inline">\theta_0</span>.</p>
+<p>Input: The number of samples <span class="math inline">\(N\)</span> and starting point <span class="math inline">\(\theta_0\)</span>.</p>
 <ol type="1">
 <li><strong>for</strong> n = 1,…, N <strong>do</strong></li>
-<li> Propose <span class="math inline">\theta' \sim q(\theta_{n-1}, \theta')</span>.</li>
+<li> Propose <span class="math inline">\(\theta' \sim q(\theta_{n-1}, \theta')\)</span>.</li>
 <li> Compute the acceptance ratio given by</li>
 </ol>
-<p><span class="math display">
+<p><span class="math display">\[
 \alpha(\theta_{n-1}, \theta') =
 \min\left\{ 1, \frac{\pi(\theta')q(\theta', \theta_{n-1})}{\pi(\theta_{n-1})q(\theta_{n-1}, \theta')} \right\}.
-</span></p>
+\]</span></p>
 <ol start="4" type="1">
-<li> Draw <span class="math inline">u \sim \text{Uniform}[0, 1)</span>.</li>
-<li> If <span class="math inline">u &lt; \alpha(\theta_{n-1}, \theta')</span>, then set <span class="math inline">\theta_n = \theta'</span>.</li>
-<li> Otherwise reject the proposal <span class="math inline">\theta'</span> and set <span class="math inline">\theta_n = \theta_{n-1}</span>.</li>
+<li> Draw <span class="math inline">\(u \sim \text{Uniform}[0, 1)\)</span>.</li>
+<li> If <span class="math inline">\(u &lt; \alpha(\theta_{n-1}, \theta')\)</span>, then set <span class="math inline">\(\theta_n = \theta'\)</span>.</li>
+<li> Otherwise reject the proposal <span class="math inline">\(\theta'\)</span> and set <span class="math inline">\(\theta_n = \theta_{n-1}\)</span>.</li>
 <li><strong>end for</strong></li>
 <li>Discard first burnin samples and return the remaining samples.</li>
 </ol>
 </div>
 </div>
-<p>特に，提案分布が <span class="math inline">q(\theta_{n-1}, \theta') = q(\theta', \theta_{n-1})</span> と対称的である場合は acceptance ratio が</p>
-<p><span class="math display">
+<p>特に，提案分布が <span class="math inline">\(q(\theta_{n-1}, \theta') = q(\theta', \theta_{n-1})\)</span> と対称的である場合は acceptance ratio が</p>
+<p><span class="math display">\[
 \alpha(\theta_{n-1}, \theta') =
 \min\left\{ 1, \frac{\pi(\theta')}{\pi(\theta_{n-1})} \right\}
-</span></p>
+\]</span></p>
 <p>と簡単になり，解釈もしやすくなる．</p>
-<p>つまり，<span class="math inline">\theta_{n-1}\to\theta'</span> の状態遷移で目標分布 <span class="math inline">\pi(\cdot)</span> の山を登る方向の移動</p>
-<p><span class="math display">
+<p>つまり，<span class="math inline">\(\theta_{n-1}\to\theta'\)</span> の状態遷移で目標分布 <span class="math inline">\(\pi(\cdot)\)</span> の山を登る方向の移動</p>
+<p><span class="math display">\[
 \pi(\theta_{n-1}) \leqslant \pi(\theta') \iff
 \frac{\pi(\theta')}{\pi(\theta_{n-1})} \geqslant 1
-</span></p>
-<p>は確率 <span class="math inline">1</span> で許可されるが，逆に山を降る方向の移動</p>
-<p><span class="math display">
+\]</span></p>
+<p>は確率 <span class="math inline">\(1\)</span> で許可されるが，逆に山を降る方向の移動</p>
+<p><span class="math display">\[
 \pi(\theta_{n-1}) &gt; \pi(\theta') \iff
 \frac{\pi(\theta')}{\pi(\theta_{n-1})} &lt; 1
-</span></p>
-<p>については，確率 <span class="math inline">\alpha(\theta_{n-1}, \theta') = \pi(\theta') / \pi(\theta_{n-1})</span> で移動が許可される．</p>
+\]</span></p>
+<p>については，確率 <span class="math inline">\(\alpha(\theta_{n-1}, \theta') = \pi(\theta') / \pi(\theta_{n-1})\)</span> で移動が許可される．</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="./images/target-distribution.png" class="img-fluid figure-img" style="width:60.0%"></p>
 <figcaption>Source: <span class="citation" data-cites="chib1995">Chib and Greenberg (<a href="#ref-chib1995" role="doc-biblioref">1995</a>)</span></figcaption>
 </figure>
 </div>
-<p><span class="citation" data-cites="chib1995">Chib and Greenberg (<a href="#ref-chib1995" role="doc-biblioref">1995</a>)</span> の図を借りると，<span class="math inline">\pi(\cdot)</span> という山で現在地 <span class="math inline">x</span> の標高よりも高い地点 <span class="math inline">y_1</span> に登る提案は 100% 受け入れられ，標高の低い地点 <span class="math inline">y_2</span> に移動する提案は <span class="math inline">\alpha(x, y_2)</span> で確率的に受け入れられるということだ．</p>
+<p><span class="citation" data-cites="chib1995">Chib and Greenberg (<a href="#ref-chib1995" role="doc-biblioref">1995</a>)</span> の図を借りると，<span class="math inline">\(\pi(\cdot)\)</span> という山で現在地 <span class="math inline">\(x\)</span> の標高よりも高い地点 <span class="math inline">\(y_1\)</span> に登る提案は 100% 受け入れられ，標高の低い地点 <span class="math inline">\(y_2\)</span> に移動する提案は <span class="math inline">\(\alpha(x, y_2)\)</span> で確率的に受け入れられるということだ．</p>
 </section>
 </section>
 <section id="python-による実装" class="level2">
 <h2 class="anchored" data-anchor-id="python-による実装">Python による実装</h2>
-<p>上記のMHアルゴリズムを <code>metropolis_hastings()</code> として実装する． 提案分布には平均 <span class="math inline">\theta_{t-1}</span>，標準偏差 <code>proposal_std</code> を持つ対称的な正規分布を使用する． したがって，acceptance ratio は目標分布の比に一致する．</p>
+<p>上記のMHアルゴリズムを <code>metropolis_hastings()</code> として実装する． 提案分布には平均 <span class="math inline">\(\theta_{t-1}\)</span>，標準偏差 <code>proposal_std</code> を持つ対称的な正規分布を使用する． したがって，acceptance ratio は目標分布の比に一致する．</p>
 <p>ここでは，標準正規分布を目標分布とし，確率密度</p>
-<p><span class="math display">
+<p><span class="math display">\[
 f(x) = \frac{1}{\sqrt{2\pi}}\exp\left(-\frac{x^2}{2}\right)
-</span></p>
+\]</span></p>
 <p>からMH法によってサンプリングを行う関数を実装する．</p>
 <section id="実装" class="level3">
 <h3 class="anchored" data-anchor-id="実装">実装</h3>
@@ -726,8 +712,8 @@ Chib, Siddhartha, and Edward Greenberg. 1995. <span>“Understanding the Metropo
 
 <ol>
 <li id="fn1"><p>一般には採択比率 (acceptance ratio) や採択確率 (acceptance probability) などと呼ばれる．<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p><a href="#eq-inequality" class="quarto-xref">式&nbsp;2</a> の不等号の向きがどちらの場合であっても対応できるように <span class="math inline">\min\{\}</span> を使用．<br>流出する人の数（分母）が流入する人の数（分子）よりも大きい場合のみ交通規制をかけるということ．<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p><span class="math inline">x=0</span> のとき <span class="math inline">1</span> をとり，それ以外の <span class="math inline">x</span> で <span class="math inline">0</span> をとる関数．<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><a href="#eq-inequality" class="quarto-xref">式&nbsp;2</a> の不等号の向きがどちらの場合であっても対応できるように <span class="math inline">\(\min\{\}\)</span> を使用．<br>流出する人の数（分母）が流入する人の数（分子）よりも大きい場合のみ交通規制をかけるということ．<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p><span class="math inline">\(x=0\)</span> のとき <span class="math inline">\(1\)</span> をとり，それ以外の <span class="math inline">\(x\)</span> で <span class="math inline">\(0\)</span> をとる関数．<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

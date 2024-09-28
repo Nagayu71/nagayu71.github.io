@@ -7,6 +7,5 @@ title-block-banner: true
 
 format: 
   html: 
-    html-math-method: katex
     code-fold: false
     code-summary: "Show the code"
