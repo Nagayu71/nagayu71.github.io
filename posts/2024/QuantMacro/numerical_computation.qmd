@@ -1,0 +1,690 @@
+---
+title: "マクロ経済学における有限期間モデルと数値計算の概観"
+author: "岩永悠希"
+date: "2024/10/04"
+date-modified: "2024/10/04"
+categories: [Macroeconomics, Python]
+image: ./images/grid-search.png
+number-sections: true
+bibliography:
+    - ../../../assets/references.bib
+    - ../../../assets/books.bib
+abstract: 本稿では
+format: html
+---
+
+{{< include ../../../assets/_preamble.qmd >}}
+
+## はじめに
+
+今年の6月に『定量的マクロ経済学と数値計算』という本が出版された [@QuantMacro2024]．
+
+近年マクロ経済学のモデルが複雑になるにつれて，コンピュータを使って近似的にモデルの性質を理解するアプローチが広まっている．
+
+しかし，日本のマクロ経済学教育の中で，それを可能にする**数値計算 (numerical computation)** という分析手法を学ぶ機会は乏しい．
+
+この状況を憂いた著者陣が，『経済セミナー』という雑誌に投稿した連載を書籍化したのが本書である．
+
+本書が扱う内容は，現代的なマクロ経済学のベースラインとなりつつあるトピックであり，教育が手薄になるのは好ましくない．
+
+> 本書が扱う内容は現在のマクロ経済学のメインストリームの１つといっても過言ではない。＜中略＞本書を通じて現代のマクロ経済分析に必要な新たな道具を身に付けるサポートをすることが、我々の目的である。(p.8)
+
+気持ちネットワーク科学をメインにやっているとはいえ，マクロ経済学徒の一人としては現代的な分析手法を学ぶ必要があると感じたため，勉強ノートを作ろうと思い立った次第である．
+
+::: {.callout-tip appearance="simple" icon="true"}
+このウェブサイトのフレームワークとなっている [Quarto](https://quarto.org/) は，このようなハンズオンで学ぶスタイルの勉強ノート作成に適している． Quarto もまだまだ勉強中の身ゆえ，このブログは Quarto の勉強も兼ねている．
+:::
+
+
+## ベンチマーク・モデルとカリブレーション
+
+まず，シンプルな２期間モデルを用いて数値計算手法の基本的な使い方のイメージをつかむ．
+
+現在のマクロ経済学でベンチマークとなっている新古典派成長モデルは，この２期間モデルをモデルを多期間に拡張していき，その極限である無限期間となったものである．
+
+### ベンチマーク・モデル：２期間モデル
+
+ある経済主体の人生全体での消費・貯蓄行動をモデル化しよう．
+
+経済主体は若年期に働いて所得 $w$ を獲得し，その所得を若年期の消費 $c_1$ に充てるか，それとも老後のための貯蓄 $a$ に残すかを決める問題に直面している．若年期の予算制約は，
+
+$$
+c_1 + a = w
+$$ {#eq-bc-young}
+
+であり，老年期の予算制約は若年期の貯蓄に金利 $r$ が付き，また遺産動機はないとすると，
+
+$$
+c_2 = a(1 + r)
+$$  {#eq-bc-old}
+
+で与えられる．$\beta > 0$ を**割引因子 (discount factor)** とすると，経済主体の生涯効用は次式で与えられる：
+
+$$
+U(c_1, c_2) = u(c_1) + \beta u(c_2).
+$$
+
+主体は若年期に意思決定を行うため，将来の消費 $c_2$ から得られる効用は割り引かれる．
+
+ここで，効用関数について $u'(c) > 0$ および $u''(c) < 0$ を仮定し，主体は**消費の平準化 (consumption smoothing)** を望むものとする[^1]．
+
+[^1]: 効用関数が凹関数であるとき，経済主体はリスク回避的である．
+
+以上の設定の下で解くべき意思決定問題は，次のように定式化できる．
+
+$$
+\begin{aligned}
+\max_{c_1, c_2, a} & \quad U(c_1, c_2) = u(c_1) + \beta u(c_2) \\
+\text{s.t.} & \quad c_1 + a = w, \\
+& \quad c_2 = (1+r)a. \\
+\end{aligned}
+$$ {#eq-problem}
+
+ラグランジアンは
+
+$$
+\mathcal{L} = u(c_1) + \beta u(c_2) + \lambda_1 (w - c_1 - a) + \lambda_2[(1+r)a - c_2]
+$$
+
+より，一階条件は
+
+$$
+\begin{aligned}
+&0 = \frac{\partial\mathcal{L}}{\partial c_1} = u'(c_1) - \lambda_1,\\
+&0 = \frac{\partial\mathcal{L}}{\partial c_2} = \beta u'(c_2) - \lambda_2,\\
+&0 = \frac{\partial\mathcal{L}}{\partial a} = -\lambda_1 + \lambda_2(1+r).
+\end{aligned}
+$$
+
+整理すると @eq-euler のオイラー条件（オイラー方程式）を得る．
+
+$$
+u'(c_1) = \beta (1+r) u'(c_2).
+$$ {#eq-euler}
+
+オイラー条件（@eq-euler）の直感的な意味は，若年期と老年期で極端に消費水準が変動することを嫌うリスク回避的な主体は，若年期の消費 $c_1$ から得られる限界効用 $u'(c_1)$ と，老年期の消費 $c_2$ から得られる限界効用の割引現在価値 $\beta (1+r) u'(c_2)$ が一致するように消費計画を決めるということである．
+
+::: {.callout-important appearance="simple" icon="true"}
+ところで，何をもってモデルを「解いた」と言えるのか．マクロモデルはさまざまな経済変数が登場するため，この点を整理しておかないとすぐに迷子になる．
+
+このモデルの内生変数は $c_1$ と $a$ であり，外生変数は $w$ であるから[^2]，モデルを解くにはある所得 $w$ のもとでの主体の貯蓄関数 $g(w)$ と消費関数 $h(w)$ を導出すれば良い：
+
+$$
+\begin{aligned}
+a &= g(w), \\
+c_1 &= h(w).
+\end{aligned}
+$$
+
+この例のように，
+
+$$
+\text{内生変数} = f(\text{外生変数})
+$$
+
+と内生変数が外生変数の関数として書けるとき，「モデルが解けた」という．
+:::
+
+[^2]: 経済学では，方程式の解として決まる変数を**内生変数 (endogenous variable)**，方程式を解く前に値がすでに決まっている変数を**外生変数 (exogenous variable)** と呼ぶ[@Math4Econ1996]．外生変数は単にパラメータとか状態変数とも言われる．
+
+### カリブレーション
+
+２期間モデルは人間にとってはシンプルなモデルだが，コンピュータにとってはそうではない．
+
+というのも，効用関数 $u(c)$ という表現は抽象的で，コンピュータには理解できないからである．
+
+そこで，コンピュータが理解できる形で効用関数を「特定化」する必要がある．
+
+ここでは，マクロ経済学で頻繁に使われる**相対的リスク回避度一定 (constant relative risk aversion: CRRA)** 型効用関数を仮定する．
+
+$$
+u(c) = \frac{c^{1-\gamma}}{1-\gamma}.
+$$ {#eq-crra}
+
+リスクが存在するモデルであれば，$\gamma$ は**相対的リスク回避度 (coefficient of relative risk aversion)** であり，同時に**異時点間の代替の弾力性 (intertemporal elasticity of substitution)** の逆数である．
+
+@eq-crra をコンピュータが認識できるように Python で書くと，次のようになる．
+
+```{python}
+import numpy as np
+
+def CRRA(c, gamma):
+    if gamma != 1.0:
+        util = c**(1.0 - gamma) / (1.0 - gamma)
+    else:
+        util = np.log(c) # <1>
+    return util
+```
+
+1.  $\gamma = 1$ の場合に $u(c) = \log c$ としているのは @eq-crra が $c \to 1$ の極限で発散するため，次式のようにロピタルの定理で解消した結果である．$$
+\begin{aligned}
+\lim_{\gamma\to1} u(c) 
+&= \lim_{\gamma\to1} \frac{c^{1-\gamma}}{1-\gamma} \\
+&= \lim_{\gamma\to1} \frac{-c^{1-\gamma} \log c}{-1} \\
+&= \lim_{\gamma\to1} c^{1-\gamma}\log c \\
+&= \log c
+\end{aligned}$$
+
+実際にプログラムを動かす際は，関数形の特定に加えて具体的にパラメータの値を決める必要があるが，このように関数形を特定してパラメータを定める一連の作業を**カリブレーション (calibration)** と呼ぶ．
+
+異なる `gamma` の下で CRRA 型効用関数（@eq-crra）を可視化したものが @fig-crra である．
+
+```{python}
+#| label: fig-crra
+#| fig-cap: "CRRA 型効用関数"
+#| code-fold: true
+
+import japanize_matplotlib
+import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots()
+# c の範囲を指定して曲線をプロット
+c = np.linspace(start=0.1, stop=1.0, num=100) # <1>
+
+gammas = [1, 1.5, 2]
+for gamma in gammas:
+    u = CRRA(c, gamma)
+    ax.plot(c, u, label=f'gamma = {gamma}')
+ax.set_title("Utility Function for Different gamma values")
+ax.set_xlabel(r"$c$")
+ax.set_ylabel(r"$u(c)$")
+ax.legend()
+ax.grid()
+pass
+```
+1. 0.1 から 10 までの値 (0 は定義できないので 0.1 から)
+
+ベンチマーク・モデルでは人生を 2 期間に分けているので，モデル上の 1 期間を 30 年と想定する．
+そのため，割引因子 $\beta$ と金利 $r$ は年率ではなく 30 年間の値を使う．
+
+今回は実際に 1 期間を 30 年でカリブレートしている @song2012rotten の値を拝借する．割引因子は年率で $\beta = 0.985$ として，1 期間は 30 年なので 30 乗する（$\beta = 0.985^{30}$）．金利は年率で $2.5\%$ と設定すると $1+r = 1.025^{30}$ となる．相対的リスク回避度は，よく使われる値の $\gamma = 2$ としておく．
+
+```{python}
+beta = 0.985**30        # 割引因子
+gamma = 2.0             # 相対的危険回避度
+r = 1.025**30 - 1.0     # 金利
+```
+
+### 解析解の性質
+
+数値計算に入る前に，２期間モデルの解析解の性質を簡単に確認しておく．今回のモデルはシンプルなので，貯蓄関数 $a = g(w)$ を手計算で求めることができる．
+
+$$
+% \begin{equation}
+a = \frac{w}{1+(1+r)\{\beta(1+r)\}^{-1/\gamma}}
+% \end{equation}
+$$ {#eq-saving}
+
+:::{.callout-note icon="false" collapse="true"}
+## 導出
+
+オイラー条件（@eq-euler）に予算制約の @eq-bc-young と @eq-bc-old を代入すると，
+
+$$
+\begin{aligned}
+(w-a)^{-\gamma} &= \beta(1+r)\SquareBrac{(1+r)a}^{-\gamma} \\
+(w-a) &= \SquareBrac{\beta(1+r)}^{-1/\gamma}(1+r)a \\
+w &= \Brace{1+\SquareBrac{\beta(1+r)}^{-1/\gamma}(1+r)}a.
+\end{aligned}
+$$
+
+:::
+
+これがモデルから導出される真の貯蓄関数であり，内生変数 $a$ が外生変数 $w, r, \beta, \gamma$ で表されているので，これでモデルは解けている．
+
+貯蓄関数（@eq-saving）は若年期の所得 $w$ の連続な線形の増加関数になっており，そのグラフを可視化したものが @fig-saving である．
+
+```{python}
+#| label: fig-saving
+#| fig-cap: "解析的に求めた貯蓄関数"
+#| code-fold: true
+
+# 貯蓄関数
+def saving(w, beta, r, gamma):
+    return w / (1 + (1+r) * (beta*(1+r)) **(-1/gamma))
+
+fig, ax = plt.subplots()
+
+w = np.linspace(start=0, stop=1.0, num=100)
+a = saving(w, beta, r, gamma)
+ax.plot(w, a, c="#FF7A72")
+ax.set(title="貯蓄関数", xlabel="若年期の所得: "+r"$w$", ylabel="若年期の貯蓄: "+r"$a=g(w)$", xlim=(0,1), ylim=(0,0.4))
+ax.grid()
+pass
+```
+
+
+## 【実践】数値計算
+
+### 離散近似とグリッド
+
+貯蓄関数（@eq-saving）は連続関数であるが，コンピュータは連続という概念をそのままの形では理解できない．
+
+そこで，数値計算においては基本的に，連続な変数を有限の $N$ 個の点に**離散化 (discretize)** して考える必要がある．
+
+#### グリッド上で計算する
+
+若年期の所得 $w$ がとりうる値は，$w_i \in \{w_1,\ldots,w_N\}$ の範囲にあるとする．
+
+::: {.callout-important appearance="simple"}
+コンピュータは無限を扱えないので，$w \in [0, \infty)$ や $w \in (-\infty, \infty)$ のような範囲を扱うことはできない．
+数値計算において，定義域は必ず**有界 (finite)**である必要がある．
+:::
+
+所得を $N$ 個に離散化するということは，若年期の所得に応じて $N$ 種類の経済主体が存在している状況を作り出すということである．
+
+この離散的な点の集まりを**グリッド (grid)** あるいは**ノード (node)** と呼ぶ．
+また，それぞれの点は**グリッドポイント (grid point)** あるいは**評価点 (evaluation point)** と呼ばれている．
+
+ここでは単純に，若年期の所得 $w$ は $[0.1, 1]$ 区間の間に $0.1$ 刻みで $10$ 個の点
+
+$$
+w_i \in \{0.1, 0.2,\ldots, 1.0\}
+$$
+
+として存在していると考える．
+
+```{python}
+nw = 10       # 所得グリッドの数
+w_min = 0.1   # 所得の最大値
+w_max = 1.0   # 所得の最小値
+grid_w = np.linspace(start=0.1, stop=1.0, num=10)
+print(grid_w)
+```
+
+::: {.callout-important appearance="simple"}
+この意思決定問題では $w_i = 0$ を含めると若年期も老年期も消費ができなくなってしまうため，最小値は正値にしておく必要がある．
+:::
+
+### 状態変数と制御変数がともに離散の場合：グリッドサーチ {#sec-grid-search}
+
+::: {.callout-tip appearance="simple"}
+## 用語の導入
+最適化問題を解く際にすでに決まっている若年期の所得 $w$ を**状態変数 (state variable)** と呼び，意思決定において選択する若年期の貯蓄 $a$ を**制御変数 (control variable)** と呼ぶ．
+また，貯蓄関数のような意思決定関数は**政策関数 (policy function)** と呼ばれる．
+:::
+
+
+まずは，所得 $w$ と資産 $a$ がともに離散的な場合に２期間モデルを解く方法を見る．
+
+すなわち，状態変数 $w$ だけでなく，制御変数 $a$ についても離散化を行う．
+
+ここでは
+
+$$
+a_j \in \{0.025, 0.05, 0.075, 0.1, \ldots, 1.0\}
+$$
+
+と $0.025$ 刻みで $40$ 個のグリッドをとる^[$w_i$ と同じ離散化をすると，$w = 0.1$ のときに　1 期目の消費 $c_1 = w - a$ がゼロか負値しかとれず，最適貯蓄あるいは最適消費が存在しなくなってしまうため．]．
+
+```{python}
+na = 40       # 貯蓄グリッドの数
+a_min = 0.025 # 貯蓄の最小値
+a_max = 1.0   # 貯蓄の最大値
+grid_a = np.linspace(start=a_min, stop=a_max, num=na)
+print(grid_a)
+```
+
+
+このような離散化を行うと，解くべき効用最大化問題（@eq-problem）は，所与の $w_i$ について，
+
+$$
+\max_{a_j} \quad 
+\frac{[w_i-a_j]^{1-\gamma}}{1-\gamma} + \beta\frac{[(1+r)a_j]^{1-\gamma}}{1-\gamma}
+$$ {#eq-obj}
+
+と書き直すことができる．
+
+組み合わせの数は，所得 $w_i$ と資産 $a_j$ がそれぞれ $10$ 通りと $40$ 通りあるので， $400$ 通りとなる．
+
+そして各所得 $w_i$ のもとで $40$ 種類の資産 $a_j$ の中から生涯効用（@eq-obj）を最大化する資産 $a^*$ を求めれば良いので，これくらいであれば「総当たり」で求めることができる．
+
+```{python}
+obj = np.zeros((na, nw)) # <1>
+
+# 状態変数と制御変数のすべての組み合わせ (w,a) について生涯効用を計算
+for i in range(nw):
+    for j in range(na):
+        c = grid_w[i] - grid_a[j]
+        if c > 0:
+            obj[j, i] = CRRA(c, gamma) + beta * CRRA((1+r)*grid_a[j], gamma)
+        else: # <2>
+            obj[j, i] = -10000.0 
+```
+1. 各 $(w_i, a_j)$ での生涯効用を格納する`na` $\times$ `nw` ゼロ行列
+2. 消費が負になる場合，負の効用を与えて最適化でこの値が選ばれないようにしておく
+
+試しに，`w = 0.5, 0.8, 1.0` のときの生涯効用を可視化してみよう（@fig-obj）．
+
+```{python}
+#| label: fig-obj
+#| fig-cap: "生涯効用"
+#| code-fold: true
+fig, ax = plt.subplots()
+ax.plot(grid_a, obj[:,4], c="b", label="w=0.5")
+ax.plot(grid_a, obj[:,7], c="r", label="w=0.8")
+ax.plot(grid_a, obj[:,9], c="g", label="w=1.0")
+ax.set(xlabel="若年期の貯蓄(老年期の資産): "+r"$a$", ylabel="生涯効用: "+r"$U(c_1,c_2)$", xlim=(0,1), ylim=(-10,0))
+ax.legend()
+ax.grid(ls="--")
+pass
+```
+
+@fig-obj では若年期の所得 $w_i$ の下での生涯効用 $U(c_1, c_2)$ が凹関数として可視化されている．
+
+直感的にそれぞれの山の頂上に対応する貯蓄点が，求めたい最適貯蓄だとわかるだろう．
+
+そこで，若年期の所得 $w_i$ ごとに最適な貯蓄点 $a_j$ を計算し，求めた貯蓄関数を可視化する（@fig-policy）．
+
+```{python}
+#| label: fig-policy
+#| fig-cap: "グリッドサーチで求めた貯蓄関数"
+pol = np.zeros(nw)                               # <1>
+for i in range(nw):
+    maximizer = np.argmax(obj[:, i])             # <2>
+    pol[i] = grid_a[maximizer]
+
+fig, ax = plt.subplots()
+ax.plot(grid_w, saving(grid_w, beta, r, gamma), c="#FF7A72",label="解析解")
+ax.plot(grid_w, pol, c="#78C2AD", marker="o", label="グリッドサーチ")
+ax.set(title="貯蓄関数", xlabel="若年期の所得: "+r"$w$", ylabel="若年期の貯蓄: "+r"$a=g(w)$")
+ax.grid(ls="--")
+ax.legend()
+pass
+```
+1. 政策関数（貯蓄関数）を格納するゼロベクトル
+2. 生涯効用が最大値をとる点を探す
+
+@fig-policy を見ると，グリッドサーチで求めた最適貯蓄（緑色の点）が，解析解（赤色の直線）からあまり離れていないことがわかる．
+
+::: {.callout-important appearance="simple"}
+グリッドサーチのグラフは点同士を直線でつないだ折れ線グラフのように見えるが，これは `plot()` 関数の仕様によるものである．実際には，状態変数 $w$ のグリッドポイント上でしか最適貯蓄 $a$ を求めていないことに注意されたい．
+:::
+
+グリッドサーチで精度を上げるには，離散化するグリッドの数を増やせば良さそうだが，考えているモデルによっては次のセクションで扱う「次元の呪い」という問題にぶつかる．
+
+#### 注意点：次元の呪い
+
+状態変数と制御変数をどちらも離散化して，とりうる全ての組み合わせを計算するというグリッドサーチのアプローチは，単純ではあるが複雑な非線形モデルにも使えるのでなかなか侮れない．
+
+たとえば，政策関数の形状や性質がよくわかっていないモデルを解く場合，とりあえずグリッドを切ってモデルの性質を大雑把に掴むというアプローチは有効である．
+
+しかし，このアプローチは**次元の呪い (curse of dimensionality)** の影響をダイレクトに受けるので，計算に時間がかかる傾向にある．
+
+状態変数の数が $n$ 個のとき，最適貯蓄を計算する必要のあるグリッドポイントの数は
+
+$$
+(\text{状態変数のグリッド数})^n
+$$
+
+で与えられる．したがって，たとえば教育水準の違いや性別の違いを考慮できるように若年期における状態変数を増やしていくと，計算時間は指数的に増えてしまう．
+
+::: {.callout-important}
+## 次元の呪い
+
+状態変数を増やせば増やすほど，計算時間は指数的に増える．そのため，現実的な計算時間で複雑なモデルを高い精度で解くための工夫が常に求められる．
+:::
+
+#### オブジェクト指向プログラミング {#sec-obj-oriented}
+
+数値計算では，コンピュータが理解できるように関数を特定化してパラメータを設定するカリブレーションという作業が必要なのであった．
+
+ここまでの実装では，逐一関数を定義してパラメータを指定していた．
+
+しかし，その方法ではパラメータが変わった時にモデルの振る舞いがどう変わるかを分析する比較静学のような場面で苦労しそうなのは容易に想像できる．
+
+そこで，オブジェクト指向プログラミングの**クラス (class)** という機能でモデルのテンプレートを作っておくと便利である．
+
+```{{python}}
+class Models:
+    def __init__(self, beta, gamma, r, nw, w_min, w_max, grid_w, na, a_min, a_max, grid_a):
+        self.beta = beta
+        self.gamma = gamma
+        self.r = r
+        self.nw = nw
+        self.w_min = w_min
+        self.w_max = w_max
+        self.grid_w = grid_w
+        self.na = na
+        self.a_min = a_min
+        self.a_max = a_max
+        self.grid_a = grid_a
+```
+
+カリブレーションを行う際は `Models` を定義した上で，次の `Calibration()` 関数を実行する．
+
+```{{python}}
+def Calibration():
+    beta = 0.985 ** 30
+    gamma = 2.0
+    r = 1.025**30 - 1.0
+    nw = 10
+    w_min = 0.1
+    w_max = 1.0
+    na = 40
+    a_min = 0.025
+    a_max = 1.0
+
+    grid_w = np.linspace(w_min, w_max, nw)
+    grid_a = np.linspace(a_min, a_max, na)
+    return Models(beta, gamma, r, nw, w_min, w_max, grid_w, na, a_min, a_max, grid_a)
+```
+
+このノードでもこれ以降は，さまざまなパラメータをクラスを使って管理する．
+
+
+### 最適化アルゴリズム {#sec-optimize}
+
+グリッドサーチはモデルを拡張した場合に計算量が指数的に増加するのに加え，グリッド数を節約すると精度が悪化するという問題を抱えていた．
+
+実際，真の貯蓄関数は @fig-saving のように線形である一方，グリッドサーチで求めた貯蓄関数は @fig-policy にあるように直線ではない．
+
+そこで，状態変数 $w$ は @sec-grid-search と同様に離散化するが，連続な制御変数 $a$ を許容するより洗練されたアプローチを用いる．
+
+よって，今考えている最適化問題は次式で表される．
+
+$$
+\max_{a\in\R} \quad 
+\frac{[w_i-a]^{1-\gamma}}{1-\gamma} + \beta\frac{[(1+r)a]^{1-\gamma}}{1-\gamma}
+$$ {#eq-prob25}
+
+@eq-prob25 のような最適化問題を数値計算で解くには，数値計算ソフトに標準的に実装されている最適化ライブラリを用いれば良い．
+
+大抵は，目的関数とその関数のパラメータを入力として受け取り，目的関数の最大値や最小値を探索する仕様になっている．
+
+最適化問題（@eq-prob25）であれば，カリブレーションしたパラメータ $\{\beta, \gamma, r\}$ を所与として，各状態変数 $w_i \in \Brace{w_1, \ldots, w_N}$ の下で生涯効用の最大値とそれを与える最大元 $a$ を探索してくれる．
+
+#### 実装
+
+まず，カリブレーションを @sec-obj-oriented で導入した方法で行う．
+
+```{python}
+class Models:
+    def __init__(self, beta, gamma, r, nw, w_min, w_max, grid_w):
+        self.beta = beta
+        self.gamma = gamma
+        self.r = r
+        self.nw = nw
+        self.w_min = w_min
+        self.w_max = w_max
+        self.grid_w = grid_w
+
+def Calibration():
+    beta = 0.985 ** 30
+    gamma = 2.0
+    r = 1.025**30 - 1.0
+    nw = 10
+    w_min = 0.1
+    w_max = 1.0
+
+    grid_w = np.linspace(w_min, w_max, nw)
+    return Models(beta, gamma, r, nw, w_min, w_max, grid_w)
+```
+
+`Calibration()` 関数を実行することで，`Calibration()` 内で定義されたパラメータを情報として持つ `Models` インスタンスが生成されるので，`params` に代入しておく．
+
+```{python}
+params = Calibration()
+```
+
+ここでは，`scipy` の `optimize` モジュールにある [`fminbound()` 関数](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.fminbound.html#scipy.optimize.fminbound)を使って最適化問題（@eq-prob25）を解く^[`fminbound()` のように数値計算によって方程式を解くアルゴリズムのことを**ソルバー (solver)** と呼ぶ．]．
+
+```{python}
+from scipy import optimize
+```
+
+では，`optimize.fminbound()` に渡す目的関数を定義しよう．最小化問題に変換するために $-1$ をかけている．
+
+$$
+\text{obj}(a, w_i;\beta, \gamma, r) = -\Brace{\frac{[w_i-a]^{1-\gamma}}{1-\gamma} + \beta\frac{[(1+r)a]^{1-\gamma}}{1-\gamma}}
+$$
+
+```{python}
+def obj(a, w_i, params):
+    c = w_i - a
+    if c > 0:
+        life_util = CRRA(c, params.gamma) + params.beta * CRRA((1+params.r)*a, params.gamma)
+    else:
+        life_util = -100000.0
+    return -1.0 * life_util
+```
+
+::: {.callout-important appearance="simple"}
+上の `obj()` は `a, w_i, params` の３つの引数を持つが，実際に `optimize.fminbound()` に渡すときは，最適化を行う `a` だけの関数にしておく必要がある．
+:::
+
+所与の状態変数 $w_i$ に対して制御変数 $a$ についての最適化問題を解けば良いので，`grid_w` についての `for` ループ内で `optimize.fminbound()` を使えば良い．
+
+```{python}
+opt_a = np.zeros(params.nw) # <1>
+
+for i, w_i in enumerate(params.grid_w):
+    obj_specified = lambda a: obj(a, w_i, params)                     # <2>
+    opt_a[i] = optimize.fminbound(obj_specified, w_i*0.01, w_i*2.0)
+print(f"最適貯蓄の配列: \n{opt_a}")
+```
+1. 各 $w_i$ の下での最適貯蓄を格納する配列
+2. `optimize.fminbound()` に渡すために，`obj()` を `a` だけの関数にする
+
+`opt_a` には `grid_w` の各 $w_i$ に対する最適貯蓄 $a$ が格納してある．これを可視化したものが @fig-optimization である．
+
+```{python}
+#| label: fig-optimization
+#| fig-cap: "最適化アルゴリズムから導出した貯蓄関数"
+fig, ax = plt.subplots()
+ax.grid(ls="--")
+ax.scatter(params.grid_w, saving(params.grid_w, params.beta, params.r, params.gamma), c="#FF7A72",label="解析解")
+ax.plot(params.grid_w, opt_a, c="#78C2AD",label="アルゴリズム")
+ax.set(title="貯蓄関数", xlabel="若年期の所得: "+r"$w$", ylabel="若年期の貯蓄: "+r"$a=g(w)$")
+ax.legend()
+pass
+```
+
+同じグリッドポイントを使っているが，グリッドサーチで求めた @fig-policy と違って，最適化アルゴリズムで導出した @fig-optimization は解析的な解（@fig-saving）が示す綺麗な直線になっており，計算精度が大幅に改善された様子がわかる^[@fig-optimization では，アルゴリズムで求めた解のグラフが直線に見えるが，これは 'plot()' の仕様によるもので，実際にはグリッドポイント上でしか最適貯蓄を計算していないことに注意．]．
+
+これは制御変数 $a$ がとりうる値を連続値にしたことに起因する．
+
+### １階条件を使う
+
+モデルの解が満たすべきオイラー条件（@eq-euler）をうまく使って数値計算を行うアプローチもある．
+
+ここでは，オイラー条件を求根問題に落とし込んで解く方法（@sec-root-finding）と，政策関数自体をパラメトリックに近似する方法（@sec-projection）を扱う．
+
+#### 非線形方程式の求根問題 {#sec-root-finding}
+
+オイラー条件（@eq-euler）に予算制約を代入すると次式を得る．
+
+$$
+u'(w-a) = \beta(1+r)u'((1+r)a)
+$$ {#eq-2.7}
+
+状態変数 $w$ を $w_i$ と離散化して，それぞれの変数の役割を見てみると
+
+$$
+u'(\eqDescribe{w_i}{given} - \eqDescribe{a}{control}) = 
+\eqDescribe{\beta(1+r)}{parameter}u'(\eqDescribe{(1+r)}{parameter}\ \eqDescribe{a}{control})
+$$
+
+なので，未知変数は $a$ だけである．そこで，@eq-2.7 を変形して次式で**残差関数 (residual function)** を定義する：
+
+$$
+R(a;w_i) \equiv
+\beta(1+r)\frac{u'((1+r)a)}{u'(w_i-a)} - 1.
+$$ {#eq-resid}
+
+@eq-resid を使うと，オイラー条件を満たす制御変数 $a$ を見つける問題を，
+
+$$
+R(a;w_i) = 0
+$$
+
+となる $a$ を探すという **求根（ゼロ点）問題 (root-finding problem)** に変換することができる．
+
+一般に，オイラー条件を変換して得た残差関数（@eq-resid）は，複雑な形をした非線形方程式である可能性があるが，非線形方程式のゼロ点を探すアルゴリズムの研究は長い歴史を持つため，様々なアプローチが考案されている．
+
+##### 実装
+
+求根問題は [`scipy.optimize.fsolve()` 関数](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.fsolve.html#scipy.optimize.fsolve)で解くことができる．
+ここではカリブレーションは @sec-optimize のものを再び使用する．
+
+まずはソルバーに渡す残差関数（@eq-resid）を実装しよう．残差関数内にある限界効用 (marginal utility) は
+
+$$
+u'(c) = c^{-\gamma}
+$$
+
+で与えられるので，Python で表すと次のようになる．
+
+```{python}
+def marginal_util(c, gamma):
+    return c ** (- gamma)
+```
+
+これを用いると残差関数は次のように実装できる．
+
+```{python}
+def resid(a, w_i, params):
+    c = w_i - a
+    if c > 0:
+        mu_y = marginal_util(c, params.gamma) # <1>
+    else:
+        mu_y = 10000.0
+    mu_o = marginal_util((1+params.r)*a, params.gamma) # <2>
+    return params.beta * (1+params.r) * (mu_o/mu_y) - 1.0
+```
+1. 若年期の限界効用
+2. 老年期の限界効用
+
+@sec-optimize と同様に，ソルバーを使って各状態変数 $w_i$ の下で最適貯蓄を求めていく．
+
+```{python}
+opt_a = np.zeros(params.nw)                                 # <1>
+
+for i, w_i in enumerate(params.grid_w):
+    resid_specified = lambda a: resid(a, w_i, params)       # <2>
+    opt_a[i] = optimize.fsolve(resid_specified, x0=0.01)[0] # <3>
+print(f"最適貯蓄の配列: \n{opt_a}")
+```
+1. 各 $w_i$ の下での最適貯蓄を格納する配列
+2. `optimize.fsolve()` に渡すために，`resid()` を `a` だけの関数にする
+3. `optimize.fsolve()` の返り値の最初の要素に欲しい最適な $a$ が格納されている
+
+結果を図示した @fig-root-finding を見ると，アルゴリズムで求めた解が解析解の直線上に乗っている様子がわかる．
+
+```{python}
+#| label: fig-root-finding
+#| fig-cap: "求根アルゴリズムから導出した貯蓄関数"
+fig, ax = plt.subplots()
+ax.grid(ls="--")
+ax.plot(params.grid_w, saving(params.grid_w, params.beta, params.r, params.gamma), c="#FF7A72",label="解析解")
+ax.scatter(params.grid_w, opt_a, c="#78C2AD", label="アルゴリズム")
+ax.set(title="貯蓄関数", xlabel="若年期の所得: "+r"$w$", ylabel="若年期の貯蓄: "+r"$a=g(w)$")
+ax.legend()
+pass
+```
+
+#### パラメトリックな近似：射影法 {#sec-projection}
+
+
+
+## References {.unnumbered}
