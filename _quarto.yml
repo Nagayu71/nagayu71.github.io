@@ -84,6 +84,7 @@ crossref:
   thm-title: 定理
   fig-prefix: 図
   fig-title: 図
+  sec-prefix: §
 # date-format: "M/DD/YYYY"
 
 execute: 
