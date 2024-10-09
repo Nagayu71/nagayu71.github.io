@@ -88,4 +88,4 @@ crossref:
 # date-format: "M/DD/YYYY"
 
 execute: 
-  freeze: true # see https://quarto.org/docs/projects/code-execution.html#freeze
+  freeze: auto # see https://quarto.org/docs/projects/code-execution.html#freeze
