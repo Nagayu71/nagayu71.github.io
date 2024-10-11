@@ -2,6 +2,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/2024/QuantMacro/numerical_computation.html",
       "/posts/2024/MCMC/metropolis-hastings.html"
     ]
   }

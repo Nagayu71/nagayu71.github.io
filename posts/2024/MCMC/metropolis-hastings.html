@@ -283,14 +283,14 @@ window.Quarto = {
   <ul>
   <li><a href="#モチベーション" id="toc-モチベーション" class="nav-link active" data-scroll-target="#モチベーション">モチベーション</a></li>
   <li><a href="#metropolis-hastings-アルゴリズム" id="toc-metropolis-hastings-アルゴリズム" class="nav-link" data-scroll-target="#metropolis-hastings-アルゴリズム">Metropolis-Hastings アルゴリズム</a>
-  <ul class="collapse">
+  <ul>
   <li><a href="#提案分布の導入" id="toc-提案分布の導入" class="nav-link" data-scroll-target="#提案分布の導入">提案分布の導入</a></li>
   <li><a href="#状態遷移の制限" id="toc-状態遷移の制限" class="nav-link" data-scroll-target="#状態遷移の制限">状態遷移の制限</a></li>
   <li><a href="#遷移確率の定式化" id="toc-遷移確率の定式化" class="nav-link" data-scroll-target="#遷移確率の定式化">遷移確率の定式化</a></li>
   <li><a href="#mh-アルゴリズム" id="toc-mh-アルゴリズム" class="nav-link" data-scroll-target="#mh-アルゴリズム">MH アルゴリズム</a></li>
   </ul></li>
   <li><a href="#python-による実装" id="toc-python-による実装" class="nav-link" data-scroll-target="#python-による実装">Python による実装</a>
-  <ul class="collapse">
+  <ul>
   <li><a href="#実装" id="toc-実装" class="nav-link" data-scroll-target="#実装">実装</a></li>
   <li><a href="#サンプリング" id="toc-サンプリング" class="nav-link" data-scroll-target="#サンプリング">サンプリング</a></li>
   <li><a href="#おまけr-のコード" id="toc-おまけr-のコード" class="nav-link" data-scroll-target="#おまけr-のコード">おまけ：R のコード</a></li>
@@ -1086,25 +1086,64 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         }
       };
     }
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
+      const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+      for (let i=0; i<annoteTargets.length; i++) {
+        const annoteTarget = annoteTargets[i];
+        const targetCell = annoteTarget.getAttribute("data-target-cell");
+        const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+        const contentFn = () => {
+          const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          if (content) {
+            const tipContent = content.cloneNode(true);
+            tipContent.classList.add("code-annotation-tip-content");
+            return tipContent.outerHTML;
           }
-        });
+        }
+        const config = {
+          allowHTML: true,
+          content: contentFn,
+          onShow: (instance) => {
+            selectCodeLines(instance.reference);
+            instance.reference.classList.add('code-annotation-active');
+            window.tippy.hideAll();
+          },
+          onHide: (instance) => {
+            unselectCodeLines();
+            instance.reference.classList.remove('code-annotation-active');
+          },
+          maxWidth: 300,
+          delay: [50, 0],
+          duration: [200, 0],
+          offset: [5, 10],
+          arrow: true,
+          appendTo: function(el) {
+            return el.parentElement.parentElement.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'quarto',
+          placement: 'right',
+          popperOptions: {
+            modifiers: [
+            {
+              name: 'flip',
+              options: {
+                flipVariations: false, // true by default
+                allowedAutoPlacements: ['right'],
+                fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+              },
+            },
+            {
+              name: 'preventOverflow',
+              options: {
+                mainAxis: false,
+                altAxis: false
+              }
+            }
+            ]        
+          }      
+        };
+        window.tippy(annoteTarget, config); 
       }
   const findCites = (el) => {
     const parentEl = el.parentElement;
