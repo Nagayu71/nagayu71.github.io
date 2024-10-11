@@ -31,6 +31,9 @@ $$
 \newcommand{\Ceil}[1]{\left\lceil#1\rceil\right}
 \newcommand{\iso}{\overset{\sim}{\to}}
 \newcommand{\eqDescribe}[2]{\underbrace{#1}_{\text{#2}}}
+\newcommand{\bm}[1]{\boldsymbol{#1}}
+\newcommand{\argmax}{\operatorname*{argmax}}
+\newcommand{\argmin}{\operatorname*{argmin}}
 $$
 
 :::

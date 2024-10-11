@@ -29,7 +29,7 @@ format: html
 
 > 本書が扱う内容は現在のマクロ経済学のメインストリームの１つといっても過言ではない。＜中略＞本書を通じて現代のマクロ経済分析に必要な新たな道具を身に付けるサポートをすることが、我々の目的である。(p.8)
 
-気持ちネットワーク科学をメインにやっているとはいえ，マクロ経済学徒の一人としては現代的な分析手法を学ぶ必要があると感じたため，勉強ノートを作ろうと思い立った次第である．
+（気持ちネットワーク科学をメインにやっているとはいえ，）マクロ経済学徒の一人としては現代的な分析手法を学ぶ必要があると感じたため，勉強ノートを作ろうと思い立った次第である．
 
 ::: {.callout-tip appearance="simple" icon="true"}
 このウェブサイトのフレームワークとなっている [Quarto](https://quarto.org/) は，このようなハンズオンで学ぶスタイルの勉強ノート作成に適している． Quarto もまだまだ勉強中の身ゆえ，このブログは Quarto の勉強も兼ねている．
@@ -40,13 +40,17 @@ format: html
 
 まず，シンプルな２期間モデルを用いて数値計算手法の基本的な使い方のイメージをつかむ．
 
-現在のマクロ経済学でベンチマークとなっている新古典派成長モデルは，この２期間モデルをモデルを多期間に拡張していき，その極限である無限期間となったものである．
+現在のマクロ経済学でベンチマークとなっている新古典派成長モデルは，この２期間モデルを多期間に拡張していき，その極限をとって無限期間にしたものである．
+
+したがって，まずはこのシンプルな２期間モデルで数値計算の基礎をおさえておくことが重要である．
 
 ### ベンチマーク・モデル：２期間モデル
 
 ある経済主体の人生全体での消費・貯蓄行動をモデル化しよう．
 
-経済主体は若年期に働いて所得 $w$ を獲得し，その所得を若年期の消費 $c_1$ に充てるか，それとも老後のための貯蓄 $a$ に残すかを決める問題に直面している．若年期の予算制約は，
+経済主体は若年期に働いて所得 $w$ を獲得し，その所得を若年期の消費 $c_1$ に充てるか，それとも老後のための貯蓄 $a$ に残すかを決める問題に直面している．
+
+若年期の予算制約は，
 
 $$
 c_1 + a = w
@@ -62,9 +66,9 @@ $$  {#eq-bc-old}
 
 $$
 U(c_1, c_2) = u(c_1) + \beta u(c_2).
-$$
+$$ {#eq-lifetime-utility}
 
-主体は若年期に意思決定を行うため，将来の消費 $c_2$ から得られる効用は割り引かれる．
+右辺第２項だが，主体は若年期に意思決定を行うため，将来の消費 $c_2$ から得られる効用 $u(c_2)$ は割り引かれる．
 
 ここで，効用関数について $u'(c) > 0$ および $u''(c) < 0$ を仮定し，主体は**消費の平準化 (consumption smoothing)** を望むものとする[^1]．
 
@@ -104,7 +108,7 @@ $$ {#eq-euler}
 
 オイラー条件（@eq-euler）の直感的な意味は，若年期と老年期で極端に消費水準が変動することを嫌うリスク回避的な主体は，若年期の消費 $c_1$ から得られる限界効用 $u'(c_1)$ と，老年期の消費 $c_2$ から得られる限界効用の割引現在価値 $\beta (1+r) u'(c_2)$ が一致するように消費計画を決めるということである．
 
-::: {.callout-important appearance="simple" icon="true"}
+::: {.callout-tip appearance="simple" icon="true"}
 ところで，何をもってモデルを「解いた」と言えるのか．マクロモデルはさまざまな経済変数が登場するため，この点を整理しておかないとすぐに迷子になる．
 
 このモデルの内生変数は $c_1$ と $a$ であり，外生変数は $w$ であるから[^2]，モデルを解くにはある所得 $w$ のもとでの主体の貯蓄関数 $g(w)$ と消費関数 $h(w)$ を導出すれば良い：
@@ -174,7 +178,6 @@ def CRRA(c, gamma):
 #| fig-cap: "CRRA 型効用関数"
 #| code-fold: true
 
-import japanize_matplotlib
 import matplotlib.pyplot as plt
 
 fig, ax = plt.subplots()
@@ -239,6 +242,11 @@ $$
 #| fig-cap: "解析的に求めた貯蓄関数"
 #| code-fold: true
 
+import japanize_matplotlib  # <1>
+
+# 傾き
+slope = 1 / (1 + (1+r) * (beta*(1+r)) **(-1/gamma))
+
 # 貯蓄関数
 def saving(w, beta, r, gamma):
     return w / (1 + (1+r) * (beta*(1+r)) **(-1/gamma))
@@ -252,6 +260,7 @@ ax.set(title="貯蓄関数", xlabel="若年期の所得: "+r"$w$", ylabel="若�
 ax.grid()
 pass
 ```
+1. タイトルや軸ラベルを日本語で書くときに必要
 
 
 ## 【実践】数値計算
@@ -370,7 +379,7 @@ ax.grid(ls="--")
 pass
 ```
 
-@fig-obj では若年期の所得 $w_i$ の下での生涯効用 $U(c_1, c_2)$ が凹関数として可視化されている．
+@fig-obj では若年期の所得 $w_i$ の下での生涯効用 $U(a_j; w_i)$ が凹関数として可視化されている．
 
 直感的にそれぞれの山の頂上に対応する貯蓄点が，求めたい最適貯蓄だとわかるだろう．
 
@@ -393,7 +402,7 @@ ax.legend()
 pass
 ```
 1. 政策関数（貯蓄関数）を格納するゼロベクトル
-2. 生涯効用が最大値をとる点を探す
+2. 生涯効用が最大値をとる点を探し，そのインデックスを取得する
 
 @fig-policy を見ると，グリッドサーチで求めた最適貯蓄（緑色の点）が，解析解（赤色の直線）からあまり離れていないことがわかる．
 
@@ -470,7 +479,7 @@ def Calibration():
     return Models(beta, gamma, r, nw, w_min, w_max, grid_w, na, a_min, a_max, grid_a)
 ```
 
-このノードでもこれ以降は，さまざまなパラメータをクラスを使って管理する．
+このノートでもこれ以降は，クラスを使ってさまざまなパラメータを管理する．
 
 
 ### 最適化アルゴリズム {#sec-optimize}
@@ -479,9 +488,9 @@ def Calibration():
 
 実際，真の貯蓄関数は @fig-saving のように線形である一方，グリッドサーチで求めた貯蓄関数は @fig-policy にあるように直線ではない．
 
-そこで，状態変数 $w$ は @sec-grid-search と同様に離散化するが，連続な制御変数 $a$ を許容するより洗練されたアプローチを用いる．
+そこで，状態変数 $w$ は @sec-grid-search と同様に離散化するが，連続な制御変数 $a$ を許容するより洗練されたアプローチを採用しよう．
 
-よって，今考えている最適化問題は次式で表される．
+グリッドサーチで考えた問題（@eq-obj）で離散化していた $a_j$ を連続値にするので，今考えている最適化問題は次式で表される．
 
 $$
 \max_{a\in\R} \quad 
@@ -618,7 +627,7 @@ $$
 R(a;w_i) = 0
 $$
 
-となる $a$ を探すという **求根（ゼロ点）問題 (root-finding problem)** に変換することができる．
+となる $a$ を探すという**求根（ゼロ点）問題 (root-finding problem)** に変換することができる．
 
 一般に，オイラー条件を変換して得た残差関数（@eq-resid）は，複雑な形をした非線形方程式である可能性があるが，非線形方程式のゼロ点を探すアルゴリズムの研究は長い歴史を持つため，様々なアプローチが考案されている．
 
@@ -643,17 +652,18 @@ def marginal_util(c, gamma):
 これを用いると残差関数は次のように実装できる．
 
 ```{python}
+#| lst-label: lst-resid
+#| lst-cap: 残差関数
+
 def resid(a, w_i, params):
     c = w_i - a
     if c > 0:
-        mu_y = marginal_util(c, params.gamma) # <1>
+        mu_y = marginal_util(c, params.gamma)              # 若年期の限界効用
     else:
         mu_y = 10000.0
-    mu_o = marginal_util((1+params.r)*a, params.gamma) # <2>
+    mu_o = marginal_util((1+params.r)*a, params.gamma)     # 老年期の限界効用
     return params.beta * (1+params.r) * (mu_o/mu_y) - 1.0
 ```
-1. 若年期の限界効用
-2. 老年期の限界効用
 
 @sec-optimize と同様に，ソルバーを使って各状態変数 $w_i$ の下で最適貯蓄を求めていく．
 
@@ -667,7 +677,7 @@ print(f"最適貯蓄の配列: \n{opt_a}")
 ```
 1. 各 $w_i$ の下での最適貯蓄を格納する配列
 2. `optimize.fsolve()` に渡すために，`resid()` を `a` だけの関数にする
-3. `optimize.fsolve()` の返り値の最初の要素に欲しい最適な $a$ が格納されている
+3. 我々が欲しい最適な $a$ は `optimize.fsolve()` の返り値の最初の要素に格納されている
 
 結果を図示した @fig-root-finding を見ると，アルゴリズムで求めた解が解析解の直線上に乗っている様子がわかる．
 
@@ -685,23 +695,23 @@ pass
 
 #### パラメトリックな近似：射影法 {#sec-projection}
 
-最適化（@sec-optimize）と求根アルゴリズム（@sec-root-finding）を使った手法はどちらも，本来連続値をとる現在の所得水準 $w$ を有限個に離散化して，グリッドポイント上で最適貯蓄を計算するという点は共通している．
+最適化（@sec-optimize）と求根アルゴリズム（@sec-root-finding）を使った手法はどちらも，本来連続値をとる現在の所得水準 $w$ を有限個に離散化して，そのグリッドポイント上で最適貯蓄を計算するという点は共通している．
 
 これに対して，**射影法 (projection method)** では求めたい政策関数そのものをパラメトリックに近似するというアプローチをとる^[筆者は射影法を初めて学んだとき，未知の関数の形状をパラメータで規定し，ある判断基準に基づいてパラメータを推定するという点にどこか計量経済学のような雰囲気を感じた．]．
 
-今考えている政策関数は若年期の所得 $w$ を変数にとる貯蓄関数 $a=g(w)$ である．貯蓄関数をパラメトリックに近似するとは、貯蓄関数を**基底関数 (basis function) ** $\{\Psi_m\}_{m=0}^M$ の線形結合
+今考えている政策関数は若年期の所得 $w$ を変数にとる貯蓄関数 $a=g(w)$ である．貯蓄関数をパラメトリックに近似するとは、貯蓄関数を**基底関数 (basis function) ** $\{\Psi_m\}_{m=0}^M$ の線形結合 $\hat{g}(w;\bm{\theta})$ で近似するということである^[**チェビシェフ多項式 (Chebyshev polynomials)** が基底関数として頻繁に用いられている．]．
 
 $$
 a = g(w) \approx \hat{g}(w;\bm{\theta}) = \sum_{m=0}^M \theta_m\Psi_m(w)
 $$ {#eq-parametric-approx}
 
-で近似するということである^[**チェビシェフ多項式 (Chebyshev polynomials)** が基底関数として頻繁に用いられている．]．ここで $\bm{\theta} \equiv \{\theta_m\}_{m=0}^M$ は未知の係数ベクトルであり，推定する対象である．
+ここで $\bm{\theta} \equiv \Paren{\theta_m}_{m=0}^M$ は未知の $M+1$ 次元係数ベクトルであり，推定する対象である．
 
-この段階では，未知の貯蓄関数はきっとパラメトリックな関数 $\hat{g}(w;\bm{\theta})$ で表されるだろうと思っているに過ぎない．
+この段階では，未知の貯蓄関数 $g(w)$ はきっとパラメトリックな関数 $\hat{g}(w;\bm{\theta})$ で表されるだろうと思っているに過ぎず，何も解決していない．
 
-ここで，真の貯蓄関数はオイラー条件（@eq-2.7）を満たすので，それを近似した関数 $\hat{g}(w;\bm{\theta})$ もできるだけオイラー条件を満たしておいて欲しいと思うのは自然な要請である．
+しかし，真の貯蓄関数 $g(w)$ はオイラー条件（@eq-2.7）を満たすので，それを近似した関数 $\hat{g}(w;\bm{\theta})$ もできるだけオイラー条件を満たしておいて欲しいと思うのは自然な要請である．
 
-つまり射影法とは，オイラー条件を満たす政策関数を探す問題を，（近似なので完全ではないにせよ）関数 $\hat{g}(w;\bm{\theta})$ ができるだけオイラー条件を満たすような係数ベクトル $\bm{\theta}$ を見つける問題に置き換える手法である．
+つまり射影法とは，オイラー条件を満たす政策関数を探す問題を，近似関数 $\hat{g}(w;\bm{\theta})$ ができるだけオイラー条件を満たすように係数ベクトル $\bm{\theta}$ を決める問題に置き換える手法である．
 
 以下では基底関数を $\Psi_m(w) = w^m$ と指定し，貯蓄関数を次の**多項式 (polynomial)** で近似して議論を進める．
 
@@ -716,7 +726,7 @@ $$ {#eq-2.9}
 $$
 R(\bm{\theta}; w) \equiv 
 \beta (1+r)\frac{u'((1+r)\hat{g}(w;\bm{\theta}))}{u'(w-\hat{g}(w;\bm{\theta}))} - 1 \approx 0
-$$
+$$ {#eq-resid-projection}
 
 が「あらゆる $w$ で」成り立つ．
 
@@ -737,13 +747,84 @@ $$ {#eq-2.10}
 
 カリブレーションは @sec-optimize のものを再び使用する．
 
-多項式 @eq-2.9 の次元を $M=1$ として１次関数 $\hat{g}(w;\bm{\theta}) = \theta_0 + \theta_1 w$ で政策関数を近似しよう．
+ここでは多項式 @eq-2.9 の次数を $M=1$ として，１次関数 $\hat{g}(w;\bm{\theta}) = \theta_0 + \theta_1 w$ で政策関数を近似しよう．
 
-<!-- ```{python}
-def approx(theta, w):
+各評価点 $w_i$ での近似値 $\hat{g}(w_i; \bm{\theta})$ を要素にもつ列ベクトルを $\widehat{\bm{g}}$ とすると
+
+$$
+\widehat{\bm{g}} = \Paren{\hat{g}(w_i;\bm{\theta})}_{i=1}^N = 
+\begin{pmatrix} \theta_0 + \theta_1 w_1 \\ \vdots \\ \theta_0 + \theta_1 w_i \\ \vdots \\ \theta_0 + \theta_1 w_N \end{pmatrix} =
+\eqDescribe{\begin{pmatrix} 1 & w_1 \\ \vdots & \vdots \\ 1 & w_i \\ \vdots & \vdots \\ 1 & w_N \end{pmatrix}}{denoted by X below} 
+\begin{pmatrix} \theta_0 \\ \theta_1 \end{pmatrix}
+$$
+
+と書けるが，これを実装すると次のようになる．
+
+```{python}
+def approx_g(theta: np.ndarray, w: np.ndarray) -> np.ndarray:
     dim = len(theta)
+    nw = len(w)
+    X = np.zeros((nw, dim)) # <1>
+    for j in range(dim):
+        X[:, j] = w ** j    # <2>
+    return X @ theta
+```
+1. 行列 $X$ を初期化
+2. 行列 $X$ を作成
 
+次に，残差関数 `resid()`（@lst-resid）を利用して，@eq-resid-projection に従って残差ベクトル $\bm{R}(\bm{w}; \bm{\theta})$ を実装する．
 
-``` -->
+```{python}
+def resid_vec(theta, params):
+    g_hats = approx_g(theta, params.grid_w)                        # <1>
+
+    R = np.zeros(nw)
+    for g, w_i, i in zip(g_hats, params.grid_w, np.arange(nw)):
+        R[i] = resid(g, w_i, params)
+    return R
+```
+1. 貯蓄の近似値ベクトル $\bm{\hat{g}}$ を計算
+
+ここで，距離関数 $\rho$ にユークリッド距離を採用すると，考えている問題（@eq-2.10）は残差二乗和を最小にする $\bm{\theta}$ を見つける非線形最小二乗法に帰着する．
+
+非線形最小二乗法は [`scipy.optimize.least_squares()`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.least_squares.html) で実装することができる．`fun` 引数に残差ベクトルを計算する関数を渡せば良い．
+
+```{python}
+def projection(params, initial_guess=[0.1, 0.35]):
+
+    resid_specified = lambda theta: resid_vec(theta, params) # <1>
+
+    result = optimize.least_squares(fun=resid_specified, x0=initial_guess, method="lm")
+
+    estimate_g = approx_g(result.x, params.grid_w)           # <2>
+    return result.x, result.success, estimate_g
+```
+1. `optimize.least_squares()` に渡すために，`resid_vec()` を `theta` だけの関数にする
+2. 推定された $\widehat{\bm{\theta}}$ の下での近似関数 $\hat{g}(w; \widehat{\bm{\theta}})$ を求める
+
+では，実装した `projection()` 関数を使って射影法を実際に行おう．
+
+```{python}
+result = projection(params)
+print(f"convergence: {result[1]}")
+print(f"The estimated parameter: {result[0]}")
+```
+
+解析解（@eq-saving）によれば，切片はゼロで，傾きは $1/1+(1+r)\{\beta(1+r)\}^{-1/\gamma}$ から計算すると `{python} round(slope, 4)` であるから，非常に精度良く近似することができている．
+
+推定されたパラメータ $\widehat{\bm{\theta}}$ の下での近似関数のグリッド $\widehat{\bm{g}}(\bm{w}; \widehat{\bm{\theta}})$ と真の貯蓄関数を可視化したものが @fig-projection である．
+
+```{python}
+#| label: fig-projection
+#| fig-cap: "射影法でパラメトリックに近似した貯蓄関数"
+fig, ax = plt.subplots()
+ax.grid(ls="--")
+ax.plot(params.grid_w, saving(params.grid_w, params.beta, params.r, params.gamma), c="#FF7A72",label="解析解")
+ax.scatter(params.grid_w, result[2], c="#78C2AD", label="射影法")
+ax.set(title="貯蓄関数", xlabel="若年期の所得: "+r"$w$", ylabel="若年期の貯蓄: "+r"$a=g(w)$")
+ax.legend()
+pass
+```
+
 
 ## References {.unnumbered}

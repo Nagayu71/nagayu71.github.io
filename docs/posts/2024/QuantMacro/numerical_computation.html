@@ -232,7 +232,9 @@ window.Quarto = {
       <h1 class="title">マクロ経済学における有限期間モデルと数値計算の概観</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">Macroeconomics</div>
+                <div class="quarto-category">Computation</div>
                 <div class="quarto-category">Python</div>
+                <div class="quarto-category">SciPy</div>
               </div>
                   </div>
   </div>
@@ -280,17 +282,31 @@ window.Quarto = {
   <ul>
   <li><a href="#はじめに" id="toc-はじめに" class="nav-link active" data-scroll-target="#はじめに"><span class="header-section-number">1</span> はじめに</a></li>
   <li><a href="#ベンチマークモデルとカリブレーション" id="toc-ベンチマークモデルとカリブレーション" class="nav-link" data-scroll-target="#ベンチマークモデルとカリブレーション"><span class="header-section-number">2</span> ベンチマーク・モデルとカリブレーション</a>
-  <ul class="collapse">
+  <ul>
   <li><a href="#ベンチマークモデル２期間モデル" id="toc-ベンチマークモデル２期間モデル" class="nav-link" data-scroll-target="#ベンチマークモデル２期間モデル"><span class="header-section-number">2.1</span> ベンチマーク・モデル：２期間モデル</a></li>
   <li><a href="#カリブレーション" id="toc-カリブレーション" class="nav-link" data-scroll-target="#カリブレーション"><span class="header-section-number">2.2</span> カリブレーション</a></li>
   <li><a href="#解析解の性質" id="toc-解析解の性質" class="nav-link" data-scroll-target="#解析解の性質"><span class="header-section-number">2.3</span> 解析解の性質</a></li>
   </ul></li>
   <li><a href="#実践数値計算" id="toc-実践数値計算" class="nav-link" data-scroll-target="#実践数値計算"><span class="header-section-number">3</span> 【実践】数値計算</a>
+  <ul>
+  <li><a href="#離散近似とグリッド" id="toc-離散近似とグリッド" class="nav-link" data-scroll-target="#離散近似とグリッド"><span class="header-section-number">3.1</span> 離散近似とグリッド</a>
   <ul class="collapse">
-  <li><a href="#離散近似とグリッド" id="toc-離散近似とグリッド" class="nav-link" data-scroll-target="#離散近似とグリッド"><span class="header-section-number">3.1</span> 離散近似とグリッド</a></li>
-  <li><a href="#sec-grid-search" id="toc-sec-grid-search" class="nav-link" data-scroll-target="#sec-grid-search"><span class="header-section-number">3.2</span> 状態変数と制御変数がともに離散の場合：グリッドサーチ</a></li>
-  <li><a href="#sec-optimize" id="toc-sec-optimize" class="nav-link" data-scroll-target="#sec-optimize"><span class="header-section-number">3.3</span> 最適化アルゴリズム</a></li>
-  <li><a href="#階条件を使う" id="toc-階条件を使う" class="nav-link" data-scroll-target="#階条件を使う"><span class="header-section-number">3.4</span> １階条件を使う</a></li>
+  <li><a href="#グリッド上で計算する" id="toc-グリッド上で計算する" class="nav-link" data-scroll-target="#グリッド上で計算する"><span class="header-section-number">3.1.1</span> グリッド上で計算する</a></li>
+  </ul></li>
+  <li><a href="#sec-grid-search" id="toc-sec-grid-search" class="nav-link" data-scroll-target="#sec-grid-search"><span class="header-section-number">3.2</span> 状態変数と制御変数がともに離散の場合：グリッドサーチ</a>
+  <ul class="collapse">
+  <li><a href="#注意点次元の呪い" id="toc-注意点次元の呪い" class="nav-link" data-scroll-target="#注意点次元の呪い"><span class="header-section-number">3.2.1</span> 注意点：次元の呪い</a></li>
+  <li><a href="#sec-obj-oriented" id="toc-sec-obj-oriented" class="nav-link" data-scroll-target="#sec-obj-oriented"><span class="header-section-number">3.2.2</span> オブジェクト指向プログラミング</a></li>
+  </ul></li>
+  <li><a href="#sec-optimize" id="toc-sec-optimize" class="nav-link" data-scroll-target="#sec-optimize"><span class="header-section-number">3.3</span> 最適化アルゴリズム</a>
+  <ul class="collapse">
+  <li><a href="#実装" id="toc-実装" class="nav-link" data-scroll-target="#実装"><span class="header-section-number">3.3.1</span> 実装</a></li>
+  </ul></li>
+  <li><a href="#階条件を使う" id="toc-階条件を使う" class="nav-link" data-scroll-target="#階条件を使う"><span class="header-section-number">3.4</span> １階条件を使う</a>
+  <ul class="collapse">
+  <li><a href="#sec-root-finding" id="toc-sec-root-finding" class="nav-link" data-scroll-target="#sec-root-finding"><span class="header-section-number">3.4.1</span> 非線形方程式の求根問題</a></li>
+  <li><a href="#sec-projection" id="toc-sec-projection" class="nav-link" data-scroll-target="#sec-projection"><span class="header-section-number">3.4.2</span> パラメトリックな近似：射影法</a></li>
+  </ul></li>
   </ul></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
@@ -333,6 +349,9 @@ window.Quarto = {
 \newcommand{\Ceil}[1]{\left\lceil#1\rceil\right}
 \newcommand{\iso}{\overset{\sim}{\to}}
 \newcommand{\eqDescribe}[2]{\underbrace{#1}_{\text{#2}}}
+\newcommand{\bm}[1]{\boldsymbol{#1}}
+\newcommand{\argmax}{\operatorname*{argmax}}
+\newcommand{\argmin}{\operatorname*{argmin}}
 \]</span></p>
 </div>
 <section id="はじめに" class="level2" data-number="1">
@@ -345,7 +364,7 @@ window.Quarto = {
 <blockquote class="blockquote">
 <p>本書が扱う内容は現在のマクロ経済学のメインストリームの１つといっても過言ではない。＜中略＞本書を通じて現代のマクロ経済分析に必要な新たな道具を身に付けるサポートをすることが、我々の目的である。(p.8)</p>
 </blockquote>
-<p>気持ちネットワーク科学をメインにやっているとはいえ，マクロ経済学徒の一人としては現代的な分析手法を学ぶ必要があると感じたため，勉強ノートを作ろうと思い立った次第である．</p>
+<p>（気持ちネットワーク科学をメインにやっているとはいえ，）マクロ経済学徒の一人としては現代的な分析手法を学ぶ必要があると感じたため，勉強ノートを作ろうと思い立った次第である．</p>
 <div class="callout callout-style-simple callout-tip">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -360,11 +379,13 @@ window.Quarto = {
 <section id="ベンチマークモデルとカリブレーション" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="ベンチマークモデルとカリブレーション"><span class="header-section-number">2</span> ベンチマーク・モデルとカリブレーション</h2>
 <p>まず，シンプルな２期間モデルを用いて数値計算手法の基本的な使い方のイメージをつかむ．</p>
-<p>現在のマクロ経済学でベンチマークとなっている新古典派成長モデルは，この２期間モデルをモデルを多期間に拡張していき，その極限である無限期間となったものである．</p>
+<p>現在のマクロ経済学でベンチマークとなっている新古典派成長モデルは，この２期間モデルを多期間に拡張していき，その極限をとって無限期間にしたものである．</p>
+<p>したがって，まずはこのシンプルな２期間モデルで数値計算の基礎をおさえておくことが重要である．</p>
 <section id="ベンチマークモデル２期間モデル" class="level3" data-number="2.1">
 <h3 data-number="2.1" class="anchored" data-anchor-id="ベンチマークモデル２期間モデル"><span class="header-section-number">2.1</span> ベンチマーク・モデル：２期間モデル</h3>
 <p>ある経済主体の人生全体での消費・貯蓄行動をモデル化しよう．</p>
-<p>経済主体は若年期に働いて所得 <span class="math inline">\(w\)</span> を獲得し，その所得を若年期の消費 <span class="math inline">\(c_1\)</span> に充てるか，それとも老後のための貯蓄 <span class="math inline">\(a\)</span> に残すかを決める問題に直面している．若年期の予算制約は，</p>
+<p>経済主体は若年期に働いて所得 <span class="math inline">\(w\)</span> を獲得し，その所得を若年期の消費 <span class="math inline">\(c_1\)</span> に充てるか，それとも老後のための貯蓄 <span class="math inline">\(a\)</span> に残すかを決める問題に直面している．</p>
+<p>若年期の予算制約は，</p>
 <p><span id="eq-bc-young"><span class="math display">\[
 c_1 + a = w
 \tag{1}\]</span></span></p>
@@ -373,10 +394,10 @@ c_1 + a = w
 c_2 = a(1 + r)
 \tag{2}\]</span></span></p>
 <p>で与えられる．<span class="math inline">\(\beta &gt; 0\)</span> を<strong>割引因子 (discount factor)</strong> とすると，経済主体の生涯効用は次式で与えられる：</p>
-<p><span class="math display">\[
+<p><span id="eq-lifetime-utility"><span class="math display">\[
 U(c_1, c_2) = u(c_1) + \beta u(c_2).
-\]</span></p>
-<p>主体は若年期に意思決定を行うため，将来の消費 <span class="math inline">\(c_2\)</span> から得られる効用は割り引かれる．</p>
+\tag{3}\]</span></span></p>
+<p>右辺第２項だが，主体は若年期に意思決定を行うため，将来の消費 <span class="math inline">\(c_2\)</span> から得られる効用 <span class="math inline">\(u(c_2)\)</span> は割り引かれる．</p>
 <p>ここで，効用関数について <span class="math inline">\(u'(c) &gt; 0\)</span> および <span class="math inline">\(u''(c) &lt; 0\)</span> を仮定し，主体は<strong>消費の平準化 (consumption smoothing)</strong> を望むものとする<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>．</p>
 <p>以上の設定の下で解くべき意思決定問題は，次のように定式化できる．</p>
 <p><span id="eq-problem"><span class="math display">\[
@@ -385,7 +406,7 @@ U(c_1, c_2) = u(c_1) + \beta u(c_2).
 \text{s.t.} &amp; \quad c_1 + a = w, \\
 &amp; \quad c_2 = (1+r)a. \\
 \end{aligned}
-\tag{3}\]</span></span></p>
+\tag{4}\]</span></span></p>
 <p>ラグランジアンは</p>
 <p><span class="math display">\[
 \mathcal{L} = u(c_1) + \beta u(c_2) + \lambda_1 (w - c_1 - a) + \lambda_2[(1+r)a - c_2]
@@ -398,12 +419,12 @@ U(c_1, c_2) = u(c_1) + \beta u(c_2).
 &amp;0 = \frac{\partial\mathcal{L}}{\partial a} = -\lambda_1 + \lambda_2(1+r).
 \end{aligned}
 \]</span></p>
-<p>整理すると <a href="#eq-euler" class="quarto-xref">式&nbsp;4</a> のオイラー条件（オイラー方程式）を得る．</p>
+<p>整理すると <a href="#eq-euler" class="quarto-xref">式&nbsp;5</a> のオイラー条件（オイラー方程式）を得る．</p>
 <p><span id="eq-euler"><span class="math display">\[
 u'(c_1) = \beta (1+r) u'(c_2).
-\tag{4}\]</span></span></p>
-<p>オイラー条件（<a href="#eq-euler" class="quarto-xref">式&nbsp;4</a>）の直感的な意味は，若年期と老年期で極端に消費水準が変動することを嫌うリスク回避的な主体は，若年期の消費 <span class="math inline">\(c_1\)</span> から得られる限界効用 <span class="math inline">\(u'(c_1)\)</span> と，老年期の消費 <span class="math inline">\(c_2\)</span> から得られる限界効用の割引現在価値 <span class="math inline">\(\beta (1+r) u'(c_2)\)</span> が一致するように消費計画を決めるということである．</p>
-<div class="callout callout-style-simple callout-important">
+\tag{5}\]</span></span></p>
+<p>オイラー条件（<a href="#eq-euler" class="quarto-xref">式&nbsp;5</a>）の直感的な意味は，若年期と老年期で極端に消費水準が変動することを嫌うリスク回避的な主体は，若年期の消費 <span class="math inline">\(c_1\)</span> から得られる限界効用 <span class="math inline">\(u'(c_1)\)</span> と，老年期の消費 <span class="math inline">\(c_2\)</span> から得られる限界効用の割引現在価値 <span class="math inline">\(\beta (1+r) u'(c_2)\)</span> が一致するように消費計画を決めるということである．</p>
+<div class="callout callout-style-simple callout-tip">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -434,10 +455,10 @@ c_1 &amp;= h(w).
 <p>ここでは，マクロ経済学で頻繁に使われる<strong>相対的リスク回避度一定 (constant relative risk aversion: CRRA)</strong> 型効用関数を仮定する．</p>
 <p><span id="eq-crra"><span class="math display">\[
 u(c) = \frac{c^{1-\gamma}}{1-\gamma}.
-\tag{5}\]</span></span></p>
+\tag{6}\]</span></span></p>
 <p>リスクが存在するモデルであれば，<span class="math inline">\(\gamma\)</span> は<strong>相対的リスク回避度 (coefficient of relative risk aversion)</strong> であり，同時に<strong>異時点間の代替の弾力性 (intertemporal elasticity of substitution)</strong> の逆数である．</p>
-<p><a href="#eq-crra" class="quarto-xref">式&nbsp;5</a> をコンピュータが認識できるように Python で書くと，次のようになる．</p>
-<div id="b6ff4af4" class="cell" data-execution_count="1">
+<p><a href="#eq-crra" class="quarto-xref">式&nbsp;6</a> をコンピュータが認識できるように Python で書くと，次のようになる．</p>
+<div id="1522d8b6" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="annotated-cell-1-2"><a href="#annotated-cell-1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="annotated-cell-1-3"><a href="#annotated-cell-1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> CRRA(c, gamma):</span>
@@ -450,7 +471,7 @@ u(c) = \frac{c^{1-\gamma}}{1-\gamma}.
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="7" data-code-annotation="1"><span class="math inline">\(\gamma = 1\)</span> の場合に <span class="math inline">\(u(c) = \log c\)</span> としているのは <a href="#eq-crra" class="quarto-xref">式&nbsp;5</a> が <span class="math inline">\(c \to 1\)</span> の極限で発散するため，次式のようにロピタルの定理で解消した結果である．<span class="math display">\[
+<span data-code-cell="annotated-cell-1" data-code-lines="7" data-code-annotation="1"><span class="math inline">\(\gamma = 1\)</span> の場合に <span class="math inline">\(u(c) = \log c\)</span> としているのは <a href="#eq-crra" class="quarto-xref">式&nbsp;6</a> が <span class="math inline">\(c \to 1\)</span> の極限で発散するため，次式のようにロピタルの定理で解消した結果である．<span class="math display">\[
 \begin{aligned}
 \lim_{\gamma\to1} u(c)
 &amp;= \lim_{\gamma\to1} \frac{c^{1-\gamma}}{1-\gamma} \\
@@ -463,33 +484,32 @@ u(c) = \frac{c^{1-\gamma}}{1-\gamma}.
 </div>
 </div>
 <p>実際にプログラムを動かす際は，関数形の特定に加えて具体的にパラメータの値を決める必要があるが，このように関数形を特定してパラメータを定める一連の作業を<strong>カリブレーション (calibration)</strong> と呼ぶ．</p>
-<p>異なる <code>gamma</code> の下で CRRA 型効用関数（<a href="#eq-crra" class="quarto-xref">式&nbsp;5</a>）を可視化したものが <a href="#fig-crra" class="quarto-xref">図&nbsp;1</a> である．</p>
+<p>異なる <code>gamma</code> の下で CRRA 型効用関数（<a href="#eq-crra" class="quarto-xref">式&nbsp;6</a>）を可視化したものが <a href="#fig-crra" class="quarto-xref">図&nbsp;1</a> である．</p>
 <div id="cell-fig-crra" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="annotated-cell-2"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-2-1"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> japanize_matplotlib</span>
-<span id="annotated-cell-2-2"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="annotated-cell-2-3"><a href="#annotated-cell-2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-2-4"><a href="#annotated-cell-2-4" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
-<span id="annotated-cell-2-5"><a href="#annotated-cell-2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># c の範囲を指定して曲線をプロット</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-6" class="code-annotation-target"><a href="#annotated-cell-2-6" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> np.linspace(start<span class="op">=</span><span class="fl">0.1</span>, stop<span class="op">=</span><span class="fl">1.0</span>, num<span class="op">=</span><span class="dv">100</span>)</span>
-<span id="annotated-cell-2-7"><a href="#annotated-cell-2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-2-8"><a href="#annotated-cell-2-8" aria-hidden="true" tabindex="-1"></a>gammas <span class="op">=</span> [<span class="dv">1</span>, <span class="fl">1.5</span>, <span class="dv">2</span>]</span>
-<span id="annotated-cell-2-9"><a href="#annotated-cell-2-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> gamma <span class="kw">in</span> gammas:</span>
-<span id="annotated-cell-2-10"><a href="#annotated-cell-2-10" aria-hidden="true" tabindex="-1"></a>    u <span class="op">=</span> CRRA(c, gamma)</span>
-<span id="annotated-cell-2-11"><a href="#annotated-cell-2-11" aria-hidden="true" tabindex="-1"></a>    ax.plot(c, u, label<span class="op">=</span><span class="ss">f'gamma = </span><span class="sc">{</span>gamma<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="annotated-cell-2-12"><a href="#annotated-cell-2-12" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Utility Function for Different gamma values"</span>)</span>
-<span id="annotated-cell-2-13"><a href="#annotated-cell-2-13" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="vs">r"$c$"</span>)</span>
-<span id="annotated-cell-2-14"><a href="#annotated-cell-2-14" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="vs">r"$u(c)$"</span>)</span>
-<span id="annotated-cell-2-15"><a href="#annotated-cell-2-15" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
-<span id="annotated-cell-2-16"><a href="#annotated-cell-2-16" aria-hidden="true" tabindex="-1"></a>ax.grid()</span>
-<span id="annotated-cell-2-17"><a href="#annotated-cell-2-17" aria-hidden="true" tabindex="-1"></a><span class="cf">pass</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-2"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-2-1"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="annotated-cell-2-2"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-2-3"><a href="#annotated-cell-2-3" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="annotated-cell-2-4"><a href="#annotated-cell-2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># c の範囲を指定して曲線をプロット</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-5" class="code-annotation-target"><a href="#annotated-cell-2-5" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> np.linspace(start<span class="op">=</span><span class="fl">0.1</span>, stop<span class="op">=</span><span class="fl">1.0</span>, num<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="annotated-cell-2-6"><a href="#annotated-cell-2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-2-7"><a href="#annotated-cell-2-7" aria-hidden="true" tabindex="-1"></a>gammas <span class="op">=</span> [<span class="dv">1</span>, <span class="fl">1.5</span>, <span class="dv">2</span>]</span>
+<span id="annotated-cell-2-8"><a href="#annotated-cell-2-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> gamma <span class="kw">in</span> gammas:</span>
+<span id="annotated-cell-2-9"><a href="#annotated-cell-2-9" aria-hidden="true" tabindex="-1"></a>    u <span class="op">=</span> CRRA(c, gamma)</span>
+<span id="annotated-cell-2-10"><a href="#annotated-cell-2-10" aria-hidden="true" tabindex="-1"></a>    ax.plot(c, u, label<span class="op">=</span><span class="ss">f'gamma = </span><span class="sc">{</span>gamma<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="annotated-cell-2-11"><a href="#annotated-cell-2-11" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Utility Function for Different gamma values"</span>)</span>
+<span id="annotated-cell-2-12"><a href="#annotated-cell-2-12" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="vs">r"$c$"</span>)</span>
+<span id="annotated-cell-2-13"><a href="#annotated-cell-2-13" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="vs">r"$u(c)$"</span>)</span>
+<span id="annotated-cell-2-14"><a href="#annotated-cell-2-14" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
+<span id="annotated-cell-2-15"><a href="#annotated-cell-2-15" aria-hidden="true" tabindex="-1"></a>ax.grid()</span>
+<span id="annotated-cell-2-16"><a href="#annotated-cell-2-16" aria-hidden="true" tabindex="-1"></a><span class="cf">pass</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="6" data-code-annotation="1">0.1 から 10 までの値 (0 は定義できないので 0.1 から)</span>
+<span data-code-cell="annotated-cell-2" data-code-lines="5" data-code-annotation="1">0.1 から 10 までの値 (0 は定義できないので 0.1 から)</span>
 </dd>
 </dl>
 </div>
@@ -508,7 +528,7 @@ u(c) = \frac{c^{1-\gamma}}{1-\gamma}.
 </div>
 <p>ベンチマーク・モデルでは人生を 2 期間に分けているので，モデル上の 1 期間を 30 年と想定する． そのため，割引因子 <span class="math inline">\(\beta\)</span> と金利 <span class="math inline">\(r\)</span> は年率ではなく 30 年間の値を使う．</p>
 <p>今回は実際に 1 期間を 30 年でカリブレートしている <span class="citation" data-cites="song2012rotten">Song, Storesletten, and Zilibotti (<a href="#ref-song2012rotten" role="doc-biblioref">2012</a>)</span> の値を拝借する．割引因子は年率で <span class="math inline">\(\beta = 0.985\)</span> として，1 期間は 30 年なので 30 乗する（<span class="math inline">\(\beta = 0.985^{30}\)</span>）．金利は年率で <span class="math inline">\(2.5\%\)</span> と設定すると <span class="math inline">\(1+r = 1.025^{30}\)</span> となる．相対的リスク回避度は，よく使われる値の <span class="math inline">\(\gamma = 2\)</span> としておく．</p>
-<div id="d4e8b42e" class="cell" data-execution_count="3">
+<div id="031cd2a2" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>beta <span class="op">=</span> <span class="fl">0.985</span><span class="op">**</span><span class="dv">30</span>        <span class="co"># 割引因子</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>gamma <span class="op">=</span> <span class="fl">2.0</span>             <span class="co"># 相対的危険回避度</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> <span class="fl">1.025</span><span class="op">**</span><span class="dv">30</span> <span class="op">-</span> <span class="fl">1.0</span>     <span class="co"># 金利</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -521,7 +541,7 @@ u(c) = \frac{c^{1-\gamma}}{1-\gamma}.
 % \begin{equation}
 a = \frac{w}{1+(1+r)\{\beta(1+r)\}^{-1/\gamma}}
 % \end{equation}
-\tag{6}\]</span></span></p>
+\tag{7}\]</span></span></p>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -534,7 +554,7 @@ a = \frac{w}{1+(1+r)\{\beta(1+r)\}^{-1/\gamma}}
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>オイラー条件（<a href="#eq-euler" class="quarto-xref">式&nbsp;4</a>）に予算制約の <a href="#eq-bc-young" class="quarto-xref">式&nbsp;1</a> と <a href="#eq-bc-old" class="quarto-xref">式&nbsp;2</a> を代入すると，</p>
+<p>オイラー条件（<a href="#eq-euler" class="quarto-xref">式&nbsp;5</a>）に予算制約の <a href="#eq-bc-young" class="quarto-xref">式&nbsp;1</a> と <a href="#eq-bc-old" class="quarto-xref">式&nbsp;2</a> を代入すると，</p>
 <p><span class="math display">\[
 \begin{aligned}
 (w-a)^{-\gamma} &amp;= \beta(1+r)\SquareBrac{(1+r)a}^{-\gamma} \\
@@ -546,23 +566,36 @@ w &amp;= \Brace{1+\SquareBrac{\beta(1+r)}^{-1/\gamma}(1+r)}a.
 </div>
 </div>
 <p>これがモデルから導出される真の貯蓄関数であり，内生変数 <span class="math inline">\(a\)</span> が外生変数 <span class="math inline">\(w, r, \beta, \gamma\)</span> で表されているので，これでモデルは解けている．</p>
-<p>貯蓄関数（<a href="#eq-saving" class="quarto-xref">式&nbsp;6</a>）は若年期の所得 <span class="math inline">\(w\)</span> の連続な線形の増加関数になっており，そのグラフを可視化したものが <a href="#fig-saving" class="quarto-xref">図&nbsp;2</a> である．</p>
+<p>貯蓄関数（<a href="#eq-saving" class="quarto-xref">式&nbsp;7</a>）は若年期の所得 <span class="math inline">\(w\)</span> の連続な線形の増加関数になっており，そのグラフを可視化したものが <a href="#fig-saving" class="quarto-xref">図&nbsp;2</a> である．</p>
 <div id="cell-fig-saving" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 貯蓄関数</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> saving(w, beta, r, gamma):</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> w <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> (<span class="dv">1</span><span class="op">+</span>r) <span class="op">*</span> (beta<span class="op">*</span>(<span class="dv">1</span><span class="op">+</span>r)) <span class="op">**</span>(<span class="op">-</span><span class="dv">1</span><span class="op">/</span>gamma))</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> np.linspace(start<span class="op">=</span><span class="dv">0</span>, stop<span class="op">=</span><span class="fl">1.0</span>, num<span class="op">=</span><span class="dv">100</span>)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> saving(w, beta, r, gamma)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>ax.plot(w, a, c<span class="op">=</span><span class="st">"#FF7A72"</span>)</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(title<span class="op">=</span><span class="st">"貯蓄関数"</span>, xlabel<span class="op">=</span><span class="st">"若年期の所得: "</span><span class="op">+</span><span class="vs">r"$w$"</span>, ylabel<span class="op">=</span><span class="st">"若年期の貯蓄: "</span><span class="op">+</span><span class="vs">r"$a=g(w)$"</span>, xlim<span class="op">=</span>(<span class="dv">0</span>,<span class="dv">1</span>), ylim<span class="op">=</span>(<span class="dv">0</span>,<span class="fl">0.4</span>))</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>ax.grid()</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="cf">pass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-4"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="1">1</button><span id="annotated-cell-4-1" class="code-annotation-target"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> japanize_matplotlib</span>
+<span id="annotated-cell-4-2"><a href="#annotated-cell-4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-4-3"><a href="#annotated-cell-4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 傾き</span></span>
+<span id="annotated-cell-4-4"><a href="#annotated-cell-4-4" aria-hidden="true" tabindex="-1"></a>slope <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> (<span class="dv">1</span><span class="op">+</span>r) <span class="op">*</span> (beta<span class="op">*</span>(<span class="dv">1</span><span class="op">+</span>r)) <span class="op">**</span>(<span class="op">-</span><span class="dv">1</span><span class="op">/</span>gamma))</span>
+<span id="annotated-cell-4-5"><a href="#annotated-cell-4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-4-6"><a href="#annotated-cell-4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 貯蓄関数</span></span>
+<span id="annotated-cell-4-7"><a href="#annotated-cell-4-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> saving(w, beta, r, gamma):</span>
+<span id="annotated-cell-4-8"><a href="#annotated-cell-4-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> w <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> (<span class="dv">1</span><span class="op">+</span>r) <span class="op">*</span> (beta<span class="op">*</span>(<span class="dv">1</span><span class="op">+</span>r)) <span class="op">**</span>(<span class="op">-</span><span class="dv">1</span><span class="op">/</span>gamma))</span>
+<span id="annotated-cell-4-9"><a href="#annotated-cell-4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-4-10"><a href="#annotated-cell-4-10" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="annotated-cell-4-11"><a href="#annotated-cell-4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-4-12"><a href="#annotated-cell-4-12" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> np.linspace(start<span class="op">=</span><span class="dv">0</span>, stop<span class="op">=</span><span class="fl">1.0</span>, num<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="annotated-cell-4-13"><a href="#annotated-cell-4-13" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> saving(w, beta, r, gamma)</span>
+<span id="annotated-cell-4-14"><a href="#annotated-cell-4-14" aria-hidden="true" tabindex="-1"></a>ax.plot(w, a, c<span class="op">=</span><span class="st">"#FF7A72"</span>)</span>
+<span id="annotated-cell-4-15"><a href="#annotated-cell-4-15" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(title<span class="op">=</span><span class="st">"貯蓄関数"</span>, xlabel<span class="op">=</span><span class="st">"若年期の所得: "</span><span class="op">+</span><span class="vs">r"$w$"</span>, ylabel<span class="op">=</span><span class="st">"若年期の貯蓄: "</span><span class="op">+</span><span class="vs">r"$a=g(w)$"</span>, xlim<span class="op">=</span>(<span class="dv">0</span>,<span class="dv">1</span>), ylim<span class="op">=</span>(<span class="dv">0</span>,<span class="fl">0.4</span>))</span>
+<span id="annotated-cell-4-16"><a href="#annotated-cell-4-16" aria-hidden="true" tabindex="-1"></a>ax.grid()</span>
+<span id="annotated-cell-4-17"><a href="#annotated-cell-4-17" aria-hidden="true" tabindex="-1"></a><span class="cf">pass</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-4" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-4" data-code-lines="1" data-code-annotation="1">タイトルや軸ラベルを日本語で書くときに必要</span>
+</dd>
+</dl>
+</div>
 <div class="cell-output cell-output-display">
 <div id="fig-saving" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -582,7 +615,7 @@ w &amp;= \Brace{1+\SquareBrac{\beta(1+r)}^{-1/\gamma}(1+r)}a.
 <h2 data-number="3" class="anchored" data-anchor-id="実践数値計算"><span class="header-section-number">3</span> 【実践】数値計算</h2>
 <section id="離散近似とグリッド" class="level3" data-number="3.1">
 <h3 data-number="3.1" class="anchored" data-anchor-id="離散近似とグリッド"><span class="header-section-number">3.1</span> 離散近似とグリッド</h3>
-<p>貯蓄関数（<a href="#eq-saving" class="quarto-xref">式&nbsp;6</a>）は連続関数であるが，コンピュータは連続という概念をそのままの形では理解できない．</p>
+<p>貯蓄関数（<a href="#eq-saving" class="quarto-xref">式&nbsp;7</a>）は連続関数であるが，コンピュータは連続という概念をそのままの形では理解できない．</p>
 <p>そこで，数値計算においては基本的に，連続な変数を有限の <span class="math inline">\(N\)</span> 個の点に<strong>離散化 (discretize)</strong> して考える必要がある．</p>
 <section id="グリッド上で計算する" class="level4" data-number="3.1.1">
 <h4 data-number="3.1.1" class="anchored" data-anchor-id="グリッド上で計算する"><span class="header-section-number">3.1.1</span> グリッド上で計算する</h4>
@@ -604,12 +637,12 @@ w &amp;= \Brace{1+\SquareBrac{\beta(1+r)}^{-1/\gamma}(1+r)}a.
 w_i \in \{0.1, 0.2,\ldots, 1.0\}
 \]</span></p>
 <p>として存在していると考える．</p>
-<div id="4aa25539" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>nw <span class="op">=</span> <span class="dv">10</span>       <span class="co"># 所得グリッドの数</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>w_min <span class="op">=</span> <span class="fl">0.1</span>   <span class="co"># 所得の最大値</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>w_max <span class="op">=</span> <span class="fl">1.0</span>   <span class="co"># 所得の最小値</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>grid_w <span class="op">=</span> np.linspace(start<span class="op">=</span><span class="fl">0.1</span>, stop<span class="op">=</span><span class="fl">1.0</span>, num<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(grid_w)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="960ee289" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>nw <span class="op">=</span> <span class="dv">10</span>       <span class="co"># 所得グリッドの数</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>w_min <span class="op">=</span> <span class="fl">0.1</span>   <span class="co"># 所得の最大値</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>w_max <span class="op">=</span> <span class="fl">1.0</span>   <span class="co"># 所得の最小値</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>grid_w <span class="op">=</span> np.linspace(start<span class="op">=</span><span class="fl">0.1</span>, stop<span class="op">=</span><span class="fl">1.0</span>, num<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(grid_w)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1. ]</code></pre>
 </div>
@@ -648,12 +681,12 @@ w_i \in \{0.1, 0.2,\ldots, 1.0\}
 a_j \in \{0.025, 0.05, 0.075, 0.1, \ldots, 1.0\}
 \]</span></p>
 <p>と <span class="math inline">\(0.025\)</span> 刻みで <span class="math inline">\(40\)</span> 個のグリッドをとる<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>．</p>
-<div id="a64d6055" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>na <span class="op">=</span> <span class="dv">40</span>       <span class="co"># 貯蓄グリッドの数</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>a_min <span class="op">=</span> <span class="fl">0.025</span> <span class="co"># 貯蓄の最小値</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>a_max <span class="op">=</span> <span class="fl">1.0</span>   <span class="co"># 貯蓄の最大値</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>grid_a <span class="op">=</span> np.linspace(start<span class="op">=</span>a_min, stop<span class="op">=</span>a_max, num<span class="op">=</span>na)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(grid_a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="a7316e33" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>na <span class="op">=</span> <span class="dv">40</span>       <span class="co"># 貯蓄グリッドの数</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>a_min <span class="op">=</span> <span class="fl">0.025</span> <span class="co"># 貯蓄の最小値</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>a_max <span class="op">=</span> <span class="fl">1.0</span>   <span class="co"># 貯蓄の最大値</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>grid_a <span class="op">=</span> np.linspace(start<span class="op">=</span>a_min, stop<span class="op">=</span>a_max, num<span class="op">=</span>na)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(grid_a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[0.025 0.05  0.075 0.1   0.125 0.15  0.175 0.2   0.225 0.25  0.275 0.3
  0.325 0.35  0.375 0.4   0.425 0.45  0.475 0.5   0.525 0.55  0.575 0.6
@@ -661,15 +694,15 @@ a_j \in \{0.025, 0.05, 0.075, 0.1, \ldots, 1.0\}
  0.925 0.95  0.975 1.   ]</code></pre>
 </div>
 </div>
-<p>このような離散化を行うと，解くべき効用最大化問題（<a href="#eq-problem" class="quarto-xref">式&nbsp;3</a>）は，所与の <span class="math inline">\(w_i\)</span> について，</p>
+<p>このような離散化を行うと，解くべき効用最大化問題（<a href="#eq-problem" class="quarto-xref">式&nbsp;4</a>）は，所与の <span class="math inline">\(w_i\)</span> について，</p>
 <p><span id="eq-obj"><span class="math display">\[
 \max_{a_j} \quad
 \frac{[w_i-a_j]^{1-\gamma}}{1-\gamma} + \beta\frac{[(1+r)a_j]^{1-\gamma}}{1-\gamma}
-\tag{7}\]</span></span></p>
+\tag{8}\]</span></span></p>
 <p>と書き直すことができる．</p>
 <p>組み合わせの数は，所得 <span class="math inline">\(w_i\)</span> と資産 <span class="math inline">\(a_j\)</span> がそれぞれ <span class="math inline">\(10\)</span> 通りと <span class="math inline">\(40\)</span> 通りあるので， <span class="math inline">\(400\)</span> 通りとなる．</p>
-<p>そして各所得 <span class="math inline">\(w_i\)</span> のもとで <span class="math inline">\(40\)</span> 種類の資産 <span class="math inline">\(a_j\)</span> の中から生涯効用（<a href="#eq-obj" class="quarto-xref">式&nbsp;7</a>）を最大化する資産 <span class="math inline">\(a^*\)</span> を求めれば良いので，これくらいであれば「総当たり」で求めることができる．</p>
-<div id="4c80a00d" class="cell" data-execution_count="7">
+<p>そして各所得 <span class="math inline">\(w_i\)</span> のもとで <span class="math inline">\(40\)</span> 種類の資産 <span class="math inline">\(a_j\)</span> の中から生涯効用（<a href="#eq-obj" class="quarto-xref">式&nbsp;8</a>）を最大化する資産 <span class="math inline">\(a^*\)</span> を求めれば良いので，これくらいであれば「総当たり」で求めることができる．</p>
+<div id="34ee43ac" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="annotated-cell-7"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="1">1</button><span id="annotated-cell-7-1" class="code-annotation-target"><a href="#annotated-cell-7-1" aria-hidden="true" tabindex="-1"></a>obj <span class="op">=</span> np.zeros((na, nw))</span>
 <span id="annotated-cell-7-2"><a href="#annotated-cell-7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="annotated-cell-7-3"><a href="#annotated-cell-7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 状態変数と制御変数のすべての組み合わせ (w,a) について生涯効用を計算</span></span>
@@ -697,14 +730,14 @@ a_j \in \{0.025, 0.05, 0.075, 0.1, \ldots, 1.0\}
 <div id="cell-fig-obj" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>ax.plot(grid_a, obj[:,<span class="dv">4</span>], c<span class="op">=</span><span class="st">"b"</span>, label<span class="op">=</span><span class="st">"w=0.5"</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>ax.plot(grid_a, obj[:,<span class="dv">7</span>], c<span class="op">=</span><span class="st">"r"</span>, label<span class="op">=</span><span class="st">"w=0.8"</span>)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>ax.plot(grid_a, obj[:,<span class="dv">9</span>], c<span class="op">=</span><span class="st">"g"</span>, label<span class="op">=</span><span class="st">"w=1.0"</span>)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"若年期の貯蓄(老年期の資産): "</span><span class="op">+</span><span class="vs">r"$a$"</span>, ylabel<span class="op">=</span><span class="st">"生涯効用: "</span><span class="op">+</span><span class="vs">r"$U(c_1,c_2)$"</span>, xlim<span class="op">=</span>(<span class="dv">0</span>,<span class="dv">1</span>), ylim<span class="op">=</span>(<span class="op">-</span><span class="dv">10</span>,<span class="dv">0</span>))</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>ax.grid(ls<span class="op">=</span><span class="st">"--"</span>)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="cf">pass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>ax.plot(grid_a, obj[:,<span class="dv">4</span>], c<span class="op">=</span><span class="st">"b"</span>, label<span class="op">=</span><span class="st">"w=0.5"</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>ax.plot(grid_a, obj[:,<span class="dv">7</span>], c<span class="op">=</span><span class="st">"r"</span>, label<span class="op">=</span><span class="st">"w=0.8"</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>ax.plot(grid_a, obj[:,<span class="dv">9</span>], c<span class="op">=</span><span class="st">"g"</span>, label<span class="op">=</span><span class="st">"w=1.0"</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"若年期の貯蓄(老年期の資産): "</span><span class="op">+</span><span class="vs">r"$a$"</span>, ylabel<span class="op">=</span><span class="st">"生涯効用: "</span><span class="op">+</span><span class="vs">r"$U(c_1,c_2)$"</span>, xlim<span class="op">=</span>(<span class="dv">0</span>,<span class="dv">1</span>), ylim<span class="op">=</span>(<span class="op">-</span><span class="dv">10</span>,<span class="dv">0</span>))</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>ax.grid(ls<span class="op">=</span><span class="st">"--"</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="cf">pass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div id="fig-obj" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -719,7 +752,7 @@ a_j \in \{0.025, 0.05, 0.075, 0.1, \ldots, 1.0\}
 </div>
 </div>
 </div>
-<p><a href="#fig-obj" class="quarto-xref">図&nbsp;3</a> では若年期の所得 <span class="math inline">\(w_i\)</span> の下での生涯効用 <span class="math inline">\(U(c_1, c_2)\)</span> が凹関数として可視化されている．</p>
+<p><a href="#fig-obj" class="quarto-xref">図&nbsp;3</a> では若年期の所得 <span class="math inline">\(w_i\)</span> の下での生涯効用 <span class="math inline">\(U(a_j; w_i)\)</span> が凹関数として可視化されている．</p>
 <p>直感的にそれぞれの山の頂上に対応する貯蓄点が，求めたい最適貯蓄だとわかるだろう．</p>
 <p>そこで，若年期の所得 <span class="math inline">\(w_i\)</span> ごとに最適な貯蓄点 <span class="math inline">\(a_j\)</span> を計算し，求めた貯蓄関数を可視化する（<a href="#fig-policy" class="quarto-xref">図&nbsp;4</a>）．</p>
 <div id="cell-fig-policy" class="cell" data-execution_count="9">
@@ -743,7 +776,7 @@ a_j \in \{0.025, 0.05, 0.075, 0.1, \ldots, 1.0\}
 </dd>
 <dt data-target-cell="annotated-cell-9" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-9" data-code-lines="3" data-code-annotation="2">生涯効用が最大値をとる点を探す</span>
+<span data-code-cell="annotated-cell-9" data-code-lines="3" data-code-annotation="2">生涯効用が最大値をとる点を探し，そのインデックスを取得する</span>
 </dd>
 </dl>
 </div>
@@ -802,99 +835,99 @@ a_j \in \{0.025, 0.05, 0.075, 0.1, \ldots, 1.0\}
 <p>ここまでの実装では，逐一関数を定義してパラメータを指定していた．</p>
 <p>しかし，その方法ではパラメータが変わった時にモデルの振る舞いがどう変わるかを分析する比較静学のような場面で苦労しそうなのは容易に想像できる．</p>
 <p>そこで，オブジェクト指向プログラミングの<strong>クラス (class)</strong> という機能でモデルのテンプレートを作っておくと便利である．</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="in">class Models:</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="in">    def __init__(self, beta, gamma, r, nw, w_min, w_max, grid_w, na, a_min, a_max, grid_a):</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="in">        self.beta = beta</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="in">        self.gamma = gamma</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="in">        self.r = r</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="in">        self.nw = nw</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="in">        self.w_min = w_min</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="in">        self.w_max = w_max</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="in">        self.grid_w = grid_w</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="in">        self.na = na</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="in">        self.a_min = a_min</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="in">        self.a_max = a_max</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="in">        self.grid_a = grid_a</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="in">class Models:</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="in">    def __init__(self, beta, gamma, r, nw, w_min, w_max, grid_w, na, a_min, a_max, grid_a):</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="in">        self.beta = beta</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="in">        self.gamma = gamma</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="in">        self.r = r</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="in">        self.nw = nw</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="in">        self.w_min = w_min</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="in">        self.w_max = w_max</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="in">        self.grid_w = grid_w</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="in">        self.na = na</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="in">        self.a_min = a_min</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="in">        self.a_max = a_max</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="in">        self.grid_a = grid_a</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>カリブレーションを行う際は <code>Models</code> を定義した上で，次の <code>Calibration()</code> 関数を実行する．</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="in">def Calibration():</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="in">    beta = 0.985 ** 30</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="in">    gamma = 2.0</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="in">    r = 1.025**30 - 1.0</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="in">    nw = 10</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="in">    w_min = 0.1</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="in">    w_max = 1.0</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="in">    na = 40</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="in">    a_min = 0.025</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="in">    a_max = 1.0</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="in">    grid_w = np.linspace(w_min, w_max, nw)</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="in">    grid_a = np.linspace(a_min, a_max, na)</span></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="in">    return Models(beta, gamma, r, nw, w_min, w_max, grid_w, na, a_min, a_max, grid_a)</span></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>このノードでもこれ以降は，さまざまなパラメータをクラスを使って管理する．</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="in">def Calibration():</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="in">    beta = 0.985 ** 30</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="in">    gamma = 2.0</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="in">    r = 1.025**30 - 1.0</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="in">    nw = 10</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="in">    w_min = 0.1</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="in">    w_max = 1.0</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="in">    na = 40</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="in">    a_min = 0.025</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="in">    a_max = 1.0</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="in">    grid_w = np.linspace(w_min, w_max, nw)</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="in">    grid_a = np.linspace(a_min, a_max, na)</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="in">    return Models(beta, gamma, r, nw, w_min, w_max, grid_w, na, a_min, a_max, grid_a)</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>このノートでもこれ以降は，クラスを使ってさまざまなパラメータを管理する．</p>
 </section>
 </section>
 <section id="sec-optimize" class="level3" data-number="3.3">
 <h3 data-number="3.3" class="anchored" data-anchor-id="sec-optimize"><span class="header-section-number">3.3</span> 最適化アルゴリズム</h3>
 <p>グリッドサーチはモデルを拡張した場合に計算量が指数的に増加するのに加え，グリッド数を節約すると精度が悪化するという問題を抱えていた．</p>
 <p>実際，真の貯蓄関数は <a href="#fig-saving" class="quarto-xref">図&nbsp;2</a> のように線形である一方，グリッドサーチで求めた貯蓄関数は <a href="#fig-policy" class="quarto-xref">図&nbsp;4</a> にあるように直線ではない．</p>
-<p>そこで，状態変数 <span class="math inline">\(w\)</span> は <a href="#sec-grid-search" class="quarto-xref">§&nbsp;3.2</a> と同様に離散化するが，連続な制御変数 <span class="math inline">\(a\)</span> を許容するより洗練されたアプローチを用いる．</p>
-<p>よって，今考えている最適化問題は次式で表される．</p>
+<p>そこで，状態変数 <span class="math inline">\(w\)</span> は <a href="#sec-grid-search" class="quarto-xref">§&nbsp;3.2</a> と同様に離散化するが，連続な制御変数 <span class="math inline">\(a\)</span> を許容するより洗練されたアプローチを採用しよう．</p>
+<p>グリッドサーチで考えた問題（<a href="#eq-obj" class="quarto-xref">式&nbsp;8</a>）で離散化していた <span class="math inline">\(a_j\)</span> を連続値にするので，今考えている最適化問題は次式で表される．</p>
 <p><span id="eq-prob25"><span class="math display">\[
 \max_{a\in\R} \quad
 \frac{[w_i-a]^{1-\gamma}}{1-\gamma} + \beta\frac{[(1+r)a]^{1-\gamma}}{1-\gamma}
-\tag{8}\]</span></span></p>
-<p><a href="#eq-prob25" class="quarto-xref">式&nbsp;8</a> のような最適化問題を数値計算で解くには，数値計算ソフトに標準的に実装されている最適化ライブラリを用いれば良い．</p>
+\tag{9}\]</span></span></p>
+<p><a href="#eq-prob25" class="quarto-xref">式&nbsp;9</a> のような最適化問題を数値計算で解くには，数値計算ソフトに標準的に実装されている最適化ライブラリを用いれば良い．</p>
 <p>大抵は，目的関数とその関数のパラメータを入力として受け取り，目的関数の最大値や最小値を探索する仕様になっている．</p>
-<p>最適化問題（<a href="#eq-prob25" class="quarto-xref">式&nbsp;8</a>）であれば，カリブレーションしたパラメータ <span class="math inline">\(\{\beta, \gamma, r\}\)</span> を所与として，各状態変数 <span class="math inline">\(w_i \in \Brace{w_1, \ldots, w_N}\)</span> の下で生涯効用の最大値とそれを与える最大元 <span class="math inline">\(a\)</span> を探索してくれる．</p>
+<p>最適化問題（<a href="#eq-prob25" class="quarto-xref">式&nbsp;9</a>）であれば，カリブレーションしたパラメータ <span class="math inline">\(\{\beta, \gamma, r\}\)</span> を所与として，各状態変数 <span class="math inline">\(w_i \in \Brace{w_1, \ldots, w_N}\)</span> の下で生涯効用の最大値とそれを与える最大元 <span class="math inline">\(a\)</span> を探索してくれる．</p>
 <section id="実装" class="level4" data-number="3.3.1">
 <h4 data-number="3.3.1" class="anchored" data-anchor-id="実装"><span class="header-section-number">3.3.1</span> 実装</h4>
 <p>まず，カリブレーションを <a href="#sec-obj-oriented" class="quarto-xref">§&nbsp;3.2.2</a> で導入した方法で行う．</p>
-<div id="cf064701" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Models:</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, beta, gamma, r, nw, w_min, w_max, grid_w):</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.beta <span class="op">=</span> beta</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.gamma <span class="op">=</span> gamma</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.r <span class="op">=</span> r</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.nw <span class="op">=</span> nw</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.w_min <span class="op">=</span> w_min</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.w_max <span class="op">=</span> w_max</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.grid_w <span class="op">=</span> grid_w</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> Calibration():</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    beta <span class="op">=</span> <span class="fl">0.985</span> <span class="op">**</span> <span class="dv">30</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    gamma <span class="op">=</span> <span class="fl">2.0</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> <span class="fl">1.025</span><span class="op">**</span><span class="dv">30</span> <span class="op">-</span> <span class="fl">1.0</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    nw <span class="op">=</span> <span class="dv">10</span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    w_min <span class="op">=</span> <span class="fl">0.1</span></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    w_max <span class="op">=</span> <span class="fl">1.0</span></span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    grid_w <span class="op">=</span> np.linspace(w_min, w_max, nw)</span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> Models(beta, gamma, r, nw, w_min, w_max, grid_w)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="6f782e5f" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Models:</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, beta, gamma, r, nw, w_min, w_max, grid_w):</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.beta <span class="op">=</span> beta</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.gamma <span class="op">=</span> gamma</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.r <span class="op">=</span> r</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.nw <span class="op">=</span> nw</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.w_min <span class="op">=</span> w_min</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.w_max <span class="op">=</span> w_max</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.grid_w <span class="op">=</span> grid_w</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> Calibration():</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    beta <span class="op">=</span> <span class="fl">0.985</span> <span class="op">**</span> <span class="dv">30</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    gamma <span class="op">=</span> <span class="fl">2.0</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> <span class="fl">1.025</span><span class="op">**</span><span class="dv">30</span> <span class="op">-</span> <span class="fl">1.0</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    nw <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    w_min <span class="op">=</span> <span class="fl">0.1</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    w_max <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    grid_w <span class="op">=</span> np.linspace(w_min, w_max, nw)</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> Models(beta, gamma, r, nw, w_min, w_max, grid_w)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>Calibration()</code> 関数を実行することで，<code>Calibration()</code> 内で定義されたパラメータを情報として持つ <code>Models</code> インスタンスが生成されるので，<code>params</code> に代入しておく．</p>
-<div id="a10b0f7a" class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> Calibration()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="51841da2" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> Calibration()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>ここでは，<code>scipy</code> の <code>optimize</code> モジュールにある <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.fminbound.html#scipy.optimize.fminbound"><code>fminbound()</code> 関数</a>を使って最適化問題（<a href="#eq-prob25" class="quarto-xref">式&nbsp;8</a>）を解く<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>．</p>
-<div id="c9a8c206" class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> optimize</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>ここでは，<code>scipy</code> の <code>optimize</code> モジュールにある <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.fminbound.html#scipy.optimize.fminbound"><code>fminbound()</code> 関数</a>を使って最適化問題（<a href="#eq-prob25" class="quarto-xref">式&nbsp;9</a>）を解く<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>．</p>
+<div id="98ada016" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> optimize</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>では，<code>optimize.fminbound()</code> に渡す目的関数を定義しよう．最小化問題に変換するために <span class="math inline">\(-1\)</span> をかけている．</p>
 <p><span class="math display">\[
 \text{obj}(a, w_i;\beta, \gamma, r) = -\Brace{\frac{[w_i-a]^{1-\gamma}}{1-\gamma} + \beta\frac{[(1+r)a]^{1-\gamma}}{1-\gamma}}
 \]</span></p>
-<div id="53d1125c" class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> obj(a, w_i, params):</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    c <span class="op">=</span> w_i <span class="op">-</span> a</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> c <span class="op">&gt;</span> <span class="dv">0</span>:</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>        life_util <span class="op">=</span> CRRA(c, params.gamma) <span class="op">+</span> params.beta <span class="op">*</span> CRRA((<span class="dv">1</span><span class="op">+</span>params.r)<span class="op">*</span>a, params.gamma)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>        life_util <span class="op">=</span> <span class="op">-</span><span class="fl">100000.0</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="fl">1.0</span> <span class="op">*</span> life_util</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="80b88635" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> obj(a, w_i, params):</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    c <span class="op">=</span> w_i <span class="op">-</span> a</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> c <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>        life_util <span class="op">=</span> CRRA(c, params.gamma) <span class="op">+</span> params.beta <span class="op">*</span> CRRA((<span class="dv">1</span><span class="op">+</span>params.r)<span class="op">*</span>a, params.gamma)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>        life_util <span class="op">=</span> <span class="op">-</span><span class="fl">100000.0</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="fl">1.0</span> <span class="op">*</span> life_util</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-simple callout-important">
 <div class="callout-body d-flex">
@@ -907,7 +940,7 @@ a_j \in \{0.025, 0.05, 0.075, 0.1, \ldots, 1.0\}
 </div>
 </div>
 <p>所与の状態変数 <span class="math inline">\(w_i\)</span> に対して制御変数 <span class="math inline">\(a\)</span> についての最適化問題を解けば良いので，<code>grid_w</code> についての <code>for</code> ループ内で <code>optimize.fminbound()</code> を使えば良い．</p>
-<div id="d6fb94ba" class="cell" data-execution_count="14">
+<div id="7791217f" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="annotated-cell-16"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-16" data-target-annotation="1">1</button><span id="annotated-cell-16-1" class="code-annotation-target"><a href="#annotated-cell-16-1" aria-hidden="true" tabindex="-1"></a>opt_a <span class="op">=</span> np.zeros(params.nw)</span>
 <span id="annotated-cell-16-2"><a href="#annotated-cell-16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="annotated-cell-16-3"><a href="#annotated-cell-16-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, w_i <span class="kw">in</span> <span class="bu">enumerate</span>(params.grid_w):</span>
@@ -934,13 +967,13 @@ a_j \in \{0.025, 0.05, 0.075, 0.1, \ldots, 1.0\}
 </div>
 <p><code>opt_a</code> には <code>grid_w</code> の各 <span class="math inline">\(w_i\)</span> に対する最適貯蓄 <span class="math inline">\(a\)</span> が格納してある．これを可視化したものが <a href="#fig-optimization" class="quarto-xref">図&nbsp;5</a> である．</p>
 <div id="cell-fig-optimization" class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>ax.grid(ls<span class="op">=</span><span class="st">"--"</span>)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>ax.scatter(params.grid_w, saving(params.grid_w, params.beta, params.r, params.gamma), c<span class="op">=</span><span class="st">"#FF7A72"</span>,label<span class="op">=</span><span class="st">"解析解"</span>)</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>ax.plot(params.grid_w, opt_a, c<span class="op">=</span><span class="st">"#78C2AD"</span>,label<span class="op">=</span><span class="st">"アルゴリズム"</span>)</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(title<span class="op">=</span><span class="st">"貯蓄関数"</span>, xlabel<span class="op">=</span><span class="st">"若年期の所得: "</span><span class="op">+</span><span class="vs">r"$w$"</span>, ylabel<span class="op">=</span><span class="st">"若年期の貯蓄: "</span><span class="op">+</span><span class="vs">r"$a=g(w)$"</span>)</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="cf">pass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>ax.grid(ls<span class="op">=</span><span class="st">"--"</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>ax.scatter(params.grid_w, saving(params.grid_w, params.beta, params.r, params.gamma), c<span class="op">=</span><span class="st">"#FF7A72"</span>,label<span class="op">=</span><span class="st">"解析解"</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>ax.plot(params.grid_w, opt_a, c<span class="op">=</span><span class="st">"#78C2AD"</span>,label<span class="op">=</span><span class="st">"アルゴリズム"</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(title<span class="op">=</span><span class="st">"貯蓄関数"</span>, xlabel<span class="op">=</span><span class="st">"若年期の所得: "</span><span class="op">+</span><span class="vs">r"$w$"</span>, ylabel<span class="op">=</span><span class="st">"若年期の貯蓄: "</span><span class="op">+</span><span class="vs">r"$a=g(w)$"</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="cf">pass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div id="fig-optimization" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -960,86 +993,83 @@ a_j \in \{0.025, 0.05, 0.075, 0.1, \ldots, 1.0\}
 </section>
 <section id="階条件を使う" class="level3" data-number="3.4">
 <h3 data-number="3.4" class="anchored" data-anchor-id="階条件を使う"><span class="header-section-number">3.4</span> １階条件を使う</h3>
-<p>モデルの解が満たすべきオイラー条件（<a href="#eq-euler" class="quarto-xref">式&nbsp;4</a>）をうまく使って数値計算を行うアプローチもある．</p>
+<p>モデルの解が満たすべきオイラー条件（<a href="#eq-euler" class="quarto-xref">式&nbsp;5</a>）をうまく使って数値計算を行うアプローチもある．</p>
 <p>ここでは，オイラー条件を求根問題に落とし込んで解く方法（<a href="#sec-root-finding" class="quarto-xref">§&nbsp;3.4.1</a>）と，政策関数自体をパラメトリックに近似する方法（<a href="#sec-projection" class="quarto-xref">§&nbsp;3.4.2</a>）を扱う．</p>
 <section id="sec-root-finding" class="level4" data-number="3.4.1">
 <h4 data-number="3.4.1" class="anchored" data-anchor-id="sec-root-finding"><span class="header-section-number">3.4.1</span> 非線形方程式の求根問題</h4>
-<p>オイラー条件（<a href="#eq-euler" class="quarto-xref">式&nbsp;4</a>）に予算制約を代入すると次式を得る．</p>
+<p>オイラー条件（<a href="#eq-euler" class="quarto-xref">式&nbsp;5</a>）に予算制約を代入すると次式を得る．</p>
 <p><span id="eq-2.7"><span class="math display">\[
 u'(w-a) = \beta(1+r)u'((1+r)a)
-\tag{9}\]</span></span></p>
+\tag{10}\]</span></span></p>
 <p>状態変数 <span class="math inline">\(w\)</span> を <span class="math inline">\(w_i\)</span> と離散化して，それぞれの変数の役割を見てみると</p>
 <p><span class="math display">\[
 u'(\eqDescribe{w_i}{given} - \eqDescribe{a}{control}) =
 \eqDescribe{\beta(1+r)}{parameter}u'(\eqDescribe{(1+r)}{parameter}\ \eqDescribe{a}{control})
 \]</span></p>
-<p>なので，未知変数は <span class="math inline">\(a\)</span> だけである．そこで，<a href="#eq-2.7" class="quarto-xref">式&nbsp;9</a> を変形して次式で<strong>残差関数 (residual function)</strong> を定義する：</p>
+<p>なので，未知変数は <span class="math inline">\(a\)</span> だけである．そこで，<a href="#eq-2.7" class="quarto-xref">式&nbsp;10</a> を変形して次式で<strong>残差関数 (residual function)</strong> を定義する：</p>
 <p><span id="eq-resid"><span class="math display">\[
 R(a;w_i) \equiv
 \beta(1+r)\frac{u'((1+r)a)}{u'(w_i-a)} - 1.
-\tag{10}\]</span></span></p>
-<p><a href="#eq-resid" class="quarto-xref">式&nbsp;10</a> を使うと，オイラー条件を満たす制御変数 <span class="math inline">\(a\)</span> を見つける問題を，</p>
+\tag{11}\]</span></span></p>
+<p><a href="#eq-resid" class="quarto-xref">式&nbsp;11</a> を使うと，オイラー条件を満たす制御変数 <span class="math inline">\(a\)</span> を見つける問題を，</p>
 <p><span class="math display">\[
 R(a;w_i) = 0
 \]</span></p>
-<p>となる <span class="math inline">\(a\)</span> を探すという <strong>求根（ゼロ点）問題 (root-finding problem)</strong> に変換することができる．</p>
-<p>一般に，オイラー条件を変換して得た残差関数（<a href="#eq-resid" class="quarto-xref">式&nbsp;10</a>）は，複雑な形をした非線形方程式である可能性があるが，非線形方程式のゼロ点を探すアルゴリズムの研究は長い歴史を持つため，様々なアプローチが考案されている．</p>
+<p>となる <span class="math inline">\(a\)</span> を探すという<strong>求根（ゼロ点）問題 (root-finding problem)</strong> に変換することができる．</p>
+<p>一般に，オイラー条件を変換して得た残差関数（<a href="#eq-resid" class="quarto-xref">式&nbsp;11</a>）は，複雑な形をした非線形方程式である可能性があるが，非線形方程式のゼロ点を探すアルゴリズムの研究は長い歴史を持つため，様々なアプローチが考案されている．</p>
 <section id="実装-1" class="level5" data-number="3.4.1.1">
 <h5 data-number="3.4.1.1" class="anchored" data-anchor-id="実装-1"><span class="header-section-number">3.4.1.1</span> 実装</h5>
 <p>求根問題は <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.fsolve.html#scipy.optimize.fsolve"><code>scipy.optimize.fsolve()</code> 関数</a>で解くことができる． ここではカリブレーションは <a href="#sec-optimize" class="quarto-xref">§&nbsp;3.3</a> のものを再び使用する．</p>
-<p>まずはソルバーに渡す残差関数（<a href="#eq-resid" class="quarto-xref">式&nbsp;10</a>）を実装しよう．残差関数内にある限界効用 (marginal utility) は</p>
+<p>まずはソルバーに渡す残差関数（<a href="#eq-resid" class="quarto-xref">式&nbsp;11</a>）を実装しよう．残差関数内にある限界効用 (marginal utility) は</p>
 <p><span class="math display">\[
 u'(c) = c^{-\gamma}
 \]</span></p>
 <p>で与えられるので，Python で表すと次のようになる．</p>
-<div id="8a2fa672" class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> marginal_util(c, gamma):</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> c <span class="op">**</span> (<span class="op">-</span> gamma)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="acab7a1e" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> marginal_util(c, gamma):</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> c <span class="op">**</span> (<span class="op">-</span> gamma)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>これを用いると残差関数は次のように実装できる．</p>
-<div id="819bb158" class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="annotated-cell-19"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-19-1"><a href="#annotated-cell-19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> resid(a, w_i, params):</span>
-<span id="annotated-cell-19-2"><a href="#annotated-cell-19-2" aria-hidden="true" tabindex="-1"></a>    c <span class="op">=</span> w_i <span class="op">-</span> a</span>
-<span id="annotated-cell-19-3"><a href="#annotated-cell-19-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> c <span class="op">&gt;</span> <span class="dv">0</span>:</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-19" data-target-annotation="1">1</button><span id="annotated-cell-19-4" class="code-annotation-target"><a href="#annotated-cell-19-4" aria-hidden="true" tabindex="-1"></a>        mu_y <span class="op">=</span> marginal_util(c, params.gamma)</span>
-<span id="annotated-cell-19-5"><a href="#annotated-cell-19-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="annotated-cell-19-6"><a href="#annotated-cell-19-6" aria-hidden="true" tabindex="-1"></a>        mu_y <span class="op">=</span> <span class="fl">10000.0</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-19" data-target-annotation="2">2</button><span id="annotated-cell-19-7" class="code-annotation-target"><a href="#annotated-cell-19-7" aria-hidden="true" tabindex="-1"></a>    mu_o <span class="op">=</span> marginal_util((<span class="dv">1</span><span class="op">+</span>params.r)<span class="op">*</span>a, params.gamma)</span>
-<span id="annotated-cell-19-8"><a href="#annotated-cell-19-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> params.beta <span class="op">*</span> (<span class="dv">1</span><span class="op">+</span>params.r) <span class="op">*</span> (mu_o<span class="op">/</span>mu_y) <span class="op">-</span> <span class="fl">1.0</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="6a7d049d" class="cell" data-execution_count="17">
+<div id="lst-resid" class="python cell-code listing quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-resid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Code&nbsp;1: 残差関数
+</figcaption>
+<div aria-describedby="lst-resid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode cell-code" id="lst-resid"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="lst-resid-1"><a href="#lst-resid-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> resid(a, w_i, params):</span>
+<span id="lst-resid-2"><a href="#lst-resid-2" aria-hidden="true" tabindex="-1"></a>    c <span class="op">=</span> w_i <span class="op">-</span> a</span>
+<span id="lst-resid-3"><a href="#lst-resid-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> c <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="lst-resid-4"><a href="#lst-resid-4" aria-hidden="true" tabindex="-1"></a>        mu_y <span class="op">=</span> marginal_util(c, params.gamma)              <span class="co"># 若年期の限界効用</span></span>
+<span id="lst-resid-5"><a href="#lst-resid-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="lst-resid-6"><a href="#lst-resid-6" aria-hidden="true" tabindex="-1"></a>        mu_y <span class="op">=</span> <span class="fl">10000.0</span></span>
+<span id="lst-resid-7"><a href="#lst-resid-7" aria-hidden="true" tabindex="-1"></a>    mu_o <span class="op">=</span> marginal_util((<span class="dv">1</span><span class="op">+</span>params.r)<span class="op">*</span>a, params.gamma)     <span class="co"># 老年期の限界効用</span></span>
+<span id="lst-resid-8"><a href="#lst-resid-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> params.beta <span class="op">*</span> (<span class="dv">1</span><span class="op">+</span>params.r) <span class="op">*</span> (mu_o<span class="op">/</span>mu_y) <span class="op">-</span> <span class="fl">1.0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</figure>
+</div>
+</div>
+<p><a href="#sec-optimize" class="quarto-xref">§&nbsp;3.3</a> と同様に，ソルバーを使って各状態変数 <span class="math inline">\(w_i\)</span> の下で最適貯蓄を求めていく．</p>
+<div id="140aff0a" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="annotated-cell-19"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-19" data-target-annotation="1">1</button><span id="annotated-cell-19-1" class="code-annotation-target"><a href="#annotated-cell-19-1" aria-hidden="true" tabindex="-1"></a>opt_a <span class="op">=</span> np.zeros(params.nw)</span>
+<span id="annotated-cell-19-2"><a href="#annotated-cell-19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-19-3"><a href="#annotated-cell-19-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, w_i <span class="kw">in</span> <span class="bu">enumerate</span>(params.grid_w):</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-19" data-target-annotation="2">2</button><span id="annotated-cell-19-4" class="code-annotation-target"><a href="#annotated-cell-19-4" aria-hidden="true" tabindex="-1"></a>    resid_specified <span class="op">=</span> <span class="kw">lambda</span> a: resid(a, w_i, params)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-19" data-target-annotation="3">3</button><span id="annotated-cell-19-5" class="code-annotation-target"><a href="#annotated-cell-19-5" aria-hidden="true" tabindex="-1"></a>    opt_a[i] <span class="op">=</span> optimize.fsolve(resid_specified, x0<span class="op">=</span><span class="fl">0.01</span>)[<span class="dv">0</span>]</span>
+<span id="annotated-cell-19-6"><a href="#annotated-cell-19-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"最適貯蓄の配列: </span><span class="ch">\n</span><span class="sc">{</span>opt_a<span class="sc">}</span><span class="ss">"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-19" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-19" data-code-lines="4" data-code-annotation="1">若年期の限界効用</span>
+<span data-code-cell="annotated-cell-19" data-code-lines="1" data-code-annotation="1">各 <span class="math inline">\(w_i\)</span> の下での最適貯蓄を格納する配列</span>
 </dd>
 <dt data-target-cell="annotated-cell-19" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-19" data-code-lines="7" data-code-annotation="2">老年期の限界効用</span>
+<span data-code-cell="annotated-cell-19" data-code-lines="4" data-code-annotation="2"><code>optimize.fsolve()</code> に渡すために，<code>resid()</code> を <code>a</code> だけの関数にする</span>
 </dd>
-</dl>
-</div>
-</div>
-<p><a href="#sec-optimize" class="quarto-xref">§&nbsp;3.3</a> と同様に，ソルバーを使って各状態変数 <span class="math inline">\(w_i\)</span> の下で最適貯蓄を求めていく．</p>
-<div id="eacb8b5c" class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="annotated-cell-20"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-20" data-target-annotation="1">1</button><span id="annotated-cell-20-1" class="code-annotation-target"><a href="#annotated-cell-20-1" aria-hidden="true" tabindex="-1"></a>opt_a <span class="op">=</span> np.zeros(params.nw)</span>
-<span id="annotated-cell-20-2"><a href="#annotated-cell-20-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-20-3"><a href="#annotated-cell-20-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, w_i <span class="kw">in</span> <span class="bu">enumerate</span>(params.grid_w):</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-20" data-target-annotation="2">2</button><span id="annotated-cell-20-4" class="code-annotation-target"><a href="#annotated-cell-20-4" aria-hidden="true" tabindex="-1"></a>    resid_specified <span class="op">=</span> <span class="kw">lambda</span> a: resid(a, w_i, params)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-20" data-target-annotation="3">3</button><span id="annotated-cell-20-5" class="code-annotation-target"><a href="#annotated-cell-20-5" aria-hidden="true" tabindex="-1"></a>    opt_a[i] <span class="op">=</span> optimize.fsolve(resid_specified, x0<span class="op">=</span><span class="fl">0.01</span>)[<span class="dv">0</span>]</span>
-<span id="annotated-cell-20-6"><a href="#annotated-cell-20-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"最適貯蓄の配列: </span><span class="ch">\n</span><span class="sc">{</span>opt_a<span class="sc">}</span><span class="ss">"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-20" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-19" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-20" data-code-lines="1" data-code-annotation="1">各 <span class="math inline">\(w_i\)</span> の下での最適貯蓄を格納する配列</span>
-</dd>
-<dt data-target-cell="annotated-cell-20" data-target-annotation="2">2</dt>
-<dd>
-<span data-code-cell="annotated-cell-20" data-code-lines="4" data-code-annotation="2"><code>optimize.fsolve()</code> に渡すために，<code>resid()</code> を <code>a</code> だけの関数にする</span>
-</dd>
-<dt data-target-cell="annotated-cell-20" data-target-annotation="3">3</dt>
-<dd>
-<span data-code-cell="annotated-cell-20" data-code-lines="5" data-code-annotation="3"><code>optimize.fsolve()</code> の返り値の最初の要素に欲しい最適な <span class="math inline">\(a\)</span> が格納されている</span>
+<span data-code-cell="annotated-cell-19" data-code-lines="5" data-code-annotation="3">我々が欲しい最適な <span class="math inline">\(a\)</span> は <code>optimize.fsolve()</code> の返り値の最初の要素に格納されている</span>
 </dd>
 </dl>
 </div>
@@ -1051,13 +1081,13 @@ u'(c) = c^{-\gamma}
 </div>
 <p>結果を図示した <a href="#fig-root-finding" class="quarto-xref">図&nbsp;6</a> を見ると，アルゴリズムで求めた解が解析解の直線上に乗っている様子がわかる．</p>
 <div id="cell-fig-root-finding" class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>ax.grid(ls<span class="op">=</span><span class="st">"--"</span>)</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>ax.plot(params.grid_w, saving(params.grid_w, params.beta, params.r, params.gamma), c<span class="op">=</span><span class="st">"#FF7A72"</span>,label<span class="op">=</span><span class="st">"解析解"</span>)</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>ax.scatter(params.grid_w, opt_a, c<span class="op">=</span><span class="st">"#78C2AD"</span>, label<span class="op">=</span><span class="st">"アルゴリズム"</span>)</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(title<span class="op">=</span><span class="st">"貯蓄関数"</span>, xlabel<span class="op">=</span><span class="st">"若年期の所得: "</span><span class="op">+</span><span class="vs">r"$w$"</span>, ylabel<span class="op">=</span><span class="st">"若年期の貯蓄: "</span><span class="op">+</span><span class="vs">r"$a=g(w)$"</span>)</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="cf">pass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>ax.grid(ls<span class="op">=</span><span class="st">"--"</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>ax.plot(params.grid_w, saving(params.grid_w, params.beta, params.r, params.gamma), c<span class="op">=</span><span class="st">"#FF7A72"</span>,label<span class="op">=</span><span class="st">"解析解"</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>ax.scatter(params.grid_w, opt_a, c<span class="op">=</span><span class="st">"#78C2AD"</span>, label<span class="op">=</span><span class="st">"アルゴリズム"</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(title<span class="op">=</span><span class="st">"貯蓄関数"</span>, xlabel<span class="op">=</span><span class="st">"若年期の所得: "</span><span class="op">+</span><span class="vs">r"$w$"</span>, ylabel<span class="op">=</span><span class="st">"若年期の貯蓄: "</span><span class="op">+</span><span class="vs">r"$a=g(w)$"</span>)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="cf">pass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div id="fig-root-finding" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1075,6 +1105,143 @@ u'(c) = c^{-\gamma}
 </section>
 <section id="sec-projection" class="level4" data-number="3.4.2">
 <h4 data-number="3.4.2" class="anchored" data-anchor-id="sec-projection"><span class="header-section-number">3.4.2</span> パラメトリックな近似：射影法</h4>
+<p>最適化（<a href="#sec-optimize" class="quarto-xref">§&nbsp;3.3</a>）と求根アルゴリズム（<a href="#sec-root-finding" class="quarto-xref">§&nbsp;3.4.1</a>）を使った手法はどちらも，本来連続値をとる現在の所得水準 <span class="math inline">\(w\)</span> を有限個に離散化して，そのグリッドポイント上で最適貯蓄を計算するという点は共通している．</p>
+<p>これに対して，<strong>射影法 (projection method)</strong> では求めたい政策関数そのものをパラメトリックに近似するというアプローチをとる<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>．</p>
+<p>今考えている政策関数は若年期の所得 <span class="math inline">\(w\)</span> を変数にとる貯蓄関数 <span class="math inline">\(a=g(w)\)</span> である．貯蓄関数をパラメトリックに近似するとは、貯蓄関数を<strong>基底関数 (basis function) </strong> <span class="math inline">\(\{\Psi_m\}_{m=0}^M\)</span> の線形結合 <span class="math inline">\(\hat{g}(w;\bm{\theta})\)</span> で近似するということである<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>．</p>
+<p><span id="eq-parametric-approx"><span class="math display">\[
+a = g(w) \approx \hat{g}(w;\bm{\theta}) = \sum_{m=0}^M \theta_m\Psi_m(w)
+\tag{12}\]</span></span></p>
+<p>ここで <span class="math inline">\(\bm{\theta} \equiv \Paren{\theta_m}_{m=0}^M\)</span> は未知の <span class="math inline">\(M+1\)</span> 次元係数ベクトルであり，推定する対象である．</p>
+<p>この段階では，未知の貯蓄関数 <span class="math inline">\(g(w)\)</span> はきっとパラメトリックな関数 <span class="math inline">\(\hat{g}(w;\bm{\theta})\)</span> で表されるだろうと思っているに過ぎず，何も解決していない．</p>
+<p>しかし，真の貯蓄関数 <span class="math inline">\(g(w)\)</span> はオイラー条件（<a href="#eq-2.7" class="quarto-xref">式&nbsp;10</a>）を満たすので，それを近似した関数 <span class="math inline">\(\hat{g}(w;\bm{\theta})\)</span> もできるだけオイラー条件を満たしておいて欲しいと思うのは自然な要請である．</p>
+<p>つまり射影法とは，オイラー条件を満たす政策関数を探す問題を，近似関数 <span class="math inline">\(\hat{g}(w;\bm{\theta})\)</span> ができるだけオイラー条件を満たすように係数ベクトル <span class="math inline">\(\bm{\theta}\)</span> を決める問題に置き換える手法である．</p>
+<p>以下では基底関数を <span class="math inline">\(\Psi_m(w) = w^m\)</span> と指定し，貯蓄関数を次の<strong>多項式 (polynomial)</strong> で近似して議論を進める．</p>
+<p><span id="eq-2.9"><span class="math display">\[
+a \approx \hat{g}(w;\bm{\theta}) = \sum_{m=0}^M \theta_m w^m
+\tag{13}\]</span></span></p>
+<p>ところで，上述の「できるだけオイラー条件を満たす」ことをどうやって評価すれば良いだろうか．ここで，<a href="#sec-root-finding" class="quarto-xref">§&nbsp;3.4.1</a> で定義した残差関数（<a href="#eq-resid" class="quarto-xref">式&nbsp;11</a>）を思い出そう．</p>
+<p>仮に近似関数 <span class="math inline">\(\hat{g}(w;\bm{\theta})\)</span> が真の貯蓄関数 <span class="math inline">\(g(w)\)</span> と完全に一致する場合は残差はゼロになり，うまく近似しているのであれば残差はゼロに近いはずである．つまり，</p>
+<p><span id="eq-resid-projection"><span class="math display">\[
+R(\bm{\theta}; w) \equiv
+\beta (1+r)\frac{u'((1+r)\hat{g}(w;\bm{\theta}))}{u'(w-\hat{g}(w;\bm{\theta}))} - 1 \approx 0
+\tag{14}\]</span></span></p>
+<p>が「あらゆる <span class="math inline">\(w\)</span> で」成り立つ．</p>
+<p>「」をつけたのは，実際に数値計算を行う際コンピュータは連続的な <span class="math inline">\(w\)</span> を扱えないため，任意にとった評価点 <span class="math inline">\(\{w_i\}_{i=1}^N\)</span> 上での残差がゼロに限りなく近くなるようなベクトル <span class="math inline">\(\bm{\theta}\)</span> を見つける必要があるからである．</p>
+<p>要素に評価点 <span class="math inline">\(w_i\)</span> 上での残差 <span class="math inline">\(R(\bm{\theta}; w_i)\)</span> を持つベクトルを <span class="math inline">\(\bm{R}(\bm{w}; \bm{\theta}) \equiv \Paren{R(\bm{\theta}; w_i)}_{i=1}^N\)</span> とする． ただし，<span class="math inline">\(\bm{w} = \Paren{w_i}_{i=1}^N\)</span> である．</p>
+<p><span class="math inline">\(\rho(\cdot, \cdot)\)</span> を<strong>距離関数 (metric function)</strong> とすると，考えている問題は</p>
+<p><span id="eq-2.10"><span class="math display">\[
+\bm{\theta}^* = \argmin_\bm{\theta} \rho(\bm{R}(\bm{w}; \bm{\theta}), \bm{0})
+\tag{15}\]</span></span></p>
+<p>と定式化できる．このように，評価点上でのみ距離を測る方法を<strong>選点法 (collocation method) </strong>と呼ぶ．</p>
+<section id="実装-2" class="level5" data-number="3.4.2.1">
+<h5 data-number="3.4.2.1" class="anchored" data-anchor-id="実装-2"><span class="header-section-number">3.4.2.1</span> 実装</h5>
+<p>カリブレーションは <a href="#sec-optimize" class="quarto-xref">§&nbsp;3.3</a> のものを再び使用する．</p>
+<p>ここでは多項式 <a href="#eq-2.9" class="quarto-xref">式&nbsp;13</a> の次数を <span class="math inline">\(M=1\)</span> として，１次関数 <span class="math inline">\(\hat{g}(w;\bm{\theta}) = \theta_0 + \theta_1 w\)</span> で政策関数を近似しよう．</p>
+<p>各評価点 <span class="math inline">\(w_i\)</span> での近似値 <span class="math inline">\(\hat{g}(w_i; \bm{\theta})\)</span> を要素にもつ列ベクトルを <span class="math inline">\(\widehat{\bm{g}}\)</span> とすると</p>
+<p><span class="math display">\[
+\widehat{\bm{g}} = \Paren{\hat{g}(w_i;\bm{\theta})}_{i=1}^N =
+\begin{pmatrix} \theta_0 + \theta_1 w_1 \\ \vdots \\ \theta_0 + \theta_1 w_i \\ \vdots \\ \theta_0 + \theta_1 w_N \end{pmatrix} =
+\eqDescribe{\begin{pmatrix} 1 &amp; w_1 \\ \vdots &amp; \vdots \\ 1 &amp; w_i \\ \vdots &amp; \vdots \\ 1 &amp; w_N \end{pmatrix}}{denoted by X below}
+\begin{pmatrix} \theta_0 \\ \theta_1 \end{pmatrix}
+\]</span></p>
+<p>と書けるが，これを実装すると次のようになる．</p>
+<div id="23dc90e4" class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="annotated-cell-21"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-21-1"><a href="#annotated-cell-21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> approx_g(theta: np.ndarray, w: np.ndarray) <span class="op">-&gt;</span> np.ndarray:</span>
+<span id="annotated-cell-21-2"><a href="#annotated-cell-21-2" aria-hidden="true" tabindex="-1"></a>    dim <span class="op">=</span> <span class="bu">len</span>(theta)</span>
+<span id="annotated-cell-21-3"><a href="#annotated-cell-21-3" aria-hidden="true" tabindex="-1"></a>    nw <span class="op">=</span> <span class="bu">len</span>(w)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-21" data-target-annotation="1">1</button><span id="annotated-cell-21-4" class="code-annotation-target"><a href="#annotated-cell-21-4" aria-hidden="true" tabindex="-1"></a>    X <span class="op">=</span> np.zeros((nw, dim))</span>
+<span id="annotated-cell-21-5"><a href="#annotated-cell-21-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(dim):</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-21" data-target-annotation="2">2</button><span id="annotated-cell-21-6" class="code-annotation-target"><a href="#annotated-cell-21-6" aria-hidden="true" tabindex="-1"></a>        X[:, j] <span class="op">=</span> w <span class="op">**</span> j</span>
+<span id="annotated-cell-21-7"><a href="#annotated-cell-21-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> X <span class="op">@</span> theta</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-21" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-21" data-code-lines="4" data-code-annotation="1">行列 <span class="math inline">\(X\)</span> を初期化</span>
+</dd>
+<dt data-target-cell="annotated-cell-21" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-21" data-code-lines="6" data-code-annotation="2">行列 <span class="math inline">\(X\)</span> を作成</span>
+</dd>
+</dl>
+</div>
+</div>
+<p>次に，残差関数 <code>resid()</code>（<a href="#lst-resid" class="quarto-xref">Code&nbsp;1</a>）を利用して，<a href="#eq-resid-projection" class="quarto-xref">式&nbsp;14</a> に従って残差ベクトル <span class="math inline">\(\bm{R}(\bm{w}; \bm{\theta})\)</span> を実装する．</p>
+<div id="7c1483bf" class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="annotated-cell-22"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-22-1"><a href="#annotated-cell-22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> resid_vec(theta, params):</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-22" data-target-annotation="1">1</button><span id="annotated-cell-22-2" class="code-annotation-target"><a href="#annotated-cell-22-2" aria-hidden="true" tabindex="-1"></a>    g_hats <span class="op">=</span> approx_g(theta, params.grid_w)</span>
+<span id="annotated-cell-22-3"><a href="#annotated-cell-22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-22-4"><a href="#annotated-cell-22-4" aria-hidden="true" tabindex="-1"></a>    R <span class="op">=</span> np.zeros(nw)</span>
+<span id="annotated-cell-22-5"><a href="#annotated-cell-22-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> g, w_i, i <span class="kw">in</span> <span class="bu">zip</span>(g_hats, params.grid_w, np.arange(nw)):</span>
+<span id="annotated-cell-22-6"><a href="#annotated-cell-22-6" aria-hidden="true" tabindex="-1"></a>        R[i] <span class="op">=</span> resid(g, w_i, params)</span>
+<span id="annotated-cell-22-7"><a href="#annotated-cell-22-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> R</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-22" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-22" data-code-lines="2" data-code-annotation="1">貯蓄の近似値ベクトル <span class="math inline">\(\bm{\hat{g}}\)</span> を計算</span>
+</dd>
+</dl>
+</div>
+</div>
+<p>ここで，距離関数 <span class="math inline">\(\rho\)</span> にユークリッド距離を採用すると，考えている問題（<a href="#eq-2.10" class="quarto-xref">式&nbsp;15</a>）は残差二乗和を最小にする <span class="math inline">\(\bm{\theta}\)</span> を見つける非線形最小二乗法に帰着する．</p>
+<p>非線形最小二乗法は <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.least_squares.html"><code>scipy.optimize.least_squares()</code></a> で実装することができる．<code>fun</code> 引数に残差ベクトルを計算する関数を渡せば良い．</p>
+<div id="7d2e05db" class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="annotated-cell-23"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-23-1"><a href="#annotated-cell-23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> projection(params, initial_guess<span class="op">=</span>[<span class="fl">0.1</span>, <span class="fl">0.35</span>]):</span>
+<span id="annotated-cell-23-2"><a href="#annotated-cell-23-2" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-23" data-target-annotation="1">1</button><span id="annotated-cell-23-3" class="code-annotation-target"><a href="#annotated-cell-23-3" aria-hidden="true" tabindex="-1"></a>    resid_specified <span class="op">=</span> <span class="kw">lambda</span> theta: resid_vec(theta, params)</span>
+<span id="annotated-cell-23-4"><a href="#annotated-cell-23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-23-5"><a href="#annotated-cell-23-5" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> optimize.least_squares(fun<span class="op">=</span>resid_specified, x0<span class="op">=</span>initial_guess, method<span class="op">=</span><span class="st">"lm"</span>)</span>
+<span id="annotated-cell-23-6"><a href="#annotated-cell-23-6" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-23" data-target-annotation="2">2</button><span id="annotated-cell-23-7" class="code-annotation-target"><a href="#annotated-cell-23-7" aria-hidden="true" tabindex="-1"></a>    estimate_g <span class="op">=</span> approx_g(result.x, params.grid_w)</span>
+<span id="annotated-cell-23-8"><a href="#annotated-cell-23-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> result.x, result.success, estimate_g</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-23" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-23" data-code-lines="3" data-code-annotation="1"><code>optimize.least_squares()</code> に渡すために，<code>resid_vec()</code> を <code>theta</code> だけの関数にする</span>
+</dd>
+<dt data-target-cell="annotated-cell-23" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-23" data-code-lines="7" data-code-annotation="2">推定された <span class="math inline">\(\widehat{\bm{\theta}}\)</span> の下での近似関数 <span class="math inline">\(\hat{g}(w; \widehat{\bm{\theta}})\)</span> を求める</span>
+</dd>
+</dl>
+</div>
+</div>
+<p>では，実装した <code>projection()</code> 関数を使って射影法を実際に行おう．</p>
+<div id="54dbb02a" class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> projection(params)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"convergence: </span><span class="sc">{</span>result[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"The estimated parameter: </span><span class="sc">{</span>result[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>convergence: True
+The estimated parameter: [-1.90171907e-10  3.55008878e-01]</code></pre>
+</div>
+</div>
+<p>解析解（<a href="#eq-saving" class="quarto-xref">式&nbsp;7</a>）によれば，切片はゼロで，傾きは <span class="math inline">\(1/1+(1+r)\{\beta(1+r)\}^{-1/\gamma}\)</span> から計算すると 0.355 であるから，非常に精度良く近似することができている．</p>
+<p>推定されたパラメータ <span class="math inline">\(\widehat{\bm{\theta}}\)</span> の下での近似関数のグリッド <span class="math inline">\(\widehat{\bm{g}}(\bm{w}; \widehat{\bm{\theta}})\)</span> と真の貯蓄関数を可視化したものが <a href="#fig-projection" class="quarto-xref">図&nbsp;7</a> である．</p>
+<div id="cell-fig-projection" class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>ax.grid(ls<span class="op">=</span><span class="st">"--"</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>ax.plot(params.grid_w, saving(params.grid_w, params.beta, params.r, params.gamma), c<span class="op">=</span><span class="st">"#FF7A72"</span>,label<span class="op">=</span><span class="st">"解析解"</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>ax.scatter(params.grid_w, result[<span class="dv">2</span>], c<span class="op">=</span><span class="st">"#78C2AD"</span>, label<span class="op">=</span><span class="st">"射影法"</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(title<span class="op">=</span><span class="st">"貯蓄関数"</span>, xlabel<span class="op">=</span><span class="st">"若年期の所得: "</span><span class="op">+</span><span class="vs">r"$w$"</span>, ylabel<span class="op">=</span><span class="st">"若年期の貯蓄: "</span><span class="op">+</span><span class="vs">r"$a=g(w)$"</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="cf">pass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="fig-projection" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-projection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="numerical_computation_files/figure-html/fig-projection-output-1.png" width="600" height="451" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-projection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+図&nbsp;7: 射影法でパラメトリックに近似した貯蓄関数
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
 </section>
 </section>
 </section>
@@ -1103,7 +1270,9 @@ Song, Zheng, Kjetil Storesletten, and Fabrizio Zilibotti. 2012. <span>“Rotten 
 <li id="fn2"><p>経済学では，方程式の解として決まる変数を<strong>内生変数 (endogenous variable)</strong>，方程式を解く前に値がすでに決まっている変数を<strong>外生変数 (exogenous variable)</strong> と呼ぶ<span class="citation" data-cites="Math4Econ1996">(<a href="#ref-Math4Econ1996" role="doc-biblioref">神谷和也 and 浦井憲 1996</a>)</span>．外生変数は単にパラメータとか状態変数とも言われる．<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p><span class="math inline">\(w_i\)</span> と同じ離散化をすると，<span class="math inline">\(w = 0.1\)</span> のときに　1 期目の消費 <span class="math inline">\(c_1 = w - a\)</span> がゼロか負値しかとれず，最適貯蓄あるいは最適消費が存在しなくなってしまうため．<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p><code>fminbound()</code> のように数値計算によって方程式を解くアルゴリズムのことを<strong>ソルバー (solver)</strong> と呼ぶ．<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p><a href="#fig-optimization" class="quarto-xref">図&nbsp;5</a> では，アルゴリズムで求めた解のグラフが直線に見えるが，これは ‘plot()’ の仕様によるもので，実際にはグリッドポイント上でしか最適貯蓄を計算していないことに注意．<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p><a href="#fig-optimization" class="quarto-xref">図&nbsp;5</a> では，アルゴリズムで求めた解のグラフが直線に見えるが，これは <code>plot()</code> の仕様によるもので，実際にはグリッドポイント上でしか最適貯蓄を計算していないことに注意．<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>筆者は射影法を初めて学んだとき，未知の関数の形状をパラメータで規定し，ある判断基準に基づいてパラメータを推定するという点にどこか計量経済学のような雰囲気を感じた．<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p><strong>チェビシェフ多項式 (Chebyshev polynomials)</strong> が基底関数として頻繁に用いられている．<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

@@ -9,3 +9,4 @@ format:
   html: 
     code-fold: false
     code-summary: "Show the code"
+    code-annotations: hover

@@ -61,6 +61,7 @@ format:
     highlight-style: ayu # see https://quarto.org/docs/output-formats/html-code.html#highlighting
     toc: true
     toc-expand: 2
+    toc-depth: 4
     toc-title: "目次"
     abstract-title: "概要"
     number-sections: false
@@ -85,6 +86,8 @@ crossref:
   fig-prefix: 図
   fig-title: 図
   sec-prefix: §
+  lst-prefix: Code
+  lst-title: Code
 # date-format: "M/DD/YYYY"
 
 execute: 
