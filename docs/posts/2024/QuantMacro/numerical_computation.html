@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="岩永悠希">
-<meta name="dcterms.date" content="2024-10-04">
+<meta name="dcterms.date" content="2024-10-11">
 
-<title>マクロ経済学における有限期間モデルと数値計算の概観 – Yuki Iwanaga</title>
+<title>定量的マクロ経済学における数値計算の基礎 – Yuki Iwanaga</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -174,14 +174,14 @@ window.Quarto = {
 </script>
 
 <link rel="stylesheet" href="../../../styles/styles.css">
-<meta property="og:title" content="マクロ経済学における有限期間モデルと数値計算の概観 – Yuki Iwanaga">
-<meta property="og:description" content="本稿では">
+<meta property="og:title" content="定量的マクロ経済学における数値計算の基礎 – Yuki Iwanaga">
+<meta property="og:description" content="近年，定量的マクロ経済学 (quantitative macroeconomics) と呼ばれる領域では，数値計算 (numerical computation) 技術が必須の分析手法となっている．本稿では２期間モデルというシンプルなモデルを用いて，ハンズオンで数値計算の基礎を学ぶ．扱う手法は，グリッドサーチ，最適化アルゴリズム，求根問題，射影法，内生的グリッド法（執筆中）である．">
 <meta property="og:image" content="https://nagayu71.github.io/posts/2024/QuantMacro/images/grid-search.png">
 <meta property="og:site_name" content="Yuki Iwanaga">
 <meta property="og:image:height" content="480">
 <meta property="og:image:width" content="672">
-<meta name="twitter:title" content="マクロ経済学における有限期間モデルと数値計算の概観 – Yuki Iwanaga">
-<meta name="twitter:description" content="本稿では">
+<meta name="twitter:title" content="定量的マクロ経済学における数値計算の基礎 – Yuki Iwanaga">
+<meta name="twitter:description" content="近年，定量的マクロ経済学 (quantitative macroeconomics) と呼ばれる領域では，数値計算 (numerical computation) 技術が必須の分析手法となっている．本稿では２期間モデルというシンプルなモデルを用いて，ハンズオンで数値計算の基礎を学ぶ．扱う手法は，グリッドサーチ，最適化アルゴリズム，求根問題，射影法，内生的グリッド法（執筆中）である．">
 <meta name="twitter:image" content="https://nagayu71.github.io/posts/2024/QuantMacro/images/grid-search.png">
 <meta name="twitter:image-height" content="480">
 <meta name="twitter:image-width" content="672">
@@ -229,7 +229,7 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">マクロ経済学における有限期間モデルと数値計算の概観</h1>
+      <h1 class="title">定量的マクロ経済学における数値計算の基礎</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">Macroeconomics</div>
                 <div class="quarto-category">Computation</div>
@@ -252,14 +252,14 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">October 4, 2024</p>
+        <p class="date">October 11, 2024</p>
       </div>
     </div>
     
       <div>
       <div class="quarto-title-meta-heading">Modified</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">October 4, 2024</p>
+        <p class="date-modified">October 11, 2024</p>
       </div>
     </div>
       
@@ -268,7 +268,7 @@ window.Quarto = {
   <div>
     <div class="abstract">
       <div class="block-title">概要</div>
-      本稿では
+      近年，定量的マクロ経済学 (quantitative macroeconomics) と呼ばれる領域では，数値計算 (numerical computation) 技術が必須の分析手法となっている．本稿では２期間モデルというシンプルなモデルを用いて，ハンズオンで数値計算の基礎を学ぶ．扱う手法は，グリッドサーチ，最適化アルゴリズム，求根問題，射影法，内生的グリッド法（執筆中）である．
     </div>
   </div>
   
@@ -359,12 +359,12 @@ window.Quarto = {
 <p>今年の6月に『定量的マクロ経済学と数値計算』という本が出版された <span class="citation" data-cites="QuantMacro2024">(<a href="#ref-QuantMacro2024" role="doc-biblioref">北尾早霧, 砂川武貴, and 山田知明 2024</a>)</span>．</p>
 <p>近年マクロ経済学のモデルが複雑になるにつれて，コンピュータを使って近似的にモデルの性質を理解するアプローチが広まっている．</p>
 <p>しかし，日本のマクロ経済学教育の中で，それを可能にする<strong>数値計算 (numerical computation)</strong> という分析手法を学ぶ機会は乏しい．</p>
-<p>この状況を憂いた著者陣が，『経済セミナー』という雑誌に投稿した連載を書籍化したのが本書である．</p>
+<p>この状況を憂いた著者陣が，<a href="https://note.com/keisemi/n/n435bd35caf93?sub_rt=share_sb">『経済セミナー』</a>という雑誌に投稿した連載を書籍化したのが本書である．</p>
 <p>本書が扱う内容は，現代的なマクロ経済学のベースラインとなりつつあるトピックであり，教育が手薄になるのは好ましくない．</p>
 <blockquote class="blockquote">
 <p>本書が扱う内容は現在のマクロ経済学のメインストリームの１つといっても過言ではない。＜中略＞本書を通じて現代のマクロ経済分析に必要な新たな道具を身に付けるサポートをすることが、我々の目的である。(p.8)</p>
 </blockquote>
-<p>（気持ちネットワーク科学をメインにやっているとはいえ，）マクロ経済学徒の一人としては現代的な分析手法を学ぶ必要があると感じたため，勉強ノートを作ろうと思い立った次第である．</p>
+<p>（気持ちネットワークを扱うモデルをメインにやっているとはいえ，）マクロ経済学徒の一人としては現代的な分析手法を学ぶ必要があると感じたため，勉強ノートを作ろうと思い立った次第である．</p>
 <div class="callout callout-style-simple callout-tip">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -458,7 +458,7 @@ u(c) = \frac{c^{1-\gamma}}{1-\gamma}.
 \tag{6}\]</span></span></p>
 <p>リスクが存在するモデルであれば，<span class="math inline">\(\gamma\)</span> は<strong>相対的リスク回避度 (coefficient of relative risk aversion)</strong> であり，同時に<strong>異時点間の代替の弾力性 (intertemporal elasticity of substitution)</strong> の逆数である．</p>
 <p><a href="#eq-crra" class="quarto-xref">式&nbsp;6</a> をコンピュータが認識できるように Python で書くと，次のようになる．</p>
-<div id="1522d8b6" class="cell" data-execution_count="1">
+<div id="5ff5b11b" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="annotated-cell-1-2"><a href="#annotated-cell-1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="annotated-cell-1-3"><a href="#annotated-cell-1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> CRRA(c, gamma):</span>
@@ -528,7 +528,7 @@ u(c) = \frac{c^{1-\gamma}}{1-\gamma}.
 </div>
 <p>ベンチマーク・モデルでは人生を 2 期間に分けているので，モデル上の 1 期間を 30 年と想定する． そのため，割引因子 <span class="math inline">\(\beta\)</span> と金利 <span class="math inline">\(r\)</span> は年率ではなく 30 年間の値を使う．</p>
 <p>今回は実際に 1 期間を 30 年でカリブレートしている <span class="citation" data-cites="song2012rotten">Song, Storesletten, and Zilibotti (<a href="#ref-song2012rotten" role="doc-biblioref">2012</a>)</span> の値を拝借する．割引因子は年率で <span class="math inline">\(\beta = 0.985\)</span> として，1 期間は 30 年なので 30 乗する（<span class="math inline">\(\beta = 0.985^{30}\)</span>）．金利は年率で <span class="math inline">\(2.5\%\)</span> と設定すると <span class="math inline">\(1+r = 1.025^{30}\)</span> となる．相対的リスク回避度は，よく使われる値の <span class="math inline">\(\gamma = 2\)</span> としておく．</p>
-<div id="031cd2a2" class="cell" data-execution_count="3">
+<div id="282159bd" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>beta <span class="op">=</span> <span class="fl">0.985</span><span class="op">**</span><span class="dv">30</span>        <span class="co"># 割引因子</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>gamma <span class="op">=</span> <span class="fl">2.0</span>             <span class="co"># 相対的危険回避度</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> <span class="fl">1.025</span><span class="op">**</span><span class="dv">30</span> <span class="op">-</span> <span class="fl">1.0</span>     <span class="co"># 金利</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -637,7 +637,7 @@ w &amp;= \Brace{1+\SquareBrac{\beta(1+r)}^{-1/\gamma}(1+r)}a.
 w_i \in \{0.1, 0.2,\ldots, 1.0\}
 \]</span></p>
 <p>として存在していると考える．</p>
-<div id="960ee289" class="cell" data-execution_count="5">
+<div id="2c6ad8f8" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>nw <span class="op">=</span> <span class="dv">10</span>       <span class="co"># 所得グリッドの数</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>w_min <span class="op">=</span> <span class="fl">0.1</span>   <span class="co"># 所得の最大値</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>w_max <span class="op">=</span> <span class="fl">1.0</span>   <span class="co"># 所得の最小値</span></span>
@@ -681,7 +681,7 @@ w_i \in \{0.1, 0.2,\ldots, 1.0\}
 a_j \in \{0.025, 0.05, 0.075, 0.1, \ldots, 1.0\}
 \]</span></p>
 <p>と <span class="math inline">\(0.025\)</span> 刻みで <span class="math inline">\(40\)</span> 個のグリッドをとる<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>．</p>
-<div id="a7316e33" class="cell" data-execution_count="6">
+<div id="dcecaa69" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>na <span class="op">=</span> <span class="dv">40</span>       <span class="co"># 貯蓄グリッドの数</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>a_min <span class="op">=</span> <span class="fl">0.025</span> <span class="co"># 貯蓄の最小値</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>a_max <span class="op">=</span> <span class="fl">1.0</span>   <span class="co"># 貯蓄の最大値</span></span>
@@ -702,7 +702,7 @@ a_j \in \{0.025, 0.05, 0.075, 0.1, \ldots, 1.0\}
 <p>と書き直すことができる．</p>
 <p>組み合わせの数は，所得 <span class="math inline">\(w_i\)</span> と資産 <span class="math inline">\(a_j\)</span> がそれぞれ <span class="math inline">\(10\)</span> 通りと <span class="math inline">\(40\)</span> 通りあるので， <span class="math inline">\(400\)</span> 通りとなる．</p>
 <p>そして各所得 <span class="math inline">\(w_i\)</span> のもとで <span class="math inline">\(40\)</span> 種類の資産 <span class="math inline">\(a_j\)</span> の中から生涯効用（<a href="#eq-obj" class="quarto-xref">式&nbsp;8</a>）を最大化する資産 <span class="math inline">\(a^*\)</span> を求めれば良いので，これくらいであれば「総当たり」で求めることができる．</p>
-<div id="34ee43ac" class="cell" data-execution_count="7">
+<div id="412b5b9b" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="annotated-cell-7"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="1">1</button><span id="annotated-cell-7-1" class="code-annotation-target"><a href="#annotated-cell-7-1" aria-hidden="true" tabindex="-1"></a>obj <span class="op">=</span> np.zeros((na, nw))</span>
 <span id="annotated-cell-7-2"><a href="#annotated-cell-7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="annotated-cell-7-3"><a href="#annotated-cell-7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 状態変数と制御変数のすべての組み合わせ (w,a) について生涯効用を計算</span></span>
@@ -886,7 +886,7 @@ a_j \in \{0.025, 0.05, 0.075, 0.1, \ldots, 1.0\}
 <section id="実装" class="level4" data-number="3.3.1">
 <h4 data-number="3.3.1" class="anchored" data-anchor-id="実装"><span class="header-section-number">3.3.1</span> 実装</h4>
 <p>まず，カリブレーションを <a href="#sec-obj-oriented" class="quarto-xref">§&nbsp;3.2.2</a> で導入した方法で行う．</p>
-<div id="6f782e5f" class="cell" data-execution_count="10">
+<div id="f6bdaa07" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Models:</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, beta, gamma, r, nw, w_min, w_max, grid_w):</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.beta <span class="op">=</span> beta</span>
@@ -909,18 +909,18 @@ a_j \in \{0.025, 0.05, 0.075, 0.1, \ldots, 1.0\}
 <span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> Models(beta, gamma, r, nw, w_min, w_max, grid_w)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>Calibration()</code> 関数を実行することで，<code>Calibration()</code> 内で定義されたパラメータを情報として持つ <code>Models</code> インスタンスが生成されるので，<code>params</code> に代入しておく．</p>
-<div id="51841da2" class="cell" data-execution_count="11">
+<div id="ef71f4a5" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> Calibration()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>ここでは，<code>scipy</code> の <code>optimize</code> モジュールにある <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.fminbound.html#scipy.optimize.fminbound"><code>fminbound()</code> 関数</a>を使って最適化問題（<a href="#eq-prob25" class="quarto-xref">式&nbsp;9</a>）を解く<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>．</p>
-<div id="98ada016" class="cell" data-execution_count="12">
+<div id="3dc29b1e" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> optimize</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>では，<code>optimize.fminbound()</code> に渡す目的関数を定義しよう．最小化問題に変換するために <span class="math inline">\(-1\)</span> をかけている．</p>
 <p><span class="math display">\[
 \text{obj}(a, w_i;\beta, \gamma, r) = -\Brace{\frac{[w_i-a]^{1-\gamma}}{1-\gamma} + \beta\frac{[(1+r)a]^{1-\gamma}}{1-\gamma}}
 \]</span></p>
-<div id="80b88635" class="cell" data-execution_count="13">
+<div id="a3c8f0cb" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> obj(a, w_i, params):</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    c <span class="op">=</span> w_i <span class="op">-</span> a</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> c <span class="op">&gt;</span> <span class="dv">0</span>:</span>
@@ -940,7 +940,7 @@ a_j \in \{0.025, 0.05, 0.075, 0.1, \ldots, 1.0\}
 </div>
 </div>
 <p>所与の状態変数 <span class="math inline">\(w_i\)</span> に対して制御変数 <span class="math inline">\(a\)</span> についての最適化問題を解けば良いので，<code>grid_w</code> についての <code>for</code> ループ内で <code>optimize.fminbound()</code> を使えば良い．</p>
-<div id="7791217f" class="cell" data-execution_count="14">
+<div id="8eead241" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="annotated-cell-16"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-16" data-target-annotation="1">1</button><span id="annotated-cell-16-1" class="code-annotation-target"><a href="#annotated-cell-16-1" aria-hidden="true" tabindex="-1"></a>opt_a <span class="op">=</span> np.zeros(params.nw)</span>
 <span id="annotated-cell-16-2"><a href="#annotated-cell-16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="annotated-cell-16-3"><a href="#annotated-cell-16-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, w_i <span class="kw">in</span> <span class="bu">enumerate</span>(params.grid_w):</span>
@@ -1025,12 +1025,12 @@ R(a;w_i) = 0
 u'(c) = c^{-\gamma}
 \]</span></p>
 <p>で与えられるので，Python で表すと次のようになる．</p>
-<div id="acab7a1e" class="cell" data-execution_count="16">
+<div id="6f62bf3e" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> marginal_util(c, gamma):</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> c <span class="op">**</span> (<span class="op">-</span> gamma)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>これを用いると残差関数は次のように実装できる．</p>
-<div id="6a7d049d" class="cell" data-execution_count="17">
+<div id="73ddaa1c" class="cell" data-execution_count="17">
 <div id="lst-resid" class="python cell-code listing quarto-float quarto-figure quarto-figure-left anchored">
 <figure class="quarto-float quarto-float-lst figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-resid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1050,7 +1050,7 @@ Code&nbsp;1: 残差関数
 </div>
 </div>
 <p><a href="#sec-optimize" class="quarto-xref">§&nbsp;3.3</a> と同様に，ソルバーを使って各状態変数 <span class="math inline">\(w_i\)</span> の下で最適貯蓄を求めていく．</p>
-<div id="140aff0a" class="cell" data-execution_count="18">
+<div id="04d9dae6" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="annotated-cell-19"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-19" data-target-annotation="1">1</button><span id="annotated-cell-19-1" class="code-annotation-target"><a href="#annotated-cell-19-1" aria-hidden="true" tabindex="-1"></a>opt_a <span class="op">=</span> np.zeros(params.nw)</span>
 <span id="annotated-cell-19-2"><a href="#annotated-cell-19-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="annotated-cell-19-3"><a href="#annotated-cell-19-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, w_i <span class="kw">in</span> <span class="bu">enumerate</span>(params.grid_w):</span>
@@ -1145,7 +1145,7 @@ R(\bm{\theta}; w) \equiv
 \begin{pmatrix} \theta_0 \\ \theta_1 \end{pmatrix}
 \]</span></p>
 <p>と書けるが，これを実装すると次のようになる．</p>
-<div id="23dc90e4" class="cell" data-execution_count="20">
+<div id="d3782d85" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="annotated-cell-21"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-21-1"><a href="#annotated-cell-21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> approx_g(theta: np.ndarray, w: np.ndarray) <span class="op">-&gt;</span> np.ndarray:</span>
 <span id="annotated-cell-21-2"><a href="#annotated-cell-21-2" aria-hidden="true" tabindex="-1"></a>    dim <span class="op">=</span> <span class="bu">len</span>(theta)</span>
 <span id="annotated-cell-21-3"><a href="#annotated-cell-21-3" aria-hidden="true" tabindex="-1"></a>    nw <span class="op">=</span> <span class="bu">len</span>(w)</span>
@@ -1167,7 +1167,7 @@ R(\bm{\theta}; w) \equiv
 </div>
 </div>
 <p>次に，残差関数 <code>resid()</code>（<a href="#lst-resid" class="quarto-xref">Code&nbsp;1</a>）を利用して，<a href="#eq-resid-projection" class="quarto-xref">式&nbsp;14</a> に従って残差ベクトル <span class="math inline">\(\bm{R}(\bm{w}; \bm{\theta})\)</span> を実装する．</p>
-<div id="7c1483bf" class="cell" data-execution_count="21">
+<div id="db0219f6" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="annotated-cell-22"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-22-1"><a href="#annotated-cell-22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> resid_vec(theta, params):</span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-22" data-target-annotation="1">1</button><span id="annotated-cell-22-2" class="code-annotation-target"><a href="#annotated-cell-22-2" aria-hidden="true" tabindex="-1"></a>    g_hats <span class="op">=</span> approx_g(theta, params.grid_w)</span>
 <span id="annotated-cell-22-3"><a href="#annotated-cell-22-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1186,7 +1186,7 @@ R(\bm{\theta}; w) \equiv
 </div>
 <p>ここで，距離関数 <span class="math inline">\(\rho\)</span> にユークリッド距離を採用すると，考えている問題（<a href="#eq-2.10" class="quarto-xref">式&nbsp;15</a>）は残差二乗和を最小にする <span class="math inline">\(\bm{\theta}\)</span> を見つける非線形最小二乗法に帰着する．</p>
 <p>非線形最小二乗法は <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.least_squares.html"><code>scipy.optimize.least_squares()</code></a> で実装することができる．<code>fun</code> 引数に残差ベクトルを計算する関数を渡せば良い．</p>
-<div id="7d2e05db" class="cell" data-execution_count="22">
+<div id="2cb68b8d" class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="annotated-cell-23"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-23-1"><a href="#annotated-cell-23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> projection(params, initial_guess<span class="op">=</span>[<span class="fl">0.1</span>, <span class="fl">0.35</span>]):</span>
 <span id="annotated-cell-23-2"><a href="#annotated-cell-23-2" aria-hidden="true" tabindex="-1"></a></span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-23" data-target-annotation="1">1</button><span id="annotated-cell-23-3" class="code-annotation-target"><a href="#annotated-cell-23-3" aria-hidden="true" tabindex="-1"></a>    resid_specified <span class="op">=</span> <span class="kw">lambda</span> theta: resid_vec(theta, params)</span>
@@ -1209,7 +1209,7 @@ R(\bm{\theta}; w) \equiv
 </div>
 </div>
 <p>では，実装した <code>projection()</code> 関数を使って射影法を実際に行おう．</p>
-<div id="54dbb02a" class="cell" data-execution_count="23">
+<div id="c7e8b304" class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> projection(params)</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"convergence: </span><span class="sc">{</span>result[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"The estimated parameter: </span><span class="sc">{</span>result[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
