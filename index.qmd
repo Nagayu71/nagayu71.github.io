@@ -97,11 +97,6 @@ _Kobe University, Japan_
 
 _Kobe University, Japan_
 
-##### [{{< fa chart-simple >}}]{.color-minty} Data Analyst
-
-_merchu inc._<br>
-_[Long-term internship](https://merchu.notion.site/c70f2fe8b3534740a654fed5c19e73b0)_
-
 :::
 
 :::
@@ -129,11 +124,6 @@ _Kobe University, Japan_
 ##### [{{< fa person-chalkboard >}}]{.color-minty} Teaching Assistant
 
 _Kobe University, Japan_
-
-##### [{{< fa chart-simple >}}]{.color-minty} Data Analyst
-
-_merchu inc._<br>
-_[Long-term internship](https://merchu.notion.site/c70f2fe8b3534740a654fed5c19e73b0)_
 
 :::
 
