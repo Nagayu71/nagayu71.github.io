@@ -46,8 +46,25 @@ Qiita では実装面で困ったことの備忘録や，ちょっとしたま�
 ::: {#second-column}
 ### YouTube
 
+#### 学術系
+
+- [大関真之の雑談方程式 - これって人生変えちゃう授業かも -](https://www.youtube.com/@mohzeki22)
+- [AIcia Solid Project](https://www.youtube.com/@AIcia_Solid)
 - [予備校のノリで学ぶ「大学の数学・物理」](https://youtube.com/@yobinori?si=Yj-ozwJy3xaLv3c5)
+
+#### VTuber
+
+- [Mori Calliope Ch. hololive-EN](https://www.youtube.com/@MoriCalliope)
+- [Elizabeth Rose Bloodflame Ch. hololive-EN](https://www.youtube.com/@holoen_erbloodflame)
+- [Hajime Ch. 轟はじめ ‐ ReGLOSS](https://www.youtube.com/@TodorokiHajime)
+
+#### 音楽系
+
+- [Cateen かてぃん](https://www.youtube.com/@cateen_hayatosumino)
 - [Animenz Piano Sheets](https://youtube.com/@animenzzz?si=4j8Z3EufJ9vlUdpu)
+- [Grissini Project](https://www.youtube.com/@grissini)
+
+#### その他
 - [Bappa Shota](https://youtube.com/@bappashota?si=UKR6GeX5riv2njUq)
 
 :::
