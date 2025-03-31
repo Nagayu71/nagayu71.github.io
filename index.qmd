@@ -1,6 +1,6 @@
 ---
 title: "Yuki Iwanaga | 岩永悠希"
-description: "Master's Student in Economics"
+description: "Ph.D. Student in Economics"
 title-block-banner: true
 page-layout: full
 number-sections: false
@@ -34,7 +34,7 @@ I'm a 2nd year master's Econ student supervised by [Teruyoshi Kobayashi](https:/
 ::: {#first-column}
 ## Hello!
 
-I'm a 2nd year master's Econ student supervised by [Teruyoshi Kobayashi](https://terukobayashi.wordpress.com/) at the [Kobe University](https://www.kobe-u.ac.jp/ja/) in Hyogo, Japan.
+I'm a 1st year Ph.D. student in economics supervised by [Teruyoshi Kobayashi](https://terukobayashi.wordpress.com/) at the [Kobe University](https://www.kobe-u.ac.jp/ja/) in Hyogo, Japan.
 :::
 
 ::: {#second-column}
@@ -80,7 +80,7 @@ The focus of my research is to develop a statistical model that identifies the m
 ::: {#first-column}
 ## Education
 
-##### [{{< fa graduation-cap >}}]{.color-minty} M.A. in Economics, 2025 (expected)
+##### [{{< fa graduation-cap >}}]{.color-minty} M.A. in Economics, 2025
 
 _Kobe University, Japan_
 
