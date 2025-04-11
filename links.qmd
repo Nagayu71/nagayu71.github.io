@@ -52,11 +52,15 @@ Qiita では実装面で困ったことの備忘録や，ちょっとしたま�
 - [AIcia Solid Project](https://www.youtube.com/@AIcia_Solid)
 - [予備校のノリで学ぶ「大学の数学・物理」](https://youtube.com/@yobinori?si=Yj-ozwJy3xaLv3c5)
 
-#### VTuber
+#### サイエンスコミュニケーション
+- [Veritasium](https://www.youtube.com/@veritasium)
+- [Looking Glass Universe](https://www.youtube.com/@LookingGlassUniverse)
+
+<!-- #### VTuber
 
 - [Mori Calliope Ch. hololive-EN](https://www.youtube.com/@MoriCalliope)
 - [Elizabeth Rose Bloodflame Ch. hololive-EN](https://www.youtube.com/@holoen_erbloodflame)
-- [Hajime Ch. 轟はじめ ‐ ReGLOSS](https://www.youtube.com/@TodorokiHajime)
+- [Hajime Ch. 轟はじめ ‐ ReGLOSS](https://www.youtube.com/@TodorokiHajime) -->
 
 #### 音楽系
 
