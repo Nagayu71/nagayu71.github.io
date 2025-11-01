@@ -18,6 +18,21 @@
     --font-gill-sans: "Gill Sans", sans-serif;
 }
 
+/* Noto Sans JP を少し拡大して、BIZ UDPGothicの英字サイズ感に寄せる */
+/* BIZ UDPGothic には太字がないため */
+@font-face {
+  font-family: "NotoSansJP-adjusted";
+  src: local("Noto Sans JP");
+  size-adjust: 110%;        /* まずは 102–108% あたりで試して微調整 */
+  ascent-override: 90%;
+  descent-override: 10%;
+}
+
+strong, b {
+  font-family: "NotoSansJP-adjusted", "Noto Sans JP", sans-serif;
+  font-weight: 700;
+}
+
 /* 見出しとナビゲーション */
 h1, h2, h3, h4, h5, h6, .navbar-title, .menu-text {
     font-family: var(--font-sans);
@@ -152,4 +167,63 @@ h1, h2, h3, h4, h5, h6, .navbar-title, .menu-text {
     overflow-x: auto;
     overflow-y: hidden; /* 縦方向のスクロールバーを非表示にし、不要な縦スクロールを防ぐ。 */
     max-width: 100%;
+}
+
+/* News セクションのスクロール設定 */
+.news-scroll {
+  max-height: 100px;   /* お好みで */
+  overflow-y: auto;    /* 縦スクロール */
+  margin-top: .5rem;   /* 見出しとの間を少し空ける */
+  padding-right: 8px;  /* スクロールバー対策（任意） */
+}
+
+/* --- Dark mode: override Darkly variables with Minty colors --- */
+.quarto-dark {
+  /* Bootswatch変数をMinty色に置き換え */
+  :root {
+    --bs-primary: #78C2AD;
+    --bs-primary-rgb: 120, 194, 173;
+    --bs-navbar-bg: #78C2AD;
+    --bs-navbar-color: #ffffff;
+    --bs-body-bg: #121212; /* 背景はDarkly風に維持 */
+    --bs-body-color: #e0e0e0;
+  }
+
+  /* ページ上部 */
+  header,
+  .page-header,
+  .quarto-title-block,
+  .quarto-title-banner {
+    background-color: #78C2AD !important;
+    color: #fff !important;
+  }
+
+  /* ページタイトルと説明 */
+  .quarto-title-block .title,
+  .quarto-title-block .subtitle,
+  .quarto-title-block .description {
+    color: #fff !important;
+  }
+
+  /* ナビバー */
+  .navbar,
+  .navbar-brand,
+  .navbar-nav .nav-link {
+    background-color: #78C2AD !important;
+    color: #fff !important;
+  }
+  .navbar .nav-link:hover,
+  .navbar .nav-link:focus,
+  .navbar .nav-link.active {
+    color: #fff !important;
+    text-decoration: underline;
+  }
+
+  /* トグラーとドロップダウン */
+  .navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.5) !important;
+  }
+  .dropdown-menu {
+    background-color: #2b2b2b !important;
+  }
 }
