@@ -1,15 +1,16 @@
 ---
-title: "Yuki Iwanaga | 岩永悠希"
-description: "Ph.D. Student in Economics"
+title: "Yuki IWANAGA | 岩永悠希"
+description: "Graduate School of Economics, Kobe University, Japan"
 title-block-banner: true
 page-layout: full
 number-sections: false
+toc: false
 about:
   template: marquee # これがないと links 以下が機能しない
-  links: 
-    - icon: envelope
-      text: "Contact"
-      href: mailto:yuki.iwanaga136@gmail.com
+  # links: 
+  #   - icon: envelope
+  #     text: "Contact"
+  #     href: mailto:{your email}
 ---
 
 <!-- columns 環境は、どの媒体でも column を作ってしまうため、スマホでは非常に見にくい。媒体によって柔軟に要素を配置するには {layout="[]"} 環境を使う。
@@ -35,6 +36,10 @@ I'm a 2nd year master's Econ student supervised by [Teruyoshi Kobayashi](https:/
 ## Hello!
 
 I'm a 1st year Ph.D. student in economics supervised by [Teruyoshi Kobayashi](https://terukobayashi.wordpress.com/) at the [Kobe University](https://www.kobe-u.ac.jp/ja/) in Hyogo, Japan.
+
+I study social and economic networks, where people's behaviors affect one another, using game theory and statistical models.
+
+Email: yuki.iwanaga136[at]gmail.com
 :::
 
 ::: {#second-column}
@@ -44,7 +49,7 @@ I'm a 1st year Ph.D. student in economics supervised by [Teruyoshi Kobayashi](ht
 :::
 
 
-::: {layout="[50,50]"}
+<!-- ::: {layout="[50,50]"}
 
 ::: {#first-column}
 ## Interests
@@ -70,6 +75,38 @@ My research interests lie at the intersection of economics and network science. 
 
 The focus of my research is to develop a statistical model that identifies the mechanisms behind the formation of observed economic and social networks. A key concept in economic model building is microfoundation, and I am currently working on a model based on network game theory.
 
+::: -->
+
+::: {layout="[50,25,25]"}
+
+::: {#first-column}
+
+## Interests
+
+![](assets/images/collective_behavior.png){width=500 fig-align="left"}
+
+:::
+
+::: {#second-column}
+
+<div style="margin-top: 100px;"></div>
+
+#### Research
+
+- Collective Behavior
+- Network Science
+- Network Games
+:::
+
+::: {#third-column}
+
+<div style="margin-top: 100px;"></div>
+
+#### Personal
+
+- Statistical Physics
+- Bayesian Modeling
+- History of Science
 :::
 
 :::
@@ -96,6 +133,11 @@ _Kobe University, Japan_
 ##### [{{< fa person-chalkboard >}}]{.color-minty} Teaching Assistant
 
 _Kobe University, Japan_
+
+##### [{{< fa user-graduate >}}]{.color-minty} Research Fellow, 2025.4 -- present
+
+_Kobe University, Japan_<br>
+Supported by JST BOOST, Grant Number JPMJBS2410.
 
 :::
 
@@ -128,3 +170,11 @@ _Kobe University, Japan_
 :::
 
 :::: -->
+
+## News
+
+::: {.news-scroll}
+- [2025-10-16] [神戸大学統合報告書2025](https://www.kobe-u.ac.jp/ja/announcement/20251015-67208/)の【学長×博士学生×若手研究者 座談会】に出演しました。
+- [2025-09-30] Oral presentation at [the 10th Annual International Conference in Hawaiʻi](https://www.econ.kobe-u.ac.jp/news/18216/).
+- [2025-04-03] [次世代ＡＩ人材育成プログラム (BOOST)](https://www.jst.go.jp/pr/info/info1681/index.html)に採択されました。
+:::

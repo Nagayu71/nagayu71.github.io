@@ -58,16 +58,16 @@
   {
     "objectID": "index.html#hello",
     "href": "index.html#hello",
-    "title": "Yuki Iwanaga | 岩永悠希",
+    "title": "Yuki IWANAGA | 岩永悠希",
     "section": "Hello!",
-    "text": "Hello!\nI’m a 1st year Ph.D. student in economics supervised by Teruyoshi Kobayashi at the Kobe University in Hyogo, Japan."
+    "text": "Hello!\nI’m a 1st year Ph.D. student in economics supervised by Teruyoshi Kobayashi at the Kobe University in Hyogo, Japan.\nI study social and economic networks, where people’s behaviors affect one another, using game theory and statistical models.\nEmail: yuki.iwanaga136[at]gmail.com"
   },
   {
     "objectID": "index.html#interests",
     "href": "index.html#interests",
-    "title": "Yuki Iwanaga | 岩永悠希",
+    "title": "Yuki IWANAGA | 岩永悠希",
     "section": "Interests",
-    "text": "Interests\n\nCollective Behavior\nNetwork Science\nNetwork Games\n\nStrategic network formation\nEconometric network formation models\n\nMacroeconomics\nStatistical Physics\nBayesian Modeling\nHistory of Science"
+    "text": "Interests"
   },
   {
     "objectID": "index.html#research",
@@ -79,16 +79,16 @@
   {
     "objectID": "index.html#education",
     "href": "index.html#education",
-    "title": "Yuki Iwanaga | 岩永悠希",
+    "title": "Yuki IWANAGA | 岩永悠希",
     "section": "Education",
     "text": "Education\n\n M.A. in Economics, 2025\nKobe University, Japan\n\n\n B.A. in Arts, 2023\nKobe University, Japan"
   },
   {
     "objectID": "index.html#experience",
     "href": "index.html#experience",
-    "title": "Yuki Iwanaga | 岩永悠希",
+    "title": "Yuki IWANAGA | 岩永悠希",
     "section": "Experience",
-    "text": "Experience\n\n Teaching Assistant\nKobe University, Japan"
+    "text": "Experience\n\n Teaching Assistant\nKobe University, Japan\n\n\n Research Fellow, 2025.4 – present\nKobe University, Japan Supported by JST BOOST, Grant Number JPMJBS2410."
   },
   {
     "objectID": "blog.html",
@@ -158,13 +158,41 @@
     "href": "research.html",
     "title": "Research",
     "section": "",
-    "text": "Iwanaga and Kobayashi. Network Game Meets Machine Learning: A Microfounded Graphical Lasso. The 10th Annual International Conference in Hawaiʻi. 2025/9/30.\n\n\n\n\n\nTBA. Nonlinear Physics Laboratory, Kyushu U. 2025/12/18."
+    "text": "My research interests lie at the intersection of economics and network science. Although network science is a relatively new field that emerged in the years around the early 2000s, it has been applied across various domains with significant success. In economics, considering network structures has provided deeper insights in research areas such as input-output analysis, cascading failures in financial networks, and measuring peer effects.\nThe focus of my research is to develop a statistical model that identifies the mechanisms behind the formation of observed economic and social networks. A key concept in economic model building is microfoundation, and I am currently working on a model based on network game theory."
   },
   {
     "objectID": "research.html#presentation",
     "href": "research.html#presentation",
     "title": "Research",
+    "section": "Presentation",
+    "text": "Presentation\n\nin English\n\nIwanaga and Kobayashi. Network Game Meets Machine Learning: A Microfounded Graphical Lasso. The 10th Annual International Conference in Hawaiʻi. 2025/9/30.\n\n\n\nin Japanese\n\nTBA. Nonlinear Physics Laboratory, Kyushu U. 2025/12/18."
+  },
+  {
+    "objectID": "index.html#news",
+    "href": "index.html#news",
+    "title": "Yuki IWANAGA | 岩永悠希",
+    "section": "News",
+    "text": "News\n\n\n[2025-10-16] 神戸大学統合報告書2025の【学長×博士学生×若手研究者 座談会】に出演しました。\n[2025-09-30] Oral presentation at the 10th Annual International Conference in Hawaiʻi.\n[2025-04-03] 次世代ＡＩ人材育成プログラム (BOOST)に採択されました。"
+  },
+  {
+    "objectID": "index.html#section",
+    "href": "index.html#section",
+    "title": "Yuki Iwanaga | 岩永悠希",
     "section": "",
-    "text": "Iwanaga and Kobayashi. Network Game Meets Machine Learning: A Microfounded Graphical Lasso. The 10th Annual International Conference in Hawaiʻi. 2025/9/30.\n\n\n\n\n\nTBA. Nonlinear Physics Laboratory, Kyushu U. 2025/12/18."
+    "text": "Collective Behavior\nNetwork Science\nNetwork Games\n\nStrategic network formation\nEconometric network formation models\n\nMacroeconomics\nStatistical Physics\nBayesian Modeling\nHistory of Science"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Yuki Iwanaga | 岩永悠希",
+    "section": "",
+    "text": "2025-11-01 — Website update: added News section.\n2025-10-28 — New paper accepted in JEDC.\n2025-10-15 — Gave a talk at NetSci workshop.\n2025-10-01 — Poster presentation at Hawaii Conference.\n2025-09-15 — Repository update: new module added.\n…（以降たくさん）"
+  },
+  {
+    "objectID": "research.html#about",
+    "href": "research.html#about",
+    "title": "Research",
+    "section": "",
+    "text": "My research interests lie at the intersection of economics and network science. Although network science is a relatively new field that emerged in the years around the early 2000s, it has been applied across various domains with significant success. In economics, considering network structures has provided deeper insights in research areas such as input-output analysis, cascading failures in financial networks, and measuring peer effects.\nThe focus of my research is to develop a statistical model that identifies the mechanisms behind the formation of observed economic and social networks. A key concept in economic model building is microfoundation, and I am currently working on a model based on network game theory."
   }
 ]

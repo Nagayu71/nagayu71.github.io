@@ -40,21 +40,21 @@ website:
   page-footer: 
     left: "Built with [Quarto](https://quarto.org/)"
     center: 
-      - text: "© 2024, Yuki Iwanaga"
+      - text: "© 2025, Yuki Iwanaga"
         href: terms.qmd
     right: 
       - icon: github
         href: https://github.com/Nagayu71
-      - icon: envelope
-        href: mailto:yuki.iwanaga136@gmail.com
+      # - icon: envelope
+      #   href: mailto:{your email}
     background: "#78C2AD"
 
 format:
   html:
-    mainfont: "BIZ UDPGothic"  # 教育やビジネス文書作成などに活用できるよう、より多くの方にとって読みやすく使いやすいように設計されたユニバーサルデザインフォント
+    mainfont: "BIZ UDPGothic"
     theme: 
       light: minty
-      # dark: darkly
+      dark: darkly
     css: styles/styles.css
     code-block-bg: true
     code-block-border-left: "#7CC4AC" # see https://quarto.org/docs/output-formats/html-code.html#appearance
