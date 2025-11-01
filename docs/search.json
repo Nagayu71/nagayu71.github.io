@@ -152,5 +152,19 @@
     "title": "Metropolis-Hastings アルゴリズム",
     "section": "Footnotes",
     "text": "Footnotes\n\n\n一般には採択比率 (acceptance ratio) や採択確率 (acceptance probability) などと呼ばれる．↩︎\n式 2 の不等号の向きがどちらの場合であっても対応できるように \\(\\min\\{\\}\\) を使用．流出する人の数（分母）が流入する人の数（分子）よりも大きい場合のみ交通規制をかけるということ．↩︎\n\\(x=0\\) のとき \\(1\\) をとり，それ以外の \\(x\\) で \\(0\\) をとる関数．↩︎"
+  },
+  {
+    "objectID": "research.html",
+    "href": "research.html",
+    "title": "Research",
+    "section": "",
+    "text": "Iwanaga and Kobayashi. Network Game Meets Machine Learning: A Microfounded Graphical Lasso. The 10th Annual International Conference in Hawaiʻi. 2025/9/30.\n\n\n\n\n\nTBA. Nonlinear Physics Laboratory, Kyushu U. 2025/12/18."
+  },
+  {
+    "objectID": "research.html#presentation",
+    "href": "research.html#presentation",
+    "title": "Research",
+    "section": "",
+    "text": "Iwanaga and Kobayashi. Network Game Meets Machine Learning: A Microfounded Graphical Lasso. The 10th Annual International Conference in Hawaiʻi. 2025/9/30.\n\n\n\n\n\nTBA. Nonlinear Physics Laboratory, Kyushu U. 2025/12/18."
   }
 ]

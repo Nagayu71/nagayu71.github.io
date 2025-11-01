@@ -1,0 +1,17 @@
+---
+title: "Research"
+page-layout: full
+title-block-banner: true
+number-sections: false
+toc: false
+---
+
+## Presentation
+
+#### in English
+
+1. Iwanaga and Kobayashi. Network Game Meets Machine Learning: A Microfounded Graphical Lasso. [The 10th Annual International Conference in Hawaiʻi](https://www.econ.kobe-u.ac.jp/news/18216/). 2025/9/30.
+
+#### in Japanese
+
+1. TBA. [Nonlinear Physics Laboratory, Kyushu U](https://sites.google.com/view/nonlinear-kyushu-univ/). 2025/12/18.

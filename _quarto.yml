@@ -18,8 +18,8 @@ website:
     right:
       - text: "Home"
         href: index.qmd
-      # - text: "Research"
-      #   href: research.qmd
+      - text: "Research"
+        href: research.qmd
       - text: "Blog"
         href: blog.qmd
       - text: "Links"
