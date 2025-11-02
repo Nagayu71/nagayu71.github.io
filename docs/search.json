@@ -56,48 +56,6 @@
     "text": "リンク\n当サイトにリンクを行う場合の許可や連絡は不要です。\n\n\n\n\n\n\n\n当サイトのリンクやバナーから移動したサイトで提供される情報やサービス等について一切の責任を負いません。\n当サイトのコンテンツや情報については、可能なかぎり正確な情報を提供するように努めておりますが、正確性や安全性を保証するものではありません。"
   },
   {
-    "objectID": "index.html#hello",
-    "href": "index.html#hello",
-    "title": "Yuki IWANAGA | 岩永悠希",
-    "section": "Hello!",
-    "text": "Hello!\nI’m a 1st year Ph.D. student in economics supervised by Teruyoshi Kobayashi at the Kobe University in Hyogo, Japan.\nI study social and economic networks, where people’s behaviors affect one another, using game theory and statistical models.\nEmail: yuki.iwanaga136[at]gmail.com"
-  },
-  {
-    "objectID": "index.html#interests",
-    "href": "index.html#interests",
-    "title": "Yuki IWANAGA | 岩永悠希",
-    "section": "Interests",
-    "text": "Interests"
-  },
-  {
-    "objectID": "index.html#research",
-    "href": "index.html#research",
-    "title": "Yuki Iwanaga | 岩永悠希",
-    "section": "Research",
-    "text": "Research\nMy research interests lie at the intersection of economics and network science. Although network science is a relatively new field that emerged in the years around the early 2000s, it has been applied across various domains with significant success. In economics, considering network structures has provided deeper insights in research areas such as input-output analysis, cascading failures in financial networks, and measuring peer effects.\nThe focus of my research is to develop a statistical model that identifies the mechanisms behind the formation of observed economic and social networks. A key concept in economic model building is microfoundation, and I am currently working on a model based on network game theory."
-  },
-  {
-    "objectID": "index.html#education",
-    "href": "index.html#education",
-    "title": "Yuki IWANAGA | 岩永悠希",
-    "section": "Education",
-    "text": "Education\n\n M.A. in Economics, 2025\nKobe University, Japan\n\n\n B.A. in Arts, 2023\nKobe University, Japan"
-  },
-  {
-    "objectID": "index.html#experience",
-    "href": "index.html#experience",
-    "title": "Yuki IWANAGA | 岩永悠希",
-    "section": "Experience",
-    "text": "Experience\n\n Teaching Assistant\nKobe University, Japan\n\n\n Research Fellow, 2025.4 – present\nKobe University, Japan Supported by JST BOOST, Grant Number JPMJBS2410."
-  },
-  {
-    "objectID": "blog.html",
-    "href": "blog.html",
-    "title": "Recent Posts",
-    "section": "",
-    "text": "定量的マクロ経済学における数値計算の基礎\n\n\n\n\n\n\nMacroeconomics\n\n\nComputation\n\n\nPython\n\n\nSciPy\n\n\n\n近年，定量的マクロ経済学 (quantitative macroeconomics) と呼ばれる領域では，数値計算 (numerical computation) 技術が必須の分析手法となっている．本稿では２期間モデルというシンプルなモデルを用いて，ハンズオンで数値計算の基礎を学ぶ．扱う手法は，グリッドサーチ，最適化アルゴリズム，求根問題，射影法，内生的グリッド法（執筆中）である．\n\n\n\n\n\nOct 11, 2024\n\n\n岩永悠希\n\n\n\n\n\n\n\n\n\n\n\n\nMetropolis-Hastings アルゴリズム\n\n\nPython による実装\n\n\n\nBayesian\n\n\nMCMC\n\n\nSampling\n\n\nPython\n\n\n\nMCMC (Markov Chain Monte Carlo) とは，任意の確率分布からのサンプリングを実現するモンテカルロ法である． 本稿では MCMC の一つである Metropolis-Hastings (MH) 法を @chib1995 に沿って説明し，Python で実装することで MH 法への理解を深めたい． \n\n\n\n\n\nSep 27, 2024\n\n\n岩永悠希\n\n\n\n\n\n\nNo matching items\n\n Back to top"
-  },
-  {
     "objectID": "links.html",
     "href": "links.html",
     "title": "関連リンク",
@@ -117,6 +75,69 @@
     "title": "関連リンク",
     "section": "Favorite",
     "text": "Favorite\n\n\n\n\n\n\n\nMusic\n\n\n\n\n\n\n\n\nYouTube\n\n学術系\n\n大関真之の雑談方程式 - これって人生変えちゃう授業かも -\nAIcia Solid Project\n予備校のノリで学ぶ「大学の数学・物理」\n\n\n\nサイエンスコミュニケーション\n\nVeritasium\nLooking Glass Universe\n\n\n\n\n音楽系\n\nCateen かてぃん\nAnimenz Piano Sheets\nGrissini Project\n\n\n\nその他\n\nBappa Shota"
+  },
+  {
+    "objectID": "blog.html",
+    "href": "blog.html",
+    "title": "Recent Posts",
+    "section": "",
+    "text": "定量的マクロ経済学における数値計算の基礎\n\n\n\n\n\n\nMacroeconomics\n\n\nComputation\n\n\nPython\n\n\nSciPy\n\n\n\n近年，定量的マクロ経済学 (quantitative macroeconomics) と呼ばれる領域では，数値計算 (numerical computation) 技術が必須の分析手法となっている．本稿では２期間モデルというシンプルなモデルを用いて，ハンズオンで数値計算の基礎を学ぶ．扱う手法は，グリッドサーチ，最適化アルゴリズム，求根問題，射影法，内生的グリッド法（執筆中）である．\n\n\n\n\n\nOct 11, 2024\n\n\n岩永悠希\n\n\n\n\n\n\n\n\n\n\n\n\nMetropolis-Hastings アルゴリズム\n\n\nPython による実装\n\n\n\nBayesian\n\n\nMCMC\n\n\nSampling\n\n\nPython\n\n\n\nMCMC (Markov Chain Monte Carlo) とは，任意の確率分布からのサンプリングを実現するモンテカルロ法である． 本稿では MCMC の一つである Metropolis-Hastings (MH) 法を @chib1995 に沿って説明し，Python で実装することで MH 法への理解を深めたい． \n\n\n\n\n\nSep 27, 2024\n\n\n岩永悠希\n\n\n\n\n\n\nNo matching items\n\n Back to top"
+  },
+  {
+    "objectID": "index.html#hello",
+    "href": "index.html#hello",
+    "title": "Yuki IWANAGA | 岩永悠希",
+    "section": "Hello!",
+    "text": "Hello!\nI’m a 1st year Ph.D. student in economics supervised by Teruyoshi Kobayashi at the Kobe University in Hyogo, Japan.\nI study social and economic networks, where people’s behaviors affect one another, using game theory and statistical models.\nEmail: yuki.iwanaga136[at]gmail.com"
+  },
+  {
+    "objectID": "index.html#interests",
+    "href": "index.html#interests",
+    "title": "Yuki IWANAGA | 岩永悠希",
+    "section": "Interests",
+    "text": "Interests"
+  },
+  {
+    "objectID": "index.html#education",
+    "href": "index.html#education",
+    "title": "Yuki IWANAGA | 岩永悠希",
+    "section": "Education",
+    "text": "Education\n\n M.A. in Economics, 2025\nKobe University, Japan\n\n\n B.A. in Arts, 2023\nKobe University, Japan"
+  },
+  {
+    "objectID": "index.html#experience",
+    "href": "index.html#experience",
+    "title": "Yuki IWANAGA | 岩永悠希",
+    "section": "Experience",
+    "text": "Experience\n\n Teaching Assistant\nKobe University, Japan\n\n\n Research Fellow, 2025.4 – present\nKobe University, Japan Supported by JST BOOST, Grant Number JPMJBS2410."
+  },
+  {
+    "objectID": "index.html#news",
+    "href": "index.html#news",
+    "title": "Yuki IWANAGA | 岩永悠希",
+    "section": "News",
+    "text": "News\n\n\n[2025-10-16] 神戸大学統合報告書2025の【学長×博士学生×若手研究者 座談会】に出演しました。\n[2025-09-30] Oral presentation at the 10th Annual International Conference in Hawaiʻi.\n[2025-04-03] 次世代ＡＩ人材育成プログラム (BOOST)に採択されました。"
+  },
+  {
+    "objectID": "research.html",
+    "href": "research.html",
+    "title": "Research",
+    "section": "",
+    "text": "My research interests lie at the intersection of economics and network science. Although network science is a relatively new field that emerged in the years around the early 2000s, it has been applied across various domains with significant success. In economics, considering network structures has provided deeper insights in research areas such as input-output analysis, cascading failures in financial networks, and measuring peer effects.\nThe focus of my research is to develop a statistical model that identifies the mechanisms behind the formation of observed economic and social networks. A key concept in economic model building is microfoundation, and I am currently working on a model based on network game theory."
+  },
+  {
+    "objectID": "research.html#about",
+    "href": "research.html#about",
+    "title": "Research",
+    "section": "",
+    "text": "My research interests lie at the intersection of economics and network science. Although network science is a relatively new field that emerged in the years around the early 2000s, it has been applied across various domains with significant success. In economics, considering network structures has provided deeper insights in research areas such as input-output analysis, cascading failures in financial networks, and measuring peer effects.\nThe focus of my research is to develop a statistical model that identifies the mechanisms behind the formation of observed economic and social networks. A key concept in economic model building is microfoundation, and I am currently working on a model based on network game theory."
+  },
+  {
+    "objectID": "research.html#presentation",
+    "href": "research.html#presentation",
+    "title": "Research",
+    "section": "Presentation",
+    "text": "Presentation\n\nin English\n\nIwanaga and Kobayashi. Network Game Meets Machine Learning: A Microfounded Graphical Lasso. The 10th Annual International Conference in Hawaiʻi. 2025/9/30.\n\n\n\nin Japanese\n\nTBA. Nonlinear Physics Laboratory, Kyushu U. 2025/12/18."
   },
   {
     "objectID": "posts/2024/MCMC/metropolis-hastings.html",
@@ -154,45 +175,10 @@
     "text": "Footnotes\n\n\n一般には採択比率 (acceptance ratio) や採択確率 (acceptance probability) などと呼ばれる．↩︎\n式 2 の不等号の向きがどちらの場合であっても対応できるように \\(\\min\\{\\}\\) を使用．流出する人の数（分母）が流入する人の数（分子）よりも大きい場合のみ交通規制をかけるということ．↩︎\n\\(x=0\\) のとき \\(1\\) をとり，それ以外の \\(x\\) で \\(0\\) をとる関数．↩︎"
   },
   {
-    "objectID": "research.html",
-    "href": "research.html",
-    "title": "Research",
-    "section": "",
-    "text": "My research interests lie at the intersection of economics and network science. Although network science is a relatively new field that emerged in the years around the early 2000s, it has been applied across various domains with significant success. In economics, considering network structures has provided deeper insights in research areas such as input-output analysis, cascading failures in financial networks, and measuring peer effects.\nThe focus of my research is to develop a statistical model that identifies the mechanisms behind the formation of observed economic and social networks. A key concept in economic model building is microfoundation, and I am currently working on a model based on network game theory."
-  },
-  {
-    "objectID": "research.html#presentation",
-    "href": "research.html#presentation",
-    "title": "Research",
-    "section": "Presentation",
-    "text": "Presentation\n\nin English\n\nIwanaga and Kobayashi. Network Game Meets Machine Learning: A Microfounded Graphical Lasso. The 10th Annual International Conference in Hawaiʻi. 2025/9/30.\n\n\n\nin Japanese\n\nTBA. Nonlinear Physics Laboratory, Kyushu U. 2025/12/18."
-  },
-  {
-    "objectID": "index.html#news",
-    "href": "index.html#news",
+    "objectID": "index.html#fields-of-interest",
+    "href": "index.html#fields-of-interest",
     "title": "Yuki IWANAGA | 岩永悠希",
-    "section": "News",
-    "text": "News\n\n\n[2025-10-16] 神戸大学統合報告書2025の【学長×博士学生×若手研究者 座談会】に出演しました。\n[2025-09-30] Oral presentation at the 10th Annual International Conference in Hawaiʻi.\n[2025-04-03] 次世代ＡＩ人材育成プログラム (BOOST)に採択されました。"
-  },
-  {
-    "objectID": "index.html#section",
-    "href": "index.html#section",
-    "title": "Yuki Iwanaga | 岩永悠希",
-    "section": "",
-    "text": "Collective Behavior\nNetwork Science\nNetwork Games\n\nStrategic network formation\nEconometric network formation models\n\nMacroeconomics\nStatistical Physics\nBayesian Modeling\nHistory of Science"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Yuki Iwanaga | 岩永悠希",
-    "section": "",
-    "text": "2025-11-01 — Website update: added News section.\n2025-10-28 — New paper accepted in JEDC.\n2025-10-15 — Gave a talk at NetSci workshop.\n2025-10-01 — Poster presentation at Hawaii Conference.\n2025-09-15 — Repository update: new module added.\n…（以降たくさん）"
-  },
-  {
-    "objectID": "research.html#about",
-    "href": "research.html#about",
-    "title": "Research",
-    "section": "",
-    "text": "My research interests lie at the intersection of economics and network science. Although network science is a relatively new field that emerged in the years around the early 2000s, it has been applied across various domains with significant success. In economics, considering network structures has provided deeper insights in research areas such as input-output analysis, cascading failures in financial networks, and measuring peer effects.\nThe focus of my research is to develop a statistical model that identifies the mechanisms behind the formation of observed economic and social networks. A key concept in economic model building is microfoundation, and I am currently working on a model based on network game theory."
+    "section": "Fields of Interest",
+    "text": "Fields of Interest"
   }
 ]

@@ -77,32 +77,30 @@ The focus of my research is to develop a statistical model that identifies the m
 
 ::: -->
 
-::: {layout="[50,25,25]"}
+::: {layout="[68,32]"}
 
 ::: {#first-column}
 
-## Interests
+## Fields of Interest
 
-![](assets/images/collective_behavior.png){width=500 fig-align="left"}
+![](assets/images/collective_behavior.png){width=480 fig-align="center"}
 
+![](assets/images/network_evolution.png){width=300 fig-align="center"}
 :::
 
 ::: {#second-column}
 
 <div style="margin-top: 100px;"></div>
 
-#### Research
+#### Research Interests
 
 - Collective Behavior
-- Network Science
 - Network Games
-:::
+- Network Formation
 
-::: {#third-column}
+<br>
 
-<div style="margin-top: 100px;"></div>
-
-#### Personal
+#### Personal Interests
 
 - Statistical Physics
 - Bayesian Modeling
