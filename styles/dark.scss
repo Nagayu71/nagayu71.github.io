@@ -1,0 +1,42 @@
+/*-- scss:defaults --*/
+
+/* Bootswatch Minty dark 相当の本文配色 */
+$body-bg: #212529;
+$body-color: #eceeef;
+
+/*-- scss:rules --*/
+
+/* ナビバーと description のテキスト色を固定 */
+.navbar,
+.navbar .nav-link,
+.navbar .navbar-brand {
+  color: #fff !important;   /* 例: 白で固定 */
+}
+
+.quarto-title-block .title,
+.quarto-title-block .description {
+  color: #fff !important;   /* 例: 白で固定 */
+}
+
+/* ヘディングカラー（Bootswatch Minty dark と同じ） */
+h1, h2, h3, h4, h5, h6 {
+  color: #eceeef !important;  /* --bs-body-color と同じ */
+}
+
+/* リンクカラー（Minty ダーク準拠） */
+a,
+.content a {
+  color: #aedace !important;          /* --bs-link-color */
+}
+a:hover {
+  color: #bee1d8 !important;          /* --bs-link-hover-color */
+  text-decoration: underline;
+}
+
+/* コードブロック / callout 背景 */
+pre,
+code,
+.callout {
+  background-color: #1e1e1e !important;
+  color: #e0e0e0 !important;
+}

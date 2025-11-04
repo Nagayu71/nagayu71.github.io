@@ -29,8 +29,8 @@
 }
 
 strong, b {
-  font-family: "NotoSansJP-adjusted", "Noto Sans JP", sans-serif;
-  font-weight: 700;
+    font-family: "NotoSansJP-adjusted", "Noto Sans JP", sans-serif;
+    font-weight: 800;
 }
 
 /* 見出しとナビゲーション */
@@ -111,16 +111,21 @@ h1, h2, h3, h4, h5, h6, .navbar-title, .menu-text {
     margin: 0;
 }
 
-/* フッター */
-.nav-footer, .nav-footer a {
-    color: var(--color-white) !important; /* フッターのテキスト部分に適用 */
+/* フッター背景と文字色を Minty の変数に合わせる */
+.nav-footer {
+    background-color: var(--bs-primary) !important; /* Minty のメインカラー (#78C2AD) */
+    color: var(--bs-light, #fff) !important;
+}
+
+.nav-footer a {
+    color: var(--bs-light, #fff) !important;
 }
 
 .nav-footer-left {
     white-space: nowrap;
 }
 
-/* 色指定 */
+/* Fontawesome 色指定 */
 .color-minty {
     color: var(--color-minty); /* font awesome のアイコンの色設定 */
 }
@@ -171,59 +176,8 @@ h1, h2, h3, h4, h5, h6, .navbar-title, .menu-text {
 
 /* News セクションのスクロール設定 */
 .news-scroll {
-  max-height: 100px;   /* お好みで */
+  max-height: 150px;   /* お好みで */
   overflow-y: auto;    /* 縦スクロール */
   margin-top: .5rem;   /* 見出しとの間を少し空ける */
   padding-right: 8px;  /* スクロールバー対策（任意） */
-}
-
-/* --- Dark mode: override Darkly variables with Minty colors --- */
-.quarto-dark {
-  /* Bootswatch変数をMinty色に置き換え */
-  :root {
-    --bs-primary: #78C2AD;
-    --bs-primary-rgb: 120, 194, 173;
-    --bs-navbar-bg: #78C2AD;
-    --bs-navbar-color: #ffffff;
-    --bs-body-bg: #121212; /* 背景はDarkly風に維持 */
-    --bs-body-color: #e0e0e0;
-  }
-
-  /* ページ上部 */
-  header,
-  .page-header,
-  .quarto-title-block,
-  .quarto-title-banner {
-    background-color: #78C2AD !important;
-    color: #fff !important;
-  }
-
-  /* ページタイトルと説明 */
-  .quarto-title-block .title,
-  .quarto-title-block .subtitle,
-  .quarto-title-block .description {
-    color: #fff !important;
-  }
-
-  /* ナビバー */
-  .navbar,
-  .navbar-brand,
-  .navbar-nav .nav-link {
-    background-color: #78C2AD !important;
-    color: #fff !important;
-  }
-  .navbar .nav-link:hover,
-  .navbar .nav-link:focus,
-  .navbar .nav-link.active {
-    color: #fff !important;
-    text-decoration: underline;
-  }
-
-  /* トグラーとドロップダウン */
-  .navbar-toggler {
-    border-color: rgba(255, 255, 255, 0.5) !important;
-  }
-  .dropdown-menu {
-    background-color: #2b2b2b !important;
-  }
 }
