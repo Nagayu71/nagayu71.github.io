@@ -1,0 +1,106 @@
+---
+title: "About"
+title-block-banner: true
+page-layout: full
+number-sections: false
+toc: false
+---
+
+::: {layout="[50,50]" layout-valign="top"}
+
+::: {#first-column}
+## Education
+
+##### [{{< fa graduation-cap >}}]{.color-minty} M.A. in Economics, 2025
+
+_Kobe University, Japan_
+
+##### [{{< fa graduation-cap >}}]{.color-minty} B.A. in Arts, 2023
+
+_Kobe University, Japan_
+
+:::
+
+::: {#second-column}
+## Experience
+
+##### [{{< fa person-chalkboard >}}]{.color-minty} Teaching Assistant
+
+_Kobe University, Japan_
+
+##### [{{< fa user-graduate >}}]{.color-minty} Research Fellow, 2025.4 -- present
+
+_Kobe University, Japan_<br>
+Supported by JST BOOST, Grant Number JPMJBS2410.
+
+:::
+
+:::
+
+## Tech Blog
+
+::: {layout="[50,50]"}
+
+::: {#first-column}
+
+[![](assets/images/zenn-logo.svg){width=100 fig-align="center"}](https://zenn.dev/nagayu71)
+
+Zenn では主にネットワーク科学関係の記事を書いています．  
+どちらかというと理論的な側面が強いです．
+
+:::
+::: {#second-column}
+
+[![](assets/images/qiita-icon.png){width=100 fig-align="center"}](https://qiita.com/Nagayu71)
+
+Qiita では実装面で困ったことの備忘録や，ちょっとしたまとめを記載しています．
+
+:::
+
+:::
+
+
+## Favorite
+
+::: {layout="[50,50]"}
+
+::: {#first-column}
+### Music
+
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/6288O17c1Tf45kR6J2MBzX?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+
+<iframe width="100%" height="152" src="https://www.youtube-nocookie.com/embed/h9yya-j_kjE?si=DDgqzxqZbcbX8JId" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+:::
+
+::: {#second-column}
+### YouTube
+
+#### 学術系
+
+- [大関真之の雑談方程式 - これって人生変えちゃう授業かも -](https://www.youtube.com/@mohzeki22)
+- [AIcia Solid Project](https://www.youtube.com/@AIcia_Solid)
+- [予備校のノリで学ぶ「大学の数学・物理」](https://youtube.com/@yobinori?si=Yj-ozwJy3xaLv3c5)
+
+#### サイエンスコミュニケーション
+- [Veritasium](https://www.youtube.com/@veritasium)
+- [Looking Glass Universe](https://www.youtube.com/@LookingGlassUniverse)
+
+<!-- #### VTuber
+
+- [Mori Calliope Ch. hololive-EN](https://www.youtube.com/@MoriCalliope)
+- [Elizabeth Rose Bloodflame Ch. hololive-EN](https://www.youtube.com/@holoen_erbloodflame)
+- [Hajime Ch. 轟はじめ ‐ ReGLOSS](https://www.youtube.com/@TodorokiHajime) -->
+
+#### 音楽系
+
+- [Cateen かてぃん](https://www.youtube.com/@cateen_hayatosumino)
+- [Animenz Piano Sheets](https://youtube.com/@animenzzz?si=4j8Z3EufJ9vlUdpu)
+- [Grissini Project](https://www.youtube.com/@grissini)
+
+#### その他
+- [Bappa Shota](https://youtube.com/@bappashota?si=UKR6GeX5riv2njUq)
+
+:::
+
+:::
