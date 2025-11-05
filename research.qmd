@@ -1,7 +1,7 @@
 ---
 title: "Research"
-page-layout: full
 title-block-banner: true
+page-layout: full
 number-sections: false
 toc: false
 ---
@@ -11,6 +11,10 @@ toc: false
 My research interests lie at the intersection of economics and network science. Although network science is a relatively new field that emerged in the years around the early 2000s, it has been applied across various domains with significant success. In economics, considering network structures has provided deeper insights in research areas such as input-output analysis, cascading failures in financial networks, and measuring peer effects.
 
 The focus of my research is to develop a statistical model that identifies the mechanisms behind the formation of observed economic and social networks. A key concept in economic model building is microfoundation, and I am currently working on a model based on network game theory.
+
+## Preprints
+
+- “[Welfare bounds for linear-quadratic network games](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5706124)" with Teruyoshi Kobayashi, 2025.
 
 ## Presentation
 

@@ -20,15 +20,17 @@ website:
         href: index.qmd
       - text: "Research"
         href: research.qmd
+      - text: "About"
+        href: about.qmd
       - text: "Blog"
         href: blog.qmd
-      - text: "Links"
-        # menu: 
-        #   - text: "Zenn"
-        #     href: https://zenn.dev/nagayu71
-        #   - text: "Qiita"
-        #     href: https://qiita.com/Nagayu71
-        href: links.qmd
+      # - text: "Links"
+      #   menu: 
+      #     - text: "Zenn"
+      #       href: https://zenn.dev/nagayu71
+      #     - text: "Qiita"
+      #       href: https://qiita.com/Nagayu71
+      #   href: links.qmd
     tools:
       - icon: github
         href: https://github.com/Nagayu71
@@ -47,14 +49,13 @@ website:
         href: https://github.com/Nagayu71
       # - icon: envelope
       #   href: mailto:{your email}
-    background: "#78C2AD"
 
 format:
   html:
     mainfont: "BIZ UDPGothic"
     theme: 
       light: minty
-      dark: darkly
+      dark: [minty, styles/dark.scss]   # Minty を使い続けつつ、ダーク専用CSSを追加
     css: styles/styles.css
     code-block-bg: true
     code-block-border-left: "#7CC4AC" # see https://quarto.org/docs/output-formats/html-code.html#appearance

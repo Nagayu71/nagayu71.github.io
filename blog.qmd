@@ -1,6 +1,6 @@
 ---
 title: "Recent Posts"
-description: "勉強の記録"
+# description: "勉強の記録"
 listing:
   contents: posts
   sort: "date desc"
