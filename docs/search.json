@@ -84,6 +84,34 @@
     "text": "定量的マクロ経済学における数値計算の基礎\n\n\n\n\n\n\nMacroeconomics\n\n\nComputation\n\n\nPython\n\n\nSciPy\n\n\n\n近年，定量的マクロ経済学 (quantitative macroeconomics) と呼ばれる領域では，数値計算 (numerical computation) 技術が必須の分析手法となっている．本稿では２期間モデルというシンプルなモデルを用いて，ハンズオンで数値計算の基礎を学ぶ．扱う手法は，グリッドサーチ，最適化アルゴリズム，求根問題，射影法，内生的グリッド法（執筆中）である．\n\n\n\n\n\nOct 11, 2024\n\n\n岩永悠希\n\n\n\n\n\n\n\n\n\n\n\n\nMetropolis-Hastings アルゴリズム\n\n\nPython による実装\n\n\n\nBayesian\n\n\nMCMC\n\n\nSampling\n\n\nPython\n\n\n\nMCMC (Markov Chain Monte Carlo) とは，任意の確率分布からのサンプリングを実現するモンテカルロ法である． 本稿では MCMC の一つである Metropolis-Hastings (MH) 法を @chib1995 に沿って説明し，Python で実装することで MH 法への理解を深めたい． \n\n\n\n\n\nSep 27, 2024\n\n\n岩永悠希\n\n\n\n\n\n\nNo matching items\n\n Back to top"
   },
   {
+    "objectID": "about.html#education",
+    "href": "about.html#education",
+    "title": "About",
+    "section": "Education",
+    "text": "Education\n\n M.A. in Economics, 2025\nKobe University, Japan\n\n\n B.A. in Arts, 2023\nKobe University, Japan"
+  },
+  {
+    "objectID": "about.html#experience",
+    "href": "about.html#experience",
+    "title": "About",
+    "section": "Experience",
+    "text": "Experience\n\n Teaching Assistant\nKobe University, Japan\n\n\n Research Fellow, 2025.4 – present\nKobe University, Japan Supported by JST BOOST, Grant Number JPMJBS2410."
+  },
+  {
+    "objectID": "about.html#tech-blog",
+    "href": "about.html#tech-blog",
+    "title": "About",
+    "section": "Tech Blog",
+    "text": "Tech Blog\n\n\n\n\n\n\n\n\n\n\n\nZenn では主にネットワーク科学関係の記事を書いています．\nどちらかというと理論的な側面が強いです．\n\n\n\n\n\n\n\nQiita では実装面で困ったことの備忘録や，ちょっとしたまとめを記載しています．"
+  },
+  {
+    "objectID": "about.html#favorite",
+    "href": "about.html#favorite",
+    "title": "About",
+    "section": "Favorite",
+    "text": "Favorite\n\n\n\n\n\n\n\nMusic\n\n\n\n\n\n\n\n\nYouTube\n\n学術系\n\n大関真之の雑談方程式 - これって人生変えちゃう授業かも -\nAIcia Solid Project\n予備校のノリで学ぶ「大学の数学・物理」\n\n\n\nサイエンスコミュニケーション\n\nVeritasium\nLooking Glass Universe\n\n\n\n\n音楽系\n\nCateen かてぃん\nAnimenz Piano Sheets\nGrissini Project\n\n\n\nその他\n\nBappa Shota"
+  },
+  {
     "objectID": "index.html#hello",
     "href": "index.html#hello",
     "title": "Yuki IWANAGA | 岩永悠希",
@@ -96,20 +124,6 @@
     "title": "Yuki IWANAGA | 岩永悠希",
     "section": "Fields of Interest",
     "text": "Fields of Interest"
-  },
-  {
-    "objectID": "index.html#education",
-    "href": "index.html#education",
-    "title": "Yuki IWANAGA | 岩永悠希",
-    "section": "Education",
-    "text": "Education\n\n M.A. in Economics, 2025\nKobe University, Japan\n\n\n B.A. in Arts, 2023\nKobe University, Japan"
-  },
-  {
-    "objectID": "index.html#experience",
-    "href": "index.html#experience",
-    "title": "Yuki IWANAGA | 岩永悠希",
-    "section": "Experience",
-    "text": "Experience\n\n Teaching Assistant\nKobe University, Japan\n\n\n Research Fellow, 2025.4 – present\nKobe University, Japan Supported by JST BOOST, Grant Number JPMJBS2410."
   },
   {
     "objectID": "index.html#news",
@@ -131,6 +145,13 @@
     "title": "Research",
     "section": "",
     "text": "My research interests lie at the intersection of economics and network science. Although network science is a relatively new field that emerged in the years around the early 2000s, it has been applied across various domains with significant success. In economics, considering network structures has provided deeper insights in research areas such as input-output analysis, cascading failures in financial networks, and measuring peer effects.\nThe focus of my research is to develop a statistical model that identifies the mechanisms behind the formation of observed economic and social networks. A key concept in economic model building is microfoundation, and I am currently working on a model based on network game theory."
+  },
+  {
+    "objectID": "research.html#preprints",
+    "href": "research.html#preprints",
+    "title": "Research",
+    "section": "Preprints",
+    "text": "Preprints\n\nWelfare bounds for linear-quadratic network games\nYuki Iwanaga, Teruyoshi Kobayashi\nDOI: 10.2139/ssrn.5712598"
   },
   {
     "objectID": "research.html#presentation",
@@ -173,47 +194,5 @@
     "title": "Metropolis-Hastings アルゴリズム",
     "section": "Footnotes",
     "text": "Footnotes\n\n\n一般には採択比率 (acceptance ratio) や採択確率 (acceptance probability) などと呼ばれる．↩︎\n式 2 の不等号の向きがどちらの場合であっても対応できるように \\(\\min\\{\\}\\) を使用．流出する人の数（分母）が流入する人の数（分子）よりも大きい場合のみ交通規制をかけるということ．↩︎\n\\(x=0\\) のとき \\(1\\) をとり，それ以外の \\(x\\) で \\(0\\) をとる関数．↩︎"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "Zenn では主にネットワーク科学関係の記事を書いています．\nどちらかというと理論的な側面が強いです．\n\n\n\n\n\n\n\nQiita では実装面で困ったことの備忘録や，ちょっとしたまとめを記載しています．"
-  },
-  {
-    "objectID": "about.html#tech-blog",
-    "href": "about.html#tech-blog",
-    "title": "About",
-    "section": "Tech Blog",
-    "text": "Tech Blog\n\n\n\n\n\n\n\n\n\n\n\nZenn では主にネットワーク科学関係の記事を書いています．\nどちらかというと理論的な側面が強いです．\n\n\n\n\n\n\n\nQiita では実装面で困ったことの備忘録や，ちょっとしたまとめを記載しています．"
-  },
-  {
-    "objectID": "about.html#favorite",
-    "href": "about.html#favorite",
-    "title": "About",
-    "section": "Favorite",
-    "text": "Favorite\n\n\n\n\n\n\n\nMusic\n\n\n\n\n\n\n\n\nYouTube\n\n学術系\n\n大関真之の雑談方程式 - これって人生変えちゃう授業かも -\nAIcia Solid Project\n予備校のノリで学ぶ「大学の数学・物理」\n\n\n\nサイエンスコミュニケーション\n\nVeritasium\nLooking Glass Universe\n\n\n\n\n音楽系\n\nCateen かてぃん\nAnimenz Piano Sheets\nGrissini Project\n\n\n\nその他\n\nBappa Shota"
-  },
-  {
-    "objectID": "about.html#education",
-    "href": "about.html#education",
-    "title": "About",
-    "section": "Education",
-    "text": "Education\n\n M.A. in Economics, 2025\nKobe University, Japan\n\n\n B.A. in Arts, 2023\nKobe University, Japan"
-  },
-  {
-    "objectID": "about.html#experience",
-    "href": "about.html#experience",
-    "title": "About",
-    "section": "Experience",
-    "text": "Experience\n\n Teaching Assistant\nKobe University, Japan\n\n\n Research Fellow, 2025.4 – present\nKobe University, Japan Supported by JST BOOST, Grant Number JPMJBS2410."
-  },
-  {
-    "objectID": "research.html#preprints",
-    "href": "research.html#preprints",
-    "title": "Research",
-    "section": "Preprints",
-    "text": "Preprints\n\n“Welfare bounds for linear-quadratic network games” with Teruyoshi Kobayashi, 2025."
   }
 ]
