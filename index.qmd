@@ -172,7 +172,7 @@ _Kobe University, Japan_
 ## News
 
 ::: {.news-scroll}
-- [2025-11-05] **Preprint**: “[Welfare bounds for linear-quadratic network games](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5706124)" with Teruyoshi Kobayashi.
+- [2025-11-05] **Preprint**: “[Welfare bounds for linear-quadratic network games](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5706124)" with Teruyoshi Kobayashi, R&R at _Economics Letters_.
 - [2025-10-16] [神戸大学統合報告書2025](https://www.kobe-u.ac.jp/ja/announcement/20251015-67208/)の【学長×博士学生×若手研究者 座談会】に出演しました。
 - [2025-09-30] Oral presentation at [the 10th Annual International Conference in Hawaiʻi](https://www.econ.kobe-u.ac.jp/news/18216/).
 - [2025-04-03] [次世代ＡＩ人材育成プログラム (BOOST)](https://www.jst.go.jp/pr/info/info1681/index.html)に採択されました。

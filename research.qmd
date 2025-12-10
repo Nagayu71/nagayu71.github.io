@@ -16,7 +16,8 @@ The focus of my research is to develop a statistical model that identifies the m
 
 - Welfare bounds for linear-quadratic network games [[Incl. Online Appendix](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5706124)] [[code](https://github.com/Nagayu71/lqng-welfare-bounds)]  
   Yuki Iwanaga, Teruyoshi Kobayashi  
-  DOI: [10.2139/ssrn.5706124](https://dx.doi.org/10.2139/ssrn.5706124)
+  DOI: [10.2139/ssrn.5706124](https://dx.doi.org/10.2139/ssrn.5706124)  
+  Status: R&R at _**Economics Letters**_
 
 ## Presentation
 
