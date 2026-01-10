@@ -19,13 +19,13 @@ The focus of my research is to develop a statistical model that identifies the m
   DOI: [10.2139/ssrn.5706124](https://dx.doi.org/10.2139/ssrn.5706124)  
   Status: Accepted at _**Economics Letters**_
 
-## Presentation
+## Presentations
 
 #### in English
 
-1. Iwanaga and Kobayashi. Network Game Meets Machine Learning: A Microfounded Graphical Lasso. [The 10th Annual International Conference in Hawaiʻi](https://www.econ.kobe-u.ac.jp/news/18216/). 2025/9/30.
+1. Network Game Meets Machine Learning: A Microfounded Graphical Lasso. [The 10th Annual International Conference in Hawaiʻi](https://www.econ.kobe-u.ac.jp/news/18216/). 2025/9/30.
 
 #### in Japanese
 
-1. Iwanaga and Kobayashi. Network Reconstruction Based on Network Game. [Nonlinear Physics Laboratory, Kyushu U](https://sites.google.com/view/nonlinear-kyushu-univ/). 2025/12/18.
-2. TBA. [ネットワーク科学研究会2025](https://www.network-science-seminar.com/top). 2026/2/18.
+1. Network Reconstruction Based on Network Game. [Nonlinear Physics Laboratory, Kyushu U](https://sites.google.com/view/nonlinear-kyushu-univ/). 2025/12/18.
+2. 線形二次型ネットワーク・ゲームにおける厚生限界. [ネットワーク科学研究会2025](https://www.network-science-seminar.com/activities/2025). 2026/2/18.
