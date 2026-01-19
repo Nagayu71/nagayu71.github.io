@@ -140,11 +140,11 @@
     "text": "Welfare bounds for linear-quadratic network games [code]\nYuki Iwanaga, Teruyoshi Kobayashi\nEconomics Letters 260, 112824 (2026)\nDOI: 10.1016/j.econlet.2026.112824"
   },
   {
-    "objectID": "research.html#about",
-    "href": "research.html#about",
+    "objectID": "research.html#journal-papers",
+    "href": "research.html#journal-papers",
     "title": "Research",
     "section": "",
-    "text": "My research interests lie at the intersection of economics and network science. Although network science is a relatively new field that emerged in the years around the early 2000s, it has been applied across various domains with significant success. In economics, considering network structures has provided deeper insights in research areas such as input-output analysis, cascading failures in financial networks, and measuring peer effects.\nThe focus of my research is to develop a statistical model that identifies the mechanisms behind the formation of observed economic and social networks. A key concept in economic model building is microfoundation, and I am currently working on a model based on network game theory."
+    "text": "Welfare bounds for linear-quadratic network games [code]\nYuki Iwanaga, Teruyoshi Kobayashi\nEconomics Letters 260, 112824 (2026)\nDOI: 10.1016/j.econlet.2026.112824"
   },
   {
     "objectID": "research.html#preprints",
@@ -194,12 +194,5 @@
     "title": "Metropolis-Hastings アルゴリズム",
     "section": "Footnotes",
     "text": "Footnotes\n\n\n一般には採択比率 (acceptance ratio) や採択確率 (acceptance probability) などと呼ばれる．↩︎\n式 2 の不等号の向きがどちらの場合であっても対応できるように \\(\\min\\{\\}\\) を使用．流出する人の数（分母）が流入する人の数（分子）よりも大きい場合のみ交通規制をかけるということ．↩︎\n\\(x=0\\) のとき \\(1\\) をとり，それ以外の \\(x\\) で \\(0\\) をとる関数．↩︎"
-  },
-  {
-    "objectID": "research.html#journal-papers",
-    "href": "research.html#journal-papers",
-    "title": "Research",
-    "section": "",
-    "text": "Welfare bounds for linear-quadratic network games [code]\nYuki Iwanaga, Teruyoshi Kobayashi\nEconomics Letters 260, 112824 (2026)\nDOI: 10.1016/j.econlet.2026.112824"
   }
 ]

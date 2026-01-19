@@ -176,7 +176,7 @@ h1, h2, h3, h4, h5, h6, .navbar-title, .menu-text {
 
 /* News セクションのスクロール設定 */
 .news-scroll {
-  max-height: 150px;   /* お好みで */
+  max-height: 250px;   /* お好みで */
   overflow-y: auto;    /* 縦スクロール */
   margin-top: .5rem;   /* 見出しとの間を少し空ける */
   padding-right: 8px;  /* スクロールバー対策（任意） */
