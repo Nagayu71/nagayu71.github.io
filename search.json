@@ -130,28 +130,28 @@
     "href": "index.html#news",
     "title": "Yuki IWANAGA | 岩永悠希",
     "section": "News",
-    "text": "News\n\n\n[2026-01-10] Accepted: “Welfare bounds for linear-quadratic network games” with Teruyoshi Kobayashi, Economics Letters, forthcoming.\n[2025-11-05] Preprint: “Welfare bounds for linear-quadratic network games” with Teruyoshi Kobayashi, R&R at Economics Letters.\n[2025-10-16] 神戸大学統合報告書2025の【学長×博士学生×若手研究者 座談会】に出演しました。\n[2025-09-30] Oral presentation at the 10th Annual International Conference in Hawaiʻi.\n[2025-04-03] 次世代ＡＩ人材育成プログラム (BOOST)に採択されました。"
+    "text": "News\n\n\n[2026-01-19] Published: “Welfare bounds for linear-quadratic network games” with Teruyoshi Kobayashi, Economics Letters.\n[2026-01-10] Accepted: “Welfare bounds for linear-quadratic network games” with Teruyoshi Kobayashi, Economics Letters, forthcoming.\n[2025-11-05] Preprint: “Welfare bounds for linear-quadratic network games” with Teruyoshi Kobayashi, R&R at Economics Letters.\n[2025-10-16] 神戸大学統合報告書2025の【学長×博士学生×若手研究者 座談会】に出演しました。\n[2025-09-30] Oral presentation at the 10th Annual International Conference in Hawaiʻi.\n[2025-04-03] 次世代ＡＩ人材育成プログラム (BOOST)に採択されました。"
   },
   {
     "objectID": "research.html",
     "href": "research.html",
     "title": "Research",
     "section": "",
-    "text": "My research interests lie at the intersection of economics and network science. Although network science is a relatively new field that emerged in the years around the early 2000s, it has been applied across various domains with significant success. In economics, considering network structures has provided deeper insights in research areas such as input-output analysis, cascading failures in financial networks, and measuring peer effects.\nThe focus of my research is to develop a statistical model that identifies the mechanisms behind the formation of observed economic and social networks. A key concept in economic model building is microfoundation, and I am currently working on a model based on network game theory."
+    "text": "Welfare bounds for linear-quadratic network games [code]\nYuki Iwanaga, Teruyoshi Kobayashi\nEconomics Letters 260, 112824 (2026)\nDOI: 10.1016/j.econlet.2026.112824"
   },
   {
-    "objectID": "research.html#about",
-    "href": "research.html#about",
+    "objectID": "research.html#journal-papers",
+    "href": "research.html#journal-papers",
     "title": "Research",
     "section": "",
-    "text": "My research interests lie at the intersection of economics and network science. Although network science is a relatively new field that emerged in the years around the early 2000s, it has been applied across various domains with significant success. In economics, considering network structures has provided deeper insights in research areas such as input-output analysis, cascading failures in financial networks, and measuring peer effects.\nThe focus of my research is to develop a statistical model that identifies the mechanisms behind the formation of observed economic and social networks. A key concept in economic model building is microfoundation, and I am currently working on a model based on network game theory."
+    "text": "Welfare bounds for linear-quadratic network games [code]\nYuki Iwanaga, Teruyoshi Kobayashi\nEconomics Letters 260, 112824 (2026)\nDOI: 10.1016/j.econlet.2026.112824"
   },
   {
     "objectID": "research.html#preprints",
     "href": "research.html#preprints",
     "title": "Research",
     "section": "Preprints",
-    "text": "Preprints\n\nWelfare bounds for linear-quadratic network games [Incl. Online Appendix] [code]\nYuki Iwanaga, Teruyoshi Kobayashi\nDOI: 10.2139/ssrn.5706124\nStatus: Accepted at Economics Letters"
+    "text": "Preprints"
   },
   {
     "objectID": "research.html#presentations",
