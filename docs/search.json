@@ -130,14 +130,14 @@
     "href": "index.html#news",
     "title": "Yuki IWANAGA | 岩永悠希",
     "section": "News",
-    "text": "News\n\n\n[2026-01-10] Accepted: “Welfare bounds for linear-quadratic network games” with Teruyoshi Kobayashi, Economics Letters, forthcoming.\n[2025-11-05] Preprint: “Welfare bounds for linear-quadratic network games” with Teruyoshi Kobayashi, R&R at Economics Letters.\n[2025-10-16] 神戸大学統合報告書2025の【学長×博士学生×若手研究者 座談会】に出演しました。\n[2025-09-30] Oral presentation at the 10th Annual International Conference in Hawaiʻi.\n[2025-04-03] 次世代ＡＩ人材育成プログラム (BOOST)に採択されました。"
+    "text": "News\n\n\n[2026-01-19] Published: “Welfare bounds for linear-quadratic network games” with Teruyoshi Kobayashi, Economics Letters.\n[2026-01-10] Accepted: “Welfare bounds for linear-quadratic network games” with Teruyoshi Kobayashi, Economics Letters, forthcoming.\n[2025-11-05] Preprint: “Welfare bounds for linear-quadratic network games” with Teruyoshi Kobayashi, R&R at Economics Letters.\n[2025-10-16] 神戸大学統合報告書2025の【学長×博士学生×若手研究者 座談会】に出演しました。\n[2025-09-30] Oral presentation at the 10th Annual International Conference in Hawaiʻi.\n[2025-04-03] 次世代ＡＩ人材育成プログラム (BOOST)に採択されました。"
   },
   {
     "objectID": "research.html",
     "href": "research.html",
     "title": "Research",
     "section": "",
-    "text": "My research interests lie at the intersection of economics and network science. Although network science is a relatively new field that emerged in the years around the early 2000s, it has been applied across various domains with significant success. In economics, considering network structures has provided deeper insights in research areas such as input-output analysis, cascading failures in financial networks, and measuring peer effects.\nThe focus of my research is to develop a statistical model that identifies the mechanisms behind the formation of observed economic and social networks. A key concept in economic model building is microfoundation, and I am currently working on a model based on network game theory."
+    "text": "Welfare bounds for linear-quadratic network games [code]\nYuki Iwanaga, Teruyoshi Kobayashi\nEconomics Letters 260, 112824 (2026)\nDOI: 10.1016/j.econlet.2026.112824"
   },
   {
     "objectID": "research.html#about",
@@ -151,14 +151,14 @@
     "href": "research.html#preprints",
     "title": "Research",
     "section": "Preprints",
-    "text": "Preprints\n\nWelfare bounds for linear-quadratic network games [Incl. Online Appendix] [code]\nYuki Iwanaga, Teruyoshi Kobayashi\nDOI: 10.2139/ssrn.5706124\nStatus: Accepted at Economics Letters"
+    "text": "Preprints"
   },
   {
-    "objectID": "research.html#presentation",
-    "href": "research.html#presentation",
+    "objectID": "research.html#presentations",
+    "href": "research.html#presentations",
     "title": "Research",
-    "section": "Presentation",
-    "text": "Presentation\n\nin English\n\nNetwork Game Meets Machine Learning: A Microfounded Graphical Lasso. The 10th Annual International Conference in Hawaiʻi. 2025/9/30.\n\n\n\nin Japanese\n\nNetwork Reconstruction Based on Network Game. Nonlinear Physics Laboratory, Kyushu U. 2025/12/18.\n線形二次型ネットワーク・ゲームにおける厚生限界. ネットワーク科学研究会2025. 2026/2/18."
+    "section": "Presentations",
+    "text": "Presentations\n\nin English\n\nNetwork Game Meets Machine Learning: A Microfounded Graphical Lasso. The 10th Annual International Conference in Hawaiʻi. 2025/9/30.\n\n\n\nin Japanese\n\nNetwork Reconstruction Based on Network Game. Nonlinear Physics Laboratory, Kyushu U. 2025/12/18.\n線形二次型ネットワーク・ゲームにおける厚生限界. ネットワーク科学研究会2025. 2026/2/18."
   },
   {
     "objectID": "posts/2024/MCMC/metropolis-hastings.html",
@@ -196,10 +196,10 @@
     "text": "Footnotes\n\n\n一般には採択比率 (acceptance ratio) や採択確率 (acceptance probability) などと呼ばれる．↩︎\n式 2 の不等号の向きがどちらの場合であっても対応できるように \\(\\min\\{\\}\\) を使用．流出する人の数（分母）が流入する人の数（分子）よりも大きい場合のみ交通規制をかけるということ．↩︎\n\\(x=0\\) のとき \\(1\\) をとり，それ以外の \\(x\\) で \\(0\\) をとる関数．↩︎"
   },
   {
-    "objectID": "research.html#presentations",
-    "href": "research.html#presentations",
+    "objectID": "research.html#journal-papers",
+    "href": "research.html#journal-papers",
     "title": "Research",
-    "section": "Presentations",
-    "text": "Presentations\n\nin English\n\nNetwork Game Meets Machine Learning: A Microfounded Graphical Lasso. The 10th Annual International Conference in Hawaiʻi. 2025/9/30.\n\n\n\nin Japanese\n\nNetwork Reconstruction Based on Network Game. Nonlinear Physics Laboratory, Kyushu U. 2025/12/18.\n線形二次型ネットワーク・ゲームにおける厚生限界. ネットワーク科学研究会2025. 2026/2/18."
+    "section": "",
+    "text": "Welfare bounds for linear-quadratic network games [code]\nYuki Iwanaga, Teruyoshi Kobayashi\nEconomics Letters 260, 112824 (2026)\nDOI: 10.1016/j.econlet.2026.112824"
   }
 ]
