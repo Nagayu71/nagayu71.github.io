@@ -11,11 +11,11 @@ toc: false
 ::: {#first-column}
 ## Education
 
-##### [{{< fa graduation-cap >}}]{.color-minty} M.A. in Economics, 2025
+##### [{{< fa graduation-cap >}}]{.color-minty} M.A. in [Economics](https://www.econ.kobe-u.ac.jp/), 2025
 
 _Kobe University, Japan_
 
-##### [{{< fa graduation-cap >}}]{.color-minty} B.A. in Arts, 2023
+##### [{{< fa graduation-cap >}}]{.color-minty} B.A. in [Arts](https://www.fgh.kobe-u.ac.jp/ja/academics/gc), 2023
 
 _Kobe University, Japan_
 

@@ -172,6 +172,7 @@ _Kobe University, Japan_
 ## News
 
 ::: {.news-scroll}
+- [2026-03] 令和7年度[六甲台研究奨励賞（岸本賞）](https://www.econ.kobe-u.ac.jp/kishimoto-prize/)を受賞しました。
 - [2026-01-19] **Published**: “[Welfare bounds for linear-quadratic network games](https://doi.org/10.1016/j.econlet.2026.112824)" with Teruyoshi Kobayashi, _Economics Letters_.
 - [2026-01-10] **Accepted**: “Welfare bounds for linear-quadratic network games" with Teruyoshi Kobayashi, _Economics Letters_, forthcoming.
 - [2025-11-05] **Preprint**: “[Welfare bounds for linear-quadratic network games](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5706124)" with Teruyoshi Kobayashi, R&R at _Economics Letters_.
