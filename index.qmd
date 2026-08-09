@@ -35,7 +35,7 @@ I'm a 2nd year master's Econ student supervised by [Teruyoshi Kobayashi](https:/
 ::: {#first-column}
 ## Hello!
 
-I'm a 1st year Ph.D. student in economics supervised by [Teruyoshi Kobayashi](https://terukobayashi.wordpress.com/) at the [Kobe University](https://www.kobe-u.ac.jp/ja/) in Hyogo, Japan.
+I'm a 2nd year Ph.D. student in economics supervised by [Teruyoshi Kobayashi](https://terukobayashi.wordpress.com/) at the [Kobe University](https://www.kobe-u.ac.jp/ja/) in Hyogo, Japan.
 
 I study social and economic networks, where people's behaviors affect one another, using game theory and statistical models.
 
@@ -172,6 +172,7 @@ _Kobe University, Japan_
 ## News
 
 ::: {.news-scroll}
+- [2026-08-09] Oral presentation at [The 9th International Conference on Econometrics and Statistics (EcoSta 2026)](https://www.cmstatistics.org/EcoSta2026/).
 - [2026-03] 令和7年度[六甲台研究奨励賞（岸本賞）](https://www.econ.kobe-u.ac.jp/kishimoto-prize/)を受賞しました。
 - [2026-01-19] **Published**: “[Welfare bounds for linear-quadratic network games](https://doi.org/10.1016/j.econlet.2026.112824)" with Teruyoshi Kobayashi, _Economics Letters_.
 - [2026-01-10] **Accepted**: “Welfare bounds for linear-quadratic network games" with Teruyoshi Kobayashi, _Economics Letters_, forthcoming.
